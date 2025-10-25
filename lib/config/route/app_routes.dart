@@ -1,4 +1,9 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/history/presentaion/screen/history_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/create_post_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/home_nav_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/home_screen.dart';
 import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';
@@ -40,6 +45,10 @@ class AppRoutes {
   static const String privacyPolicy = "/privacy_policy_screen.dart";
   static const String termsOfServices = "/terms_of_services_screen.dart";
   static const String setting = "/setting_screen.dart";
+  static const String homeNav = "/homeNav";
+  static const String homeScreen = "/homeScreen";
+  static const String historyScreen = "/historyScreen";
+  static const String createPost = "/createPost";
   static const String history = "/history_screen.dart";
 
   static List<GetPage> routes = [
@@ -62,5 +71,9 @@ class AppRoutes {
     GetPage(name: privacyPolicy, page: () => const PrivacyPolicyScreen()),
     GetPage(name: termsOfServices, page: () => const TermsOfServicesScreen()),
     GetPage(name: history, page: () => const HistoryScreen()),
+    GetPage(name: homeNav, page: () => HomeNav()),
+    GetPage(name: homeScreen, page: () => HomeScreen()),
+    GetPage(name: historyScreen, page: () => HistoryScreen()),
+    GetPage(name: createPost, page: () => PostDetailsScreen()),
   ];
 }

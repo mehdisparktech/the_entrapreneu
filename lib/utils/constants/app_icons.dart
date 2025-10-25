@@ -5,6 +5,11 @@ class AppIcons {
 
   // Existing icons
   static const String burger = "$baseurl/burger.svg";
+
+  static const String homeIcon = "assets/icons/home_icons.svg";
+  static const String chatIcon = "assets/icons/chat_icons.svg";
+  static const String historyIcon = "assets/icons/history_icons.svg";
+  static const String profileIcon = "assets/icons/profile_icons.svg";
   static const String onboarding = "$baseurl/onboarding.svg";
   static const String changePassword = "$baseurl/change_password.svg";
   static const String enterotp = "$baseurl/enterotp.svg";
