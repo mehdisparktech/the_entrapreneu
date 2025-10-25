@@ -16,6 +16,7 @@ class AppColors {
   static const Color textColorFirst = Color(0xFF2D2D2D);
   static const Color textFiledColor = Color(0xFF7A7A7A);
   static const Color textSecond = Color(0xFF7A7A7A);
+  static const Color card = Color(0xFFE6EEFB);
   static const Color checkColor = Color(0xFFFF5B26);
   static const Color titleColor = Color(0xff000000);
   static const Color primaryWork = Color(0xff000000);
