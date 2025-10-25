@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';
 import '../../features/auth/change_password/presentation/screen/change_password_screen.dart';
@@ -39,6 +40,7 @@ class AppRoutes {
   static const String privacyPolicy = "/privacy_policy_screen.dart";
   static const String termsOfServices = "/terms_of_services_screen.dart";
   static const String setting = "/setting_screen.dart";
+  static const String history = "/history_screen.dart";
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
@@ -59,5 +61,6 @@ class AppRoutes {
     GetPage(name: editProfile, page: () => EditProfile()),
     GetPage(name: privacyPolicy, page: () => const PrivacyPolicyScreen()),
     GetPage(name: termsOfServices, page: () => const TermsOfServicesScreen()),
+    GetPage(name: history, page: () => const HistoryScreen()),
   ];
 }

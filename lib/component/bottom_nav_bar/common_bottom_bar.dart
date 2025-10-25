@@ -5,7 +5,6 @@ import '../../../config/route/app_routes.dart';
 import '../../../utils/constants/app_colors.dart';
 import '../../../utils/log/app_log.dart';
 
-
 class CommonBottomNavBar extends StatefulWidget {
   final int currentIndex;
 
@@ -46,10 +45,12 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
         alignment: Alignment.center,
         padding: EdgeInsets.all(12.sp),
         decoration: BoxDecoration(
-            color: AppColors.blueLight,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.r),
-                topRight: Radius.circular(20.r))),
+          color: AppColors.blueLight,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20.r),
+            topRight: Radius.circular(20.r),
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(unselectedIcons.length, (index) {
@@ -73,11 +74,11 @@ class _CommonBottomNavBarState extends State<CommonBottomNavBar> {
   }
 
   void onTap(int index) async {
-      appLog(widget.currentIndex, source: "common bottombar");
+    appLog(widget.currentIndex, source: "common bottombar");
 
     if (index == 0) {
       if (!(widget.currentIndex == 0)) {
-        Get.toNamed(AppRoutes.setting);
+        Get.toNamed(AppRoutes.history);
       }
     } else if (index == 1) {
       if (!(widget.currentIndex == 1)) {
