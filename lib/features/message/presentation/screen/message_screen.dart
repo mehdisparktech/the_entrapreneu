@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../component/text_field/common_text_field.dart';
@@ -37,64 +38,82 @@ class _MessageScreenState extends State<MessageScreen> {
         return Scaffold(
           /// App Bar Section starts here
           appBar: AppBar(
-            leading: Padding(
-              padding: EdgeInsets.only(left: 20.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  /// participant image here
-                  CircleAvatar(
-                    radius: 30.sp,
-                    backgroundColor: Colors.transparent,
-                    child: ClipOval(
-                      child: CommonImage(imageSrc: image, size: 60),
-                    ),
-                  ),
-                  12.width,
-
-                  /// participant Name here
-                  CommonText(
-                    text: name,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ],
+            backgroundColor: AppColors.primaryColor,
+            elevation: 0,
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: AppColors.white,
+                size: 20.sp,
               ),
+              onPressed: () => Get.back(),
             ),
-            leadingWidth: Get.width,
+            title: Row(
+              children: [
+                /// participant image here
+                CircleAvatar(
+                  radius: 18.sp,
+                  backgroundColor: Colors.transparent,
+                  child: ClipOval(
+                    child: CommonImage(imageSrc: image, size: 36),
+                  ),
+                ),
+                12.width,
+
+                /// participant Name and Status here
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonText(
+                      text: name,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: AppColors.white,
+                    ),
+                    CommonText(
+                      text: "ACTIVE NOW",
+                      fontWeight: FontWeight.w400,
+                      fontSize: 10,
+                      color: AppColors.white,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
 
           /// Body Section starts here
-          body:
-              controller.isLoading
-                  /// Loading bar here
-                  ? const Center(child: CircularProgressIndicator())
-                  /// Show data  here
-                  : ListView.builder(
-                    reverse: true,
-                    controller: controller.scrollController,
-                    itemCount:
-                        controller.isMoreLoading
-                            ? controller.messages.length + 1
-                            : controller.messages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      /// Message item here
-                      if (index < controller.messages.length) {
-                        ChatMessageModel message = controller.messages[index];
-                        return ChatBubbleMessage(
-                          index: index,
-                          image: message.image,
-                          time: message.time,
-                          text: message.text,
-                          isMe: message.isMe,
-                          onTap: () {},
-                        );
-                      } else {
-                        /// More data loading bar
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  ),
+          body: controller.isLoading
+              /// Loading bar here
+              ? const Center(child: CircularProgressIndicator())
+              /// Show data  here
+              : ListView.builder(
+                  reverse: true,
+                  padding: EdgeInsets.all(12.h),
+                  controller: controller.scrollController,
+                  itemCount: controller.isMoreLoading
+                      ? controller.messages.length + 1
+                      : controller.messages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    /// Message item here
+                    if (index < controller.messages.length) {
+                      ChatMessageModel message = controller.messages[index];
+                      return ChatBubbleMessage(
+                        index: index,
+                        image: message.image,
+                        time: message.time,
+                        text: message.text,
+                        isMe: message.isMe,
+                        name: name,
+                        onTap: () {},
+                      );
+                    } else {
+                      /// More data loading bar
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
 
           /// bottom Navigation Bar Section starts here
           bottomNavigationBar: AnimatedPadding(

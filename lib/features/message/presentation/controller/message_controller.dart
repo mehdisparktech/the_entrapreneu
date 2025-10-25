@@ -37,11 +37,49 @@ class MessageController extends GetxController {
   MessageModel messageModel = MessageModel.fromJson({});
 
   Future<void> getMessageRepo() async {
-    return;
+    // Add demo messages for testing
     if (page == 1) {
       messages.clear();
       status = Status.loading;
       update();
+      
+      // Add demo messages
+      messages.addAll([
+        ChatMessageModel(
+          time: DateTime.now().subtract(const Duration(minutes: 2)),
+          text: "Hello there! How can I help you today?",
+          image: "https://randomuser.me/api/portraits/women/44.jpg",
+          isMe: false,
+        ),
+        ChatMessageModel(
+          time: DateTime.now().subtract(const Duration(minutes: 1, seconds: 45)),
+          text: "I'm testing the chat interface. This is a demo message.",
+          image: "",
+          isMe: true,
+        ),
+        ChatMessageModel(
+          time: DateTime.now().subtract(const Duration(minutes: 1, seconds: 30)),
+          text: "That's great! Let me know if you need any assistance.",
+          image: "https://randomuser.me/api/portraits/women/44.jpg",
+          isMe: false,
+        ),
+        ChatMessageModel(
+          time: DateTime.now().subtract(const Duration(minutes: 1)),
+          text: "Can you show me how the long messages look?",
+          image: "",
+          isMe: true,
+        ),
+        ChatMessageModel(
+          time: DateTime.now().subtract(const Duration(seconds: 30)),
+          text: "Of course! This is a longer message to demonstrate how the chat bubble handles text wrapping. The message should automatically adjust its height to fit the content while maintaining proper padding and alignment.",
+          image: "https://randomuser.me/api/portraits/women/44.jpg",
+          isMe: false,
+        ),
+      ]);
+      
+      status = Status.completed;
+      update();
+      return;
     }
 
     var response = await ApiService.get(
