@@ -26,7 +26,6 @@ class AppColors {
 
   static const Color textPrimary = Color(0xFF000000);
   static const Color secondaryText = Color(0xFF707070);
-  static const Color borderColor = Color(0xFF454545);
   static const Color cancel = Color(0xFFE53935);
   static const Color accept = Color(0xFF2E7D32);
   static const Color reject = Color(0xFFE53935);

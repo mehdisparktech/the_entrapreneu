@@ -38,7 +38,7 @@ class HistoryDetailsController extends GetxController {
 
       // Update local data
       selectedRequest.value = selectedRequest.value!.copyWith(
-        status: RequestStatus.upcoming,
+        status: StatusType.running,
       );
 
       // Show success message
@@ -95,13 +95,9 @@ class HistoryDetailsController extends GetxController {
   // Get service status text and color
   String get serviceStatusText {
     switch (selectedRequest.value?.status) {
-      case RequestStatus.pending:
-        return 'Pending';
-      case RequestStatus.upcoming:
-        return 'Upcoming';
-      case RequestStatus.complete:
-        return 'Complete';
-      case RequestStatus.rejected:
+      case StatusType.running:
+        return 'Running';
+      case StatusType.rejected:
         return 'Rejected';
       default:
         return 'Pending';
@@ -113,16 +109,13 @@ class HistoryDetailsController extends GetxController {
 
   // Check if request is pending (to show action buttons)
   bool get isPendingRequest =>
-      selectedRequest.value?.status == RequestStatus.pending;
+      selectedRequest.value?.status == StatusType.running;
 
   // Check if request is rejected (to show reject reason field)
   bool get isRejectedRequest =>
-      selectedRequest.value?.status == RequestStatus.rejected;
+      selectedRequest.value?.status == StatusType.rejected;
 
   // Check if request is completed (to show completed info)
   bool get isCompletedRequest =>
-      selectedRequest.value?.status == RequestStatus.complete;
-
-  bool get isUpcomingRequest =>
-      selectedRequest.value?.status == RequestStatus.upcoming;
+      selectedRequest.value?.status == StatusType.running;
 }

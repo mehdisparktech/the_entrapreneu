@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
@@ -9,10 +8,7 @@ import '../../../../utils/constants/app_images.dart';
 
 class HomeItem extends StatelessWidget {
   final VoidCallback? onTap;
-  const HomeItem({
-    super.key,
-    required this.onTap,
-  });
+  const HomeItem({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +38,7 @@ class HomeItem extends StatelessWidget {
                 width: 145.w,
               ),
             ),
-            SizedBox(height: 5.h,),
+            SizedBox(height: 5.h),
             CommonText(
               text: "\$100",
               fontSize: 20,

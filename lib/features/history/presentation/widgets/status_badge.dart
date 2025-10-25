@@ -39,16 +39,12 @@ class StatusBadge extends StatelessWidget {
 
   Color _getTextColor() {
     switch (type) {
-      case StatusType.pending:
+      case StatusType.running:
         return const Color(0xFFFF9800); // Orange text
-      case StatusType.complete:
+      case StatusType.completed:
         return const Color(0xFF4CAF50); // Green text
-      case StatusType.upcoming:
-        return const Color(0xFF2196F3); // Blue text
       case StatusType.rejected:
         return const Color(0xFFF44336); // Red text
-      case StatusType.accepted:
-        return const Color(0xFF2196F3); // Blue text
     }
   }
 }

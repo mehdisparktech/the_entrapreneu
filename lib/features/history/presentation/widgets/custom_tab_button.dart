@@ -31,33 +31,13 @@ class CustomTabButton extends StatelessWidget {
                   : AppColors.primaryColor,
               width: 1,
             ),
-            gradient: isSelected
-                ? LinearGradient(
-                    colors: [AppColors.blueLight, AppColors.primaryColor],
-                    begin: Alignment.topLeft,
-                    end: Alignment.topRight,
-                  )
-                : null,
           ),
           child: Center(
-            child: ShaderMask(
-              shaderCallback: !isSelected
-                  ? (bounds) => LinearGradient(
-                      colors: [AppColors.blueLight, AppColors.primaryColor],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ).createShader(bounds)
-                  : (bounds) => LinearGradient(
-                      colors: [AppColors.white, AppColors.white],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ).createShader(bounds),
-              child: CommonText(
-                text: title,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: isSelected ? AppColors.white : AppColors.white,
-              ),
+            child: CommonText(
+              text: title,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+              color: isSelected ? AppColors.white : AppColors.primaryColor,
             ),
           ),
         ),

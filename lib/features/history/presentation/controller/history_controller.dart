@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
 
@@ -37,6 +38,11 @@ class HistoryController extends GetxController {
     selectedHistoryFilter.value = index;
   }
 
+  // Navigate to details screen
+  void navigateToDetails(RequestModel request) {
+    Get.toNamed(AppRoutes.historyDetailsScreen, arguments: request);
+  }
+
   // Get current tab data
   List<RequestModel> get currentTabData {
     switch (selectedTabIndex.value) {
@@ -68,7 +74,7 @@ class HistoryController extends GetxController {
 
         // Remove from pending and add to upcoming
         pendingRequests.removeAt(requestIndex);
-        upcomingRequests.add(request.copyWith(status: RequestStatus.upcoming));
+        upcomingRequests.add(request.copyWith(status: StatusType.running));
 
         // Show success message
         Get.snackbar(
@@ -102,7 +108,7 @@ class HistoryController extends GetxController {
 
         // Remove from pending and add to rejected
         pendingRequests.removeAt(requestIndex);
-        rejectedRequests.add(request.copyWith(status: RequestStatus.rejected));
+        rejectedRequests.add(request.copyWith(status: StatusType.rejected));
 
         // Show success message
         Get.snackbar(
@@ -128,35 +134,35 @@ class HistoryController extends GetxController {
       RequestModel(
         id: '1',
         title: 'AC Installation',
-        subtitle: 'AC Replacement & Re-Installation',
+        subtitle: 'Electrical',
         date: '31st March 25',
         price: '\$100',
         customerName: 'Leslie Alexander',
         customerLocation: 'Cape Town',
         customerImage: AppImages.noImage,
-        status: RequestStatus.pending,
+        status: StatusType.running,
       ),
       RequestModel(
         id: '2',
         title: 'AC Installation',
-        subtitle: 'AC Replacement & Re-Installation',
+        subtitle: 'Electrical',
         date: '31st March 25',
         price: '\$100',
         customerName: 'Leslie Alexander',
         customerLocation: 'Cape Town',
         customerImage: AppImages.noImage,
-        status: RequestStatus.pending,
+        status: StatusType.running,
       ),
       RequestModel(
         id: '3',
         title: 'AC Installation',
-        subtitle: 'AC Replacement & Re-Installation',
+        subtitle: 'Electrical',
         date: '31st March 25',
         price: '\$100',
         customerName: 'Leslie Alexander',
         customerLocation: 'Cape Town',
         customerImage: AppImages.noImage,
-        status: RequestStatus.pending,
+        status: StatusType.running,
       ),
     ]);
 
@@ -170,7 +176,7 @@ class HistoryController extends GetxController {
         customerName: 'John Doe',
         customerLocation: 'Johannesburg',
         customerImage: AppImages.noImage,
-        status: RequestStatus.upcoming,
+        status: StatusType.running,
       ),
     ]);
 
@@ -184,7 +190,7 @@ class HistoryController extends GetxController {
         customerName: 'Jane Smith',
         customerLocation: 'Durban',
         customerImage: AppImages.noImage,
-        status: RequestStatus.complete,
+        status: StatusType.running,
       ),
     ]);
 
@@ -193,13 +199,13 @@ class HistoryController extends GetxController {
       RequestModel(
         id: '6',
         title: 'AC Installation',
-        subtitle: 'AC Replacement & Re-Installation',
+        subtitle: 'Electrical',
         date: '31st March 25',
         price: '\$100',
         customerName: 'Leslie Alexander',
         customerLocation: 'Cape Town',
         customerImage: AppImages.noImage,
-        status: RequestStatus.complete,
+        status: StatusType.running,
       ),
       RequestModel(
         id: '7',
@@ -210,7 +216,7 @@ class HistoryController extends GetxController {
         customerName: 'John Doe',
         customerLocation: 'Johannesburg',
         customerImage: AppImages.noImage,
-        status: RequestStatus.complete,
+        status: StatusType.running,
       ),
       RequestModel(
         id: '8',
@@ -221,7 +227,7 @@ class HistoryController extends GetxController {
         customerName: 'Jane Smith',
         customerLocation: 'Durban',
         customerImage: AppImages.noImage,
-        status: RequestStatus.complete,
+        status: StatusType.running,
       ),
     ]);
 
@@ -230,24 +236,24 @@ class HistoryController extends GetxController {
       RequestModel(
         id: '9',
         title: 'AC Installation',
-        subtitle: 'AC Replacement & Re-Installation',
+        subtitle: 'Electrical',
         date: '28th March 25',
         price: '\$100',
         customerName: 'Mike Johnson',
         customerLocation: 'Cape Town',
         customerImage: AppImages.noImage,
-        status: RequestStatus.rejected,
+        status: StatusType.rejected,
       ),
       RequestModel(
         id: '10',
         title: 'Cleaning Service',
-        subtitle: 'Deep House Cleaning',
+        subtitle: 'Electrical',
         date: '27th March 25',
         price: '\$60',
         customerName: 'Sarah Wilson',
         customerLocation: 'Pretoria',
         customerImage: AppImages.noImage,
-        status: RequestStatus.rejected,
+        status: StatusType.rejected,
       ),
     ]);
   }
@@ -263,7 +269,7 @@ class RequestModel {
   final String customerName;
   final String customerLocation;
   final String customerImage;
-  final RequestStatus status;
+  final StatusType status;
 
   RequestModel({
     required this.id,
@@ -286,7 +292,7 @@ class RequestModel {
     String? customerName,
     String? customerLocation,
     String? customerImage,
-    RequestStatus? status,
+    StatusType? status,
   }) {
     return RequestModel(
       id: id ?? this.id,

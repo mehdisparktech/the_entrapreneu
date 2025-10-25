@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 
 // Import your screens
 import '../../../../utils/constants/app_icons.dart';
-import '../../../history/presentaion/screen/history_screen.dart';
 import '../../../message/presentation/screen/chat_screen.dart';
 import '../../../profile/presentation/screen/profile_screen.dart';
 import 'home_screen.dart';
@@ -37,12 +37,14 @@ class HomeNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => IndexedStack(
-        index: controller.currentIndex.value,
-        children: screens,
-      )),
+      body: Obx(
+        () => IndexedStack(
+          index: controller.currentIndex.value,
+          children: screens,
+        ),
+      ),
       bottomNavigationBar: Obx(
-            () => Container(
+        () => Container(
           height: 83.h,
           color: AppColors.primaryColor, // background color
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
@@ -65,7 +67,9 @@ class HomeNav extends StatelessWidget {
                     height: 26.w,
                     width: 26.w,
                     colorFilter: ColorFilter.mode(
-                      isSelected ? AppColors.primaryColor : Colors.white.withOpacity(0.6),
+                      isSelected
+                          ? AppColors.primaryColor
+                          : Colors.white.withOpacity(0.6),
                       BlendMode.srcIn,
                     ),
                   ),

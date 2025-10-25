@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
-import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
@@ -42,19 +41,6 @@ class HistoryDetailsScreen extends StatelessWidget {
               _buildServiceInfoCard(request, controller),
               SizedBox(height: 20.h),
 
-              if (controller.isUpcomingRequest)
-                CommonButton(
-                  titleText: "Cancel Order",
-                  buttonColor: AppColors.transparent,
-                  titleColor: AppColors.cancel,
-                  titleWeight: FontWeight.w400,
-                  borderColor: AppColors.cancel,
-                  buttonRadius: 30,
-                  buttonHeight: 40,
-                ),
-
-              SizedBox(height: 20.h),
-
               // Details Card
               _buildDetailsCard(request, controller),
 
@@ -69,7 +55,6 @@ class HistoryDetailsScreen extends StatelessWidget {
               // Reject Reason Field (only for rejected requests)
               if (controller.isRejectedRequest)
                 _buildRejectReasonField(controller, context),
-              if (controller.isUpcomingRequest) _buildPendingButton(controller),
             ],
           ),
         );
@@ -79,11 +64,10 @@ class HistoryDetailsScreen extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar() {
     return AppBar(
-      backgroundColor: AppColors.white,
       elevation: 0,
       centerTitle: true,
       title: const CommonText(
-        text: "Order Details",
+        text: "View History",
         fontWeight: FontWeight.w600,
         fontSize: 20,
         color: AppColors.textPrimary,
@@ -147,23 +131,54 @@ class HistoryDetailsScreen extends StatelessWidget {
                   textAlign: TextAlign.left,
                 ),
                 SizedBox(height: 4.h),
-                CommonText(
-                  text: request.date,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textPrimary,
-                  textAlign: TextAlign.left,
+                Row(
+                  children: [
+                    ...List.generate(
+                      5,
+                      (index) =>
+                          Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                    ),
+                    CommonText(
+                      text: '(150)',
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textPrimary,
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
 
           // Price
-          CommonText(
-            text: request.price,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w700,
-            color: AppColors.primaryColor,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              CommonText(
+                text: request.price,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w700,
+                color: AppColors.primaryColor,
+              ),
+              SizedBox(height: 20.h),
+              Row(
+                children: [
+                  Icon(
+                    Icons.calendar_today,
+                    color: AppColors.primaryColor,
+                    size: 14.sp,
+                  ),
+                  SizedBox(width: 8.w),
+                  CommonText(
+                    text: request.date,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textPrimary,
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),
@@ -201,90 +216,12 @@ class HistoryDetailsScreen extends StatelessWidget {
             label: 'Payment Status',
             valueWidget: StatusBadge(
               text: controller.paymentStatusText,
-              type: StatusType.complete,
+              type: StatusType.running,
             ),
           ),
-          DetailRow(label: 'Distance', value: '5 km'),
+          DetailRow(label: 'Priority', value: 'Normal'),
           DetailRow(label: 'Location', value: '2715 Ash Dr, San Jose, South'),
-          DetailRow(
-            label: 'Special Note',
-            value: 'Punctuality Matters. Kindly Be On Time For Your Service.',
-            isLast: true,
-          ),
-          Divider(),
-          _buildCustomerInfoCard(request),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCustomerInfoCard(dynamic request) {
-    return GestureDetector(
-      onTap: () => Get.toNamed(AppRoutes.profile),
-      child: Container(
-        padding: EdgeInsets.all(10.w),
-        decoration: BoxDecoration(
-          color: Color(0xffFEEEEE),
-          borderRadius: BorderRadius.circular(12.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              blurRadius: 8,
-              spreadRadius: 2,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Customer Avatar
-            Container(
-              width: 50.w,
-              height: 50.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.grey.withOpacity(0.3),
-                  width: 1,
-                ),
-              ),
-              child: ClipOval(
-                child: CommonImage(
-                  imageSrc: request.customerImage,
-                  width: 50.w,
-                  height: 50.h,
-                  fill: BoxFit.cover,
-                ),
-              ),
-            ),
-
-            SizedBox(width: 16.w),
-
-            // Customer Details
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CommonText(
-                    text: request.customerName,
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(height: 4.h),
-                  CommonText(
-                    text: request.customerLocation,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.textPrimary,
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -295,11 +232,11 @@ class HistoryDetailsScreen extends StatelessWidget {
         children: [
           Expanded(
             child: CommonButton(
-              titleText: 'Reject',
-              titleColor: AppColors.cancel,
-              buttonColor: AppColors.white,
-              borderColor: AppColors.cancel,
-              buttonHeight: 36.h,
+              titleText: 'Message',
+              titleColor: AppColors.black,
+              buttonColor: AppColors.yellow.withOpacity(0.2),
+              borderColor: AppColors.yellow.withOpacity(0.2),
+              buttonHeight: 48.h,
               titleSize: 16,
               isLoading: controller.isRejectLoading.value,
               onTap: controller.rejectRequest,
@@ -308,11 +245,11 @@ class HistoryDetailsScreen extends StatelessWidget {
           SizedBox(width: 16.w),
           Expanded(
             child: CommonButton(
-              titleText: 'Accept',
+              titleText: 'Complete',
               titleColor: AppColors.white,
-              buttonColor: AppColors.primaryColor,
-              borderColor: AppColors.primaryColor,
-              buttonHeight: 36.h,
+              buttonColor: AppColors.green,
+              borderColor: AppColors.green,
+              buttonHeight: 48.h,
               titleSize: 16,
               isLoading: controller.isAcceptLoading.value,
               onTap: controller.acceptRequest,
@@ -370,55 +307,16 @@ class HistoryDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildPendingButton(HistoryDetailsController controller) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: CommonButton(
-              titleText: 'Message',
-              titleColor: AppColors.black,
-              buttonColor: AppColors.yellow.withOpacity(0.2),
-              borderColor: AppColors.yellow.withOpacity(0.2),
-              buttonHeight: 36.h,
-              titleSize: 14,
-              isLoading: false,
-              titleWeight: FontWeight.normal,
-              onTap: () {},
-            ),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: CommonButton(
-              titleText: 'Call',
-              titleColor: AppColors.black,
-              buttonColor: AppColors.green.withOpacity(0.2),
-              borderColor: AppColors.green.withOpacity(0.2),
-              buttonHeight: 36.h,
-              titleSize: 14,
-              titleWeight: FontWeight.normal,
-              isLoading: false,
-              onTap: () {},
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   StatusType _getStatusType(dynamic status) {
     switch (status.toString()) {
-      case 'RequestStatus.pending':
-        return StatusType.pending;
-      case 'RequestStatus.upcoming':
-        return StatusType.upcoming;
+      case 'RequestStatus.running':
+        return StatusType.running;
       case 'RequestStatus.completed':
-        return StatusType.complete;
+        return StatusType.completed;
       case 'RequestStatus.rejected':
         return StatusType.rejected;
       default:
-        return StatusType.pending;
+        return StatusType.running;
     }
   }
 }
