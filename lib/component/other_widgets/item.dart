@@ -13,7 +13,7 @@ class Item extends StatelessWidget {
     this.disableDivider = false,
     this.onTap,
     this.color = AppColors.black,
-    this.vertical = 4,
+    this.vertical = 8,
     this.horizontal = 4,
     this.disableIcon = false,
   });
@@ -31,7 +31,7 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(14),
       margin: EdgeInsets.symmetric(
         horizontal: horizontal.w,
         vertical: vertical.h,

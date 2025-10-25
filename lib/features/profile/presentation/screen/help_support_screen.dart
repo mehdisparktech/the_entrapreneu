@@ -69,16 +69,16 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CommonText(
-          text: 'Reason',
+          text: 'Issue Title',
           fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: AppColors.primaryColor,
+          fontWeight: FontWeight.w400,
+          color: AppColors.black,
         ),
         SizedBox(height: 8.h),
         CommonTextField(
           controller: _nameController,
           borderRadius: 8.r,
-          hintText: 'Enter your Reason',
+          hintText: 'Enter your Issue Title',
           textInputAction: TextInputAction.next,
           validator: (value) {
             if (value == null || value.isEmpty) {
@@ -99,8 +99,8 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         CommonText(
           text: 'Description',
           fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: AppColors.primaryColor,
+          fontWeight: FontWeight.w400,
+          color: AppColors.black,
         ),
         SizedBox(height: 8.h),
         CommonTextField(
@@ -126,6 +126,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 17),
         decoration: ShapeDecoration(
+          color: AppColors.white,
           shape: RoundedRectangleBorder(
             side: BorderSide(width: 2, color: const Color(0xFFD1D5D6)),
             borderRadius: BorderRadius.circular(11),
@@ -147,7 +148,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
               text: 'Attach File',
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: AppColors.primaryColor,
+              color: AppColors.secondaryText,
             ),
           ],
         ),

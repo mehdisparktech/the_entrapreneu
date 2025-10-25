@@ -91,4 +91,5 @@ class AppString {
   // Change Password
   static const String changePasswordsubtitle =
       "Enter your registered email to get password reset instructions";
+  static const String update = "Update";
 }

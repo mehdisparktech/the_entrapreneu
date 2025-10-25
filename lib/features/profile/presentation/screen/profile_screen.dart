@@ -15,7 +15,6 @@ import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_se
 import 'package:the_entrapreneu/services/storage/storage_keys.dart';
 import 'package:the_entrapreneu/services/storage/storage_services.dart';
 import 'package:the_entrapreneu/utils/constants/app_images.dart';
-import 'package:the_entrapreneu/utils/constants/app_string.dart';
 import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
@@ -26,25 +25,16 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /// App Bar Section Starts here
-      appBar: AppBar(
-        centerTitle: true,
-        title: const CommonText(
-          text: AppString.profile,
-          fontWeight: FontWeight.w600,
-          fontSize: 24,
-        ),
-        leading: const SizedBox(),
-      ),
-
-      /// Body Section Starts here
       body: GetBuilder<ProfileController>(
         builder: (controller) {
           return SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
+                  vertical: MediaQuery.of(context).padding.top + 10.h,
+                ),
                 child: Column(
                   children: [
                     /// User Profile Image here
@@ -68,13 +58,13 @@ class ProfileScreen extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       top: 16,
-                      bottom: 4,
+                      bottom: 24,
                     ),
-                    CommonText(
-                      text: "UI/UX Designer",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.secondaryText,
+                    CommonButton(
+                      titleText: 'Be a Service Provider',
+                      onTap: () {},
+                      buttonWidth: Get.width * 0.5,
+                      titleSize: 12,
                     ),
 
                     16.height,
