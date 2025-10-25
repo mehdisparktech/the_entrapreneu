@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/component/image/common_image.dart';
+import 'package:the_entrapreneu/utils/constants/app_icons.dart';
+import 'package:the_entrapreneu/utils/extensions/extension.dart';
 import '../../../../../component/button/common_button.dart';
 import '../../../../../component/text/common_text.dart';
 import '../controller/sign_up_controller.dart';
@@ -45,15 +48,26 @@ class _VerifyUserState extends State<VerifyUser> {
               key: formKey,
               child: Column(
                 children: [
+                  CommonImage(imageSrc: AppIcons.forgotPassword, size: 250),
+                  20.height,
+                  const CommonText(
+                    text: AppString.otpVerify,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
+                    bottom: 8,
+                  ),
+
                   /// instruction how to get OTP
                   Center(
                     child: CommonText(
                       text:
                           "${AppString.codeHasBeenSendTo} ${controller.emailController.text}",
-                      fontSize: 18,
-                      top: 100,
-                      bottom: 60,
+                      fontSize: 14,
+
+                      bottom: 40,
                       maxLines: 3,
+                      color: AppColors.secondaryText,
                     ),
                   ),
 
@@ -105,8 +119,7 @@ class _VerifyUserState extends State<VerifyUser> {
                       text: controller.time == '00:00'
                           ? AppString.resendCode
                           : "${AppString.resendCodeIn} ${controller.time} ${AppString.minute}",
-                      top: 60,
-                      bottom: 100,
+                      bottom: 20,
                       fontSize: 18,
                     ),
                   ),

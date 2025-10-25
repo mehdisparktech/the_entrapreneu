@@ -14,4 +14,5 @@ class AppColors {
   static const blueLight = Color(0xffe8e8f5);
 
   static const Color secondaryText = Color(0xFF707070);
+  static const Color borderColor = Color(0xFF454545);
 }

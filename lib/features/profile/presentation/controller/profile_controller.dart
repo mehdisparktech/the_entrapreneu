@@ -27,6 +27,7 @@ class ProfileController extends GetxController {
   /// all controller here
   TextEditingController nameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   /// select image function here
   getProfileImage() async {
@@ -76,6 +77,41 @@ class ProfileController extends GetxController {
 
       Utils.successSnackBar("Successfully Profile Updated", response.message);
       Get.toNamed(AppRoutes.profile);
+    } else {
+      Utils.errorSnackBar(response.statusCode, response.message);
+    }
+
+    isLoading = false;
+    update();
+  }
+
+  /// delete account function here
+  Future<void> deleteAccountRepo() async {
+    if (!formKey.currentState!.validate()) return;
+
+    if (!LocalStorage.isLogIn) return;
+    isLoading = true;
+    update();
+
+    Map<String, String> body = {"password": passwordController.text};
+
+    var response = await ApiService.post(ApiEndPoint.user, body: body);
+
+    if (response.statusCode == 200) {
+      var data = response.data;
+
+      LocalStorage.userId = data['data']?['_id'] ?? "";
+      LocalStorage.myImage = data['data']?['image'] ?? "";
+      LocalStorage.myName = data['data']?['fullName'] ?? "";
+      LocalStorage.myEmail = data['data']?['email'] ?? "";
+
+      LocalStorage.setString("userId", LocalStorage.userId);
+      LocalStorage.setString("myImage", LocalStorage.myImage);
+      LocalStorage.setString("myName", LocalStorage.myName);
+      LocalStorage.setString("myEmail", LocalStorage.myEmail);
+
+      Utils.successSnackBar("Successfully Account Deleted", response.message);
+      Get.back();
     } else {
       Utils.errorSnackBar(response.statusCode, response.message);
     }
