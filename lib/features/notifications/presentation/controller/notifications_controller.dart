@@ -24,6 +24,73 @@ class NotificationsController extends GetxController {
 
   /// Notification More data Loading function
 
+  // Initialize with demo notifications
+  @override
+  void onInit() {
+    super.onInit();
+
+    getNotificationsRepo();
+    moreNotification();
+    // Add demo notifications
+    notifications.addAll([
+      NotificationModel(
+        id: 'n1',
+        message: 'Your post has been liked by Sarah Johnson',
+        linkId: 'post123',
+        type: 'like',
+        role: 'user',
+        receiver: 'current_user_id',
+        v: 0,
+        createdAt: DateTime.now().subtract(const Duration(minutes: 5)),
+        updatedAt: DateTime.now().subtract(const Duration(minutes: 5)),
+      ),
+      NotificationModel(
+        id: 'n2',
+        message: 'Alex Chen mentioned you in a comment',
+        linkId: 'comment456',
+        type: 'mention',
+        role: 'user',
+        receiver: 'current_user_id',
+        v: 0,
+        createdAt: DateTime.now().subtract(const Duration(hours: 2)),
+        updatedAt: DateTime.now().subtract(const Duration(hours: 2)),
+      ),
+      NotificationModel(
+        id: 'n3',
+        message: 'New message from Tech Support',
+        linkId: 'chat789',
+        type: 'message',
+        role: 'support',
+        receiver: 'current_user_id',
+        v: 0,
+        createdAt: DateTime.now().subtract(const Duration(days: 1)),
+        updatedAt: DateTime.now().subtract(const Duration(days: 1)),
+      ),
+      NotificationModel(
+        id: 'n4',
+        message: 'Your account has been verified successfully',
+        linkId: 'account',
+        type: 'verification',
+        role: 'system',
+        receiver: 'current_user_id',
+        v: 0,
+        createdAt: DateTime.now().subtract(const Duration(days: 2)),
+        updatedAt: DateTime.now().subtract(const Duration(days: 2)),
+      ),
+      NotificationModel(
+        id: 'n5',
+        message: 'New feature update available! Check out what\'s new',
+        linkId: 'app_update',
+        type: 'update',
+        role: 'admin',
+        receiver: 'all_users',
+        v: 0,
+        createdAt: DateTime.now().subtract(const Duration(days: 3)),
+        updatedAt: DateTime.now().subtract(const Duration(days: 3)),
+      ),
+    ]);
+  }
+
   void moreNotification() {
     scrollController.addListener(() async {
       if (scrollController.position.pixels ==
@@ -65,12 +132,4 @@ class NotificationsController extends GetxController {
   /// Notification Controller Instance create here
   static NotificationsController get instance =>
       Get.put(NotificationsController());
-
-  /// Controller on Init
-  @override
-  void onInit() {
-    getNotificationsRepo();
-    moreNotification();
-    super.onInit();
-  }
 }
