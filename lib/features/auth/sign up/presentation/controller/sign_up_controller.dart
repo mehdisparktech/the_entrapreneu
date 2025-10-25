@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
 
@@ -19,6 +21,14 @@ class SignUpController extends GetxController {
   bool isPopUpOpen = false;
   bool isLoading = false;
   bool isLoadingVerify = false;
+
+  GoogleMapController? mapController;
+  Position? currentPosition;
+  var markers = <Marker>{};
+  var initialCameraPosition = const CameraPosition(
+    target: LatLng(23.8103, 90.4125), // Dhaka, Bangladesh default
+    zoom: 14.0,
+  ).obs;
 
   Timer? _timer;
   int start = 0;
@@ -53,12 +63,6 @@ class SignUpController extends GetxController {
   TextEditingController otpController = TextEditingController(
     text: kDebugMode ? '123456' : '',
   );
-
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
 
   onCountryChange(Country value) {
     countryCode = value.dialCode.toString();
@@ -162,5 +166,18 @@ class SignUpController extends GetxController {
 
     isLoadingVerify = false;
     update();
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    print("✅ Google Map Created Successfully");
+    // Location will be fetched after permission is granted
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    mapController?.dispose();
+    super.dispose();
   }
 }
