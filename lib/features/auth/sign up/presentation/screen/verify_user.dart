@@ -57,7 +57,6 @@ class _VerifyUserState extends State<VerifyUser> {
                     ),
                   ),
 
-
                   /// OTP Filed here
                   Flexible(
                     flex: 0,
@@ -96,18 +95,16 @@ class _VerifyUserState extends State<VerifyUser> {
 
                   /// Resent OTP or show Timer
                   GestureDetector(
-                    onTap:
-                        controller.time == '00:00'
-                            ? () {
-                              controller.startTimer();
-                              controller.signUpUser();
-                            }
-                            : () {},
+                    onTap: controller.time == '00:00'
+                        ? () {
+                            controller.startTimer();
+                            controller.signUpUser(formKey);
+                          }
+                        : () {},
                     child: CommonText(
-                      text:
-                          controller.time == '00:00'
-                              ? AppString.resendCode
-                              : "${AppString.resendCodeIn} ${controller.time} ${AppString.minute}",
+                      text: controller.time == '00:00'
+                          ? AppString.resendCode
+                          : "${AppString.resendCodeIn} ${controller.time} ${AppString.minute}",
                       top: 60,
                       bottom: 100,
                       fontSize: 18,

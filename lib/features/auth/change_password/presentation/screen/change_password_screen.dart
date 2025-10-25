@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/component/image/common_image.dart';
+import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import '../../../../../../../config/route/app_routes.dart';
 import '../../../../../../../utils/extensions/extension.dart';
 import '../../../../../component/button/common_button.dart';
@@ -10,7 +12,6 @@ import '../controller/change_password_controller.dart';
 import '../../../../../../../utils/constants/app_colors.dart';
 import '../../../../../../../utils/constants/app_string.dart';
 import '../../../../../utils/helpers/other_helper.dart';
-
 
 class ChangePasswordScreen extends StatelessWidget {
   const ChangePasswordScreen({super.key});
@@ -35,7 +36,22 @@ class ChangePasswordScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  70.height,
+                  CommonImage(imageSrc: AppIcons.changePassword, size: 250),
+                  20.height,
+                  const CommonText(
+                    text: AppString.changePassword,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
+                    bottom: 8,
+                  ),
+                  const CommonText(
+                    text: AppString.changePasswordsubtitle,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 2,
+                    color: AppColors.secondaryText,
+                  ),
 
                   /// current Password section
                   const CommonText(text: AppString.currentPassword, bottom: 8),
@@ -70,11 +86,10 @@ class ChangePasswordScreen extends StatelessWidget {
                   CommonTextField(
                     controller: controller.confirmPasswordController,
                     hintText: AppString.confirmPassword,
-                    validator:
-                        (value) => OtherHelper.confirmPasswordValidator(
-                          value,
-                          controller.newPasswordController,
-                        ),
+                    validator: (value) => OtherHelper.confirmPasswordValidator(
+                      value,
+                      controller.newPasswordController,
+                    ),
                     isPassword: true,
                     prefixIcon: Icon(Icons.lock, size: 20.sp),
                   ),

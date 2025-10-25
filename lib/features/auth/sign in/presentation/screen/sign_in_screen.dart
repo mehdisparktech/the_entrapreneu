@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:the_entrapreneu/component/image/common_image.dart';
+import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import '../../../../../../../config/route/app_routes.dart';
 import '../../../../../../../utils/extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +20,7 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       /// App Bar Sections Starts here
       appBar: AppBar(),
@@ -28,24 +31,19 @@ class SignInScreen extends StatelessWidget {
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
             child: Form(
-              key: controller.formKey,
+              key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   /// Log In Instruction here
-                  const CommonText(
-                    text: AppString.logIntoYourAccount,
-                    fontSize: 32,
-                    bottom: 20,
-                    top: 36,
-                  ),
+                  CommonImage(imageSrc: AppImages.logo, size: 110).center,
+                  20.height,
 
                   /// Account Email Input here
                   const CommonText(text: AppString.email, bottom: 8),
                   CommonTextField(
                     controller: controller.emailController,
-                    prefixIcon: const Icon(Icons.mail),
                     hintText: AppString.email,
                     validator: OtherHelper.emailValidator,
                   ),
@@ -58,7 +56,6 @@ class SignInScreen extends StatelessWidget {
                   ),
                   CommonTextField(
                     controller: controller.passwordController,
-                    prefixIcon: const Icon(Icons.lock),
                     isPassword: true,
                     hintText: AppString.password,
                     validator: OtherHelper.passwordValidator,
@@ -82,9 +79,9 @@ class SignInScreen extends StatelessWidget {
 
                   /// Submit Button here
                   CommonButton(
-                    titleText: AppString.signIn,
+                    titleText: AppString.login,
                     isLoading: controller.isLoading,
-                    onTap: controller.signInUser,
+                    onTap: () => controller.signInUser(formKey),
                   ),
                   30.height,
 
