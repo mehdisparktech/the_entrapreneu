@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:the_entrapreneu/features/home/presentation/screen/custom_offe_screen.dart';
 
 import 'config/route/app_routes.dart';
 import 'config/theme/light_theme.dart';
@@ -22,7 +21,7 @@ class MyApp extends StatelessWidget {
         defaultTransition: Transition.fadeIn,
         theme: themeData,
         transitionDuration: const Duration(milliseconds: 300),
-        initialRoute: AppRoutes.customOffer,
+        initialRoute: AppRoutes.splash,
         getPages: AppRoutes.routes,
       ),
     );

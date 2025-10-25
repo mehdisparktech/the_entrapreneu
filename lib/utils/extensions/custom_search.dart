@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 
 class CustomSearchField extends StatelessWidget {
   final TextEditingController? controller;
@@ -41,47 +39,31 @@ class CustomSearchField extends StatelessWidget {
               if (onChanged != null) onChanged!(value);
               setState(() {}); // refresh to show/hide clear button
             },
-            style: TextStyle(
-              color: textColor,
-              fontSize: 14,
-            ),
+            style: TextStyle(color: textColor, fontSize: 14),
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(
-                color: hintColor,
-                fontSize: 14,
-              ),
+              hintStyle: TextStyle(color: hintColor, fontSize: 14),
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Icon(
-                  Icons.search,
-                  color: hintColor,
-                  size: 20,
-                )
+                child: Icon(Icons.search, color: hintColor, size: 20),
               ),
-              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 0,
+                horizontal: 16,
+              ),
               filled: true,
               fillColor: backgroundColor,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                  color: borderColor,
-                  width: 1,
-                ),
+                borderSide: BorderSide(color: borderColor, width: 1),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                  color: borderColor,
-                  width: 1,
-                ),
+                borderSide: BorderSide(color: borderColor, width: 1),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(borderRadius),
-                borderSide: BorderSide(
-                  color: borderColor,
-                  width: 1,
-                ),
+                borderSide: BorderSide(color: borderColor, width: 1),
               ),
             ),
           );

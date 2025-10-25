@@ -1,26 +1,27 @@
 import 'package:get/get.dart';
-import 'package:the_entrapreneu/features/history/presentaion/screen/history_screen.dart';
-import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/history_details_screen.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/create_post_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/custom_offe_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/home_nav_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/home_screen.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';
 import '../../features/auth/change_password/presentation/screen/change_password_screen.dart';
 import '../../features/auth/forgot password/presentation/screen/create_password.dart';
 import '../../features/auth/forgot password/presentation/screen/forgot_password.dart';
 import '../../features/auth/forgot password/presentation/screen/verify_screen.dart';
 import '../../features/auth/sign in/presentation/screen/sign_in_screen.dart';
 import '../../features/auth/sign up/presentation/screen/sign_up_screen.dart';
+import '../../features/auth/sign up/presentation/screen/complete_profile.dart';
 import '../../features/auth/sign up/presentation/screen/verify_user.dart';
+import '../../features/auth/sign up/presentation/screen/add_location.dart';
 import '../../features/message/presentation/screen/chat_screen.dart';
 import '../../features/message/presentation/screen/message_screen.dart';
 import '../../features/notifications/presentation/screen/notifications_screen.dart';
 import '../../features/onboarding_screen/onboarding_screen.dart';
 import '../../features/profile/presentation/screen/edit_profile.dart';
 import '../../features/profile/presentation/screen/profile_screen.dart';
-import '../../features/setting/presentation/screen/privacy_policy_screen.dart';
-import '../../features/setting/presentation/screen/setting_screen.dart';
-import '../../features/setting/presentation/screen/terms_of_services_screen.dart';
 import '../../features/splash/splash_screen.dart';
 
 class AppRoutes {
@@ -29,6 +30,8 @@ class AppRoutes {
   static const String onboarding = "/onboarding_screen.dart";
   static const String signUp = "/sign_up_screen.dart";
   static const String verifyUser = "/verify_user.dart";
+  static const String completeProfile = "/complete_profile.dart";
+  static const String addLocation = "/add_location.dart";
   static const String signIn = "/sign_in_screen.dart";
   static const String forgotPassword = "/forgot_password.dart";
   static const String verifyEmail = "/verify_screen.dart";
@@ -46,6 +49,8 @@ class AppRoutes {
   static const String homeScreen = "/homeScreen";
   static const String historyScreen = "/historyScreen";
   static const String createPost = "/createPost";
+  static const String history = "/history_screen.dart";
+  static const String historyDetailsScreen = "/history_details_screen.dart";
   static const String customOffer = "/customOffer";
 
   static List<GetPage> routes = [
@@ -53,6 +58,8 @@ class AppRoutes {
     GetPage(name: onboarding, page: () => const OnboardingScreen()),
     GetPage(name: signUp, page: () => SignUpScreen()),
     GetPage(name: verifyUser, page: () => const VerifyUser()),
+    GetPage(name: completeProfile, page: () => const CompleteProfile()),
+    GetPage(name: addLocation, page: () => const AddLocation()),
     GetPage(name: signIn, page: () => SignInScreen()),
     GetPage(name: forgotPassword, page: () => ForgotPasswordScreen()),
     GetPage(name: verifyEmail, page: () => const VerifyScreen()),
@@ -65,11 +72,11 @@ class AppRoutes {
     GetPage(name: editProfile, page: () => EditProfile()),
     GetPage(name: privacyPolicy, page: () => const PrivacyPolicyScreen()),
     GetPage(name: termsOfServices, page: () => const TermsOfServicesScreen()),
-    GetPage(name: setting, page: () => const SettingScreen()),
+    GetPage(name: history, page: () => const HistoryScreen()),
     GetPage(name: homeNav, page: () => HomeNav()),
     GetPage(name: homeScreen, page: () => HomeScreen()),
-    GetPage(name: historyScreen, page: () => HistoryScreen()),
     GetPage(name: createPost, page: () => PostDetailsScreen()),
+    GetPage(name: historyDetailsScreen, page: () => HistoryDetailsScreen()),
     GetPage(name: customOffer, page: () => CustomOfferScreen()),
   ];
 }

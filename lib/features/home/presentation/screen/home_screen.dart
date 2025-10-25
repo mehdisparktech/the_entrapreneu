@@ -4,14 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
-import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/extensions/custom_search.dart';
-import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
-import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
-import '../../../../utils/constants/app_icons.dart';
 import '../widgets/home_details.dart';
 import '../widgets/home_items.dart';
 
@@ -65,12 +61,12 @@ class HomeScreen extends StatelessWidget {
                     ),
                     itemBuilder: (context, index) {
                       return HomeItem(
-                        onTap: (){
+                        onTap: () {
                           Get.toNamed(AppRoutes.createPost);
                         },
                       );
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -87,9 +83,15 @@ class CreatePostBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      {'icon': "assets/icons/homeproperty_icon.svg", 'label': 'Home & Property'},
+      {
+        'icon': "assets/icons/homeproperty_icon.svg",
+        'label': 'Home & Property',
+      },
       {'icon': "assets/icons/help_icon.svg", 'label': 'Automotive Help'},
-      {'icon': "assets/icons/vhicales_icon.svg", 'label': 'Vehicles & Transport'},
+      {
+        'icon': "assets/icons/vhicales_icon.svg",
+        'label': 'Vehicles & Transport',
+      },
       {'icon': "assets/icons/personal_help.svg", 'label': 'Personal Help'},
       {'icon': "assets/icons/tech_icon.svg", 'label': 'Business & Tech'},
       {'icon': "assets/icons/miscellnis.svg", 'label': 'Miscellanies'},

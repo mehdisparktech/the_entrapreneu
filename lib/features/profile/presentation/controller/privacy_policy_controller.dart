@@ -1,28 +1,29 @@
 import 'package:get/get.dart';
-import '../../data/model/html_model.dart';
-import '../../../../services/api/api_service.dart';
+import 'package:the_entrapreneu/features/profile/data/model/html_model.dart';
+
 import '../../../../config/api/api_end_point.dart';
+import '../../../../services/api/api_service.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/enum/enum.dart';
 
-class TermsOfServicesController extends GetxController {
+class PrivacyPolicyController extends GetxController {
   /// Api status check here
   Status status = Status.completed;
 
   ///  HTML model initialize here
   HtmlModel data = HtmlModel.fromJson({});
 
-  /// Terms of services Controller instance create here
-  static TermsOfServicesController get instance =>
-      Get.put(TermsOfServicesController());
+  /// Privacy Policy Controller instance create here
+  static PrivacyPolicyController get instance =>
+      Get.put(PrivacyPolicyController());
 
-  ///  Terms of services Api call here
-  geTermsOfServicesRepo() async {
+  /// Privacy Policy Api call here
+  getPrivacyPolicyRepo() async {
     return;
     status = Status.loading;
     update();
 
-    var response = await ApiService.get(ApiEndPoint.termsOfServices);
+    var response = await ApiService.get(ApiEndPoint.privacyPolicies);
 
     if (response.statusCode == 200) {
       data = HtmlModel.fromJson(response.data['data']['attributes']);
@@ -39,7 +40,7 @@ class TermsOfServicesController extends GetxController {
   /// Controller on Init here
   @override
   void onInit() {
-    geTermsOfServicesRepo();
+    getPrivacyPolicyRepo();
     super.onInit();
   }
 }

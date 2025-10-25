@@ -14,6 +14,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final signUpFormKey = GlobalKey<FormState>();
     return Scaffold(
       /// App Bar Section Starts Here
       appBar: AppBar(),
@@ -24,7 +25,7 @@ class SignUpScreen extends StatelessWidget {
           return SingleChildScrollView(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Form(
-              key: controller.signUpFormKey,
+              key: signUpFormKey,
               child: Column(
                 children: [
                   /// Sign UP Instructions here
@@ -43,7 +44,7 @@ class SignUpScreen extends StatelessWidget {
                   CommonButton(
                     titleText: AppString.signUp,
                     isLoading: controller.isLoading,
-                    onTap: controller.signUpUser,
+                    onTap: () => controller.signUpUser(signUpFormKey),
                   ),
                   24.height,
 

@@ -5,21 +5,22 @@ import '../image/common_image.dart';
 import '../text/common_text.dart';
 
 class Item extends StatelessWidget {
-  const Item(
-      {super.key,
-      this.icon,
-      required this.title,
-      this.image = "",
-      this.disableDivider = false,
-      this.onTap,
-      this.color = AppColors.black,
-      this.vertical = 4,
-      this.horizontal = 24,
-      this.disableIcon = false});
+  const Item({
+    super.key,
+    this.icon,
+    required this.title,
+    this.imageSrc = "",
+    this.disableDivider = false,
+    this.onTap,
+    this.color = AppColors.black,
+    this.vertical = 8,
+    this.horizontal = 4,
+    this.disableIcon = false,
+  });
 
   final IconData? icon;
   final String title;
-  final String image;
+  final String imageSrc;
   final bool disableDivider;
   final bool disableIcon;
   final VoidCallback? onTap;
@@ -29,21 +30,33 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: horizontal.w, vertical: vertical.h),
+    return Container(
+      padding: const EdgeInsets.all(14),
+      margin: EdgeInsets.symmetric(
+        horizontal: horizontal.w,
+        vertical: vertical.h,
+      ),
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        shadows: [
+          BoxShadow(
+            color: Color(0x19000000),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: InkWell(
+        onTap: onTap,
         child: Column(
           children: [
             Row(
               children: [
                 icon != null
-                    ? Icon(
-                        icon,
-                        color: color,
-                      )
-                    : CommonImage(imageSrc: image),
+                    ? Icon(icon, color: color)
+                    : CommonImage(imageSrc: imageSrc),
                 CommonText(
                   text: title,
                   color: color,
@@ -54,13 +67,9 @@ class Item extends StatelessWidget {
                 const Spacer(),
                 disableIcon
                     ? const SizedBox()
-                    : Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        size: 20.sp,
-                      )
+                    : Icon(Icons.arrow_forward_ios_outlined, size: 20.sp),
               ],
             ),
-            disableDivider ? const SizedBox() : const Divider()
           ],
         ),
       ),

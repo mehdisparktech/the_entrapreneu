@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/utils/constants/app_colors.dart';
+import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import '../../../../../../../utils/extensions/extension.dart';
 import '../../../../../component/button/common_button.dart';
 import '../../../../../component/image/common_image.dart';
 import '../../../../../component/text/common_text.dart';
 import '../../../../../component/text_field/common_text_field.dart';
 import '../controller/forget_password_controller.dart';
-import '../../../../../../../utils/constants/app_images.dart';
 import '../../../../../../../utils/constants/app_string.dart';
 import '../../../../../../../utils/helpers/other_helper.dart';
-
 
 class CreatePassword extends StatelessWidget {
   CreatePassword({super.key});
@@ -21,13 +21,7 @@ class CreatePassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       /// App Bar Section starts here
-      appBar: AppBar(
-        title: const CommonText(
-          text: AppString.createNewPassword,
-          fontWeight: FontWeight.w700,
-          fontSize: 24,
-        ),
-      ),
+      appBar: AppBar(),
 
       /// Body Section starts here
       body: GetBuilder<ForgetPasswordController>(
@@ -37,53 +31,53 @@ class CreatePassword extends StatelessWidget {
             child: Form(
               key: formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  64.height,
-
-                  /// Reset password image here
-                  const Center(
-                    child: CommonImage(
-                      imageSrc: AppImages.noImage,
-                      height: 297,
-                      width: 297,
-                    ),
-                  ),
-
-                  /// Instruction of Creating New Password
+                  CommonImage(imageSrc: AppIcons.resetPassword, size: 250),
+                  20.height,
                   const CommonText(
-                    text: AppString.createYourNewPassword,
-                    fontSize: 18,
-                    textAlign: TextAlign.start,
-                    top: 64,
-                    bottom: 24,
+                    text: AppString.setNewPassword,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
+                    bottom: 8,
                   ),
+                  const CommonText(
+                    text: AppString.forgotPasswordsubtitle,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 2,
+                    color: AppColors.secondaryText,
+                  ),
+                  20.height,
 
                   /// New Password here
-                  const CommonText(text: AppString.password, bottom: 8),
+                  const CommonText(
+                    text: AppString.newPassword,
+                    bottom: 8,
+                  ).start,
                   CommonTextField(
                     controller: controller.passwordController,
-                    prefixIcon: const Icon(Icons.lock),
-                    hintText: AppString.password,
+
+                    hintText: AppString.newPassword,
                     isPassword: true,
                     validator: OtherHelper.passwordValidator,
                   ),
 
                   /// Confirm Password here
                   const CommonText(
-                    text: AppString.password,
+                    text: AppString.confirmPassword,
                     bottom: 8,
                     top: 12,
-                  ),
+                  ).start,
                   CommonTextField(
                     controller: controller.confirmPasswordController,
-                    prefixIcon: const Icon(Icons.lock),
+
                     hintText: AppString.confirmPassword,
-                    validator:
-                        (value) => OtherHelper.confirmPasswordValidator(
-                          value,
-                          controller.passwordController,
-                        ),
+                    validator: (value) => OtherHelper.confirmPasswordValidator(
+                      value,
+                      controller.passwordController,
+                    ),
                     isPassword: true,
                   ),
                   64.height,

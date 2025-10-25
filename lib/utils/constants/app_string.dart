@@ -28,7 +28,7 @@ class AppString {
   static const String password = "Password";
   static const String continues = "Continue";
   static const String email = "Email";
-  static const String codeHasBeenSendTo = "Code has been send to";
+  static const String codeHasBeenSendTo = "Onetime OTP Has Been Sent To";
   static const String otpIsInValid = "Otp is inValid";
   static const String resendCode = "Resend Code";
   static const String resendCodeIn = "Resend code in";
@@ -41,8 +41,9 @@ class AppString {
   static const String signUp = "Sign up";
   static const String alreadyHaveAccount = "Already have an account";
   static const String fullName = "Full Name";
-  static const String createYourAccount = "Create Your Account";
-  static const String otpVerify = "OTP Verify";
+  static const String createYourAccount = "Registration";
+  static const String otpVerify = "OTP Verification";
+  static const String setNewPassword = "Set Your New Password";
   static const String inbox = "Inbox";
   static const String searchDoctor = "search a doctor";
   static const String activeNow = "Active Now";
@@ -71,4 +72,24 @@ class AppString {
   static const String thePasswordDoesNotMatch = "The password does not match";
   static const String startServer = "Please, start the Server";
   static const String unknownError = "Unknown Error";
+
+  // Onboarding
+  static const String onboardingHeadingText = "Onboarding Heading Text";
+  static const String onboardingSubText =
+      "Find Verified Experts, Schedule Services Effortlessly, and Enjoy On-Time Service Every Time";
+
+  // Sign Up
+  static const String name = "Name";
+
+  // Sign In
+  static const String login = "Log In";
+
+  // Forgot Password
+  static const String forgotPasswordsubtitle =
+      "Enter your registered email to get password reset instructions";
+
+  // Change Password
+  static const String changePasswordsubtitle =
+      "Enter your registered email to get password reset instructions";
+  static const String update = "Update";
 }

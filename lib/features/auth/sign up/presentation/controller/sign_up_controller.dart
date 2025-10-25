@@ -2,8 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl_phone_field/countries.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
 
 import '../../../../../config/route/app_routes.dart';
@@ -15,11 +19,18 @@ import '../../../../../utils/app_utils.dart';
 
 class SignUpController extends GetxController {
   /// Sign Up Form Key
-  final signUpFormKey = GlobalKey<FormState>();
 
   bool isPopUpOpen = false;
   bool isLoading = false;
   bool isLoadingVerify = false;
+
+  GoogleMapController? mapController;
+  Position? currentPosition;
+  var markers = <Marker>{};
+  var initialCameraPosition = const CameraPosition(
+    target: LatLng(23.8103, 90.4125), // Dhaka, Bangladesh default
+    zoom: 14.0,
+  ).obs;
 
   Timer? _timer;
   int start = 0;
@@ -55,12 +66,6 @@ class SignUpController extends GetxController {
     text: kDebugMode ? '123456' : '',
   );
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
-  }
-
   onCountryChange(Country value) {
     countryCode = value.dialCode.toString();
   }
@@ -75,7 +80,7 @@ class SignUpController extends GetxController {
     update();
   }
 
-  signUpUser() async {
+  signUpUser(GlobalKey<FormState> signUpFormKey) async {
     if (!signUpFormKey.currentState!.validate()) return;
     Get.toNamed(AppRoutes.verifyUser);
     return;
@@ -122,7 +127,7 @@ class SignUpController extends GetxController {
   }
 
   Future<void> verifyOtpRepo() async {
-    Get.toNamed(AppRoutes.signIn);
+    Get.toNamed(AppRoutes.completeProfile);
     return;
 
     isLoadingVerify = true;
@@ -163,5 +168,176 @@ class SignUpController extends GetxController {
 
     isLoadingVerify = false;
     update();
+  }
+
+  // Location permission
+  Future<void> _requestLocationPermission() async {
+    try {
+      // Check current permission status
+      var status = await Permission.location.status;
+
+      // If permission not determined yet or denied, request it
+      if (status.isDenied || status.isRestricted || status.isLimited) {
+        // Request permission - this will show the system dialog
+        status = await Permission.location.request();
+      }
+
+      if (status.isGranted || status.isLimited) {
+        // Permission granted, get location
+        await getCurrentLocation();
+      } else if (status.isDenied) {
+        // User denied the permission
+        Get.snackbar(
+          "Permission Denied",
+          "Location permission is needed to show your position",
+          backgroundColor: AppColors.red.withOpacity(0.9),
+          colorText: AppColors.white,
+          duration: const Duration(seconds: 4),
+          isDismissible: true,
+          mainButton: TextButton(
+            onPressed: () {
+              Get.back();
+              _requestLocationPermission(); // Ask again
+            },
+            child: const Text(
+              "Retry",
+              style: TextStyle(
+                color: AppColors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      }
+    } catch (e) {
+      print("Permission error: $e");
+    }
+  }
+
+  // Location methods
+  Future<void> getCurrentLocation() async {
+    try {
+      // Check permission first
+      final permissionStatus = await Permission.location.status;
+      if (!permissionStatus.isGranted) {
+        await _requestLocationPermission();
+        return;
+      }
+
+      final serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        Get.snackbar(
+          "Location Service",
+          "Please enable location services in your device settings",
+          backgroundColor: AppColors.red,
+          colorText: AppColors.white,
+          duration: const Duration(seconds: 3),
+        );
+        return;
+      }
+
+      // Show loading indicator
+      Get.snackbar(
+        "Getting Location",
+        "Please wait...",
+        backgroundColor: AppColors.secondary.withOpacity(0.8),
+        colorText: AppColors.white,
+        duration: const Duration(seconds: 1),
+        showProgressIndicator: true,
+      );
+
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: const Duration(seconds: 10),
+      );
+
+      currentPosition = position;
+
+      // Move camera to current location
+      mapController?.animateCamera(
+        CameraUpdate.newLatLngZoom(
+          LatLng(position.latitude, position.longitude),
+          15.0,
+        ),
+      );
+
+      Get.snackbar(
+        "Location Updated",
+        "Moved to your current location",
+        backgroundColor: AppColors.secondary,
+        colorText: AppColors.white,
+        duration: const Duration(seconds: 2),
+      );
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Failed to get location. Please check your GPS and try again.",
+        backgroundColor: AppColors.red,
+        colorText: AppColors.white,
+        duration: const Duration(seconds: 3),
+      );
+    }
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+    print("✅ Google Map Created Successfully");
+    // Location will be fetched after permission is granted
+  }
+
+  // Confirm location and add marker
+  void confirmLocation() async {
+    try {
+      // Get current camera position
+      if (mapController != null) {
+        final LatLng center = await mapController!.getVisibleRegion().then(
+              (bounds) => LatLng(
+                (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+                (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
+              ),
+            );
+
+        // Add marker at center
+        markers.clear();
+        markers.add(
+          Marker(
+            markerId: const MarkerId('selected_location'),
+            position: center,
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+            infoWindow: const InfoWindow(
+              title: 'Selected Location',
+            ),
+          ),
+        );
+        update();
+
+        // Show success message
+        Get.snackbar(
+          "Location Confirmed",
+          "Your location has been selected successfully",
+          backgroundColor: AppColors.primaryColor,
+          colorText: AppColors.white,
+          duration: const Duration(seconds: 2),
+        );
+
+        // Navigate to next screen or save location
+        // Get.toNamed(AppRoutes.nextScreen);
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Failed to confirm location. Please try again.",
+        backgroundColor: AppColors.red,
+        colorText: AppColors.white,
+        duration: const Duration(seconds: 2),
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    mapController?.dispose();
+    super.dispose();
   }
 }
