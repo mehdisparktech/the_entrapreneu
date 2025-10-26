@@ -5,7 +5,6 @@ import '../../../../../utils/constants/app_images.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 
-
 class ChatBubbleMessage extends StatelessWidget {
   final DateTime time;
   final String text;
@@ -30,50 +29,62 @@ class ChatBubbleMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment:
-            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      padding: EdgeInsets.symmetric(vertical: 8.h),
+      child: Row(
+        mainAxisAlignment:
+        isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                margin: EdgeInsets.only(left: 10.w),
-                padding: EdgeInsets.only(left: 10.w),
-                width: 220,
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.r),
-                  color: AppColors.white,
-                ),
-                child: Column(
-                  children: [
-                    /// participant Image here
-                    if (!isMe)
-                      const CommonImage(
-                        imageSrc: AppImages.noImage,
-                        fill: BoxFit.contain,
-                        size: 60,
-                      ),
+          // Left side: Other person's message
+          if (!isMe) ...[
+            // Profile picture for other person
+            CircleAvatar(
+              radius: 16.r,
+              backgroundColor: Colors.grey[300],
+              backgroundImage: image.isNotEmpty
+                  ? NetworkImage(image)
+                  : null,
+              child: image.isEmpty
+                  ? Icon(Icons.person, size: 16.sp, color: Colors.grey[600])
+                  : null,
+            ),
+            SizedBox(width: 8.w),
+          ],
 
-                    ///Message here
-                    Container(
-                      color: AppColors.primaryColor,
-                      width: 220,
-                      child: CommonText(
-                        maxLines: 5,
-                        text: text,
-                        fontSize: 18,
-                        color: AppColors.white,
-                      ),
-                    ),
-                  ],
-                ),
+          // Message bubble
+          Flexible(
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 12.h,
               ),
-            ],
+              decoration: BoxDecoration(
+                color: isMe ? AppColors.primaryColor : Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(isMe ? 16.r : 4.r),
+                  topRight: Radius.circular(isMe ? 4.r : 16.r),
+                  bottomLeft: Radius.circular(16.r),
+                  bottomRight: Radius.circular(16.r),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 5,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: CommonText(
+                text: text,
+                fontSize: 14.sp,
+                color: isMe ? Colors.white : Colors.black87,
+                maxLines: 100,
+              ),
+            ),
           ),
+
+          // Right side: My message
+          if (isMe) SizedBox(width: 8.w),
         ],
       ),
     );

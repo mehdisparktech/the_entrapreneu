@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
+import 'package:the_entrapreneu/features/history/presentation/widgets/completed_card.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import '../controller/history_controller.dart';
 import '../widgets/custom_tab_button.dart';
@@ -94,13 +95,27 @@ class HistoryScreen extends StatelessWidget {
               return _buildEmptyState();
             }
 
-            return ListView.builder(
+            return controller.selectedTabIndex.value == 0
+                ? ListView.builder(
               itemCount: currentData.length,
               itemBuilder: (context, index) {
                 final request = currentData[index];
                 final isPendingTab = controller.selectedTabIndex.value == 0;
 
                 return RequestCard(
+                  request: request,
+                  showActions: isPendingTab,
+                  onTap: () => controller.navigateToDetails(request),
+                );
+              },
+            )
+                : ListView.builder(
+              itemCount: currentData.length,
+              itemBuilder: (context, index) {
+                final request = currentData[index];
+                final isPendingTab = controller.selectedTabIndex.value == 0;
+
+                return CompletedCard(
                   request: request,
                   showActions: isPendingTab,
                   onTap: () => controller.navigateToDetails(request),

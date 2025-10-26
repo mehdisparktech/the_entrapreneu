@@ -8,13 +8,13 @@ import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/confirm_message_dialog.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/message_details_dialog.dart';
+import 'package:the_entrapreneu/features/message/presentation/controller/view_message_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
-class PostDetailsScreen extends StatelessWidget {
-  PostDetailsScreen({super.key});
+class ViewMessageScreen extends StatelessWidget {
+  ViewMessageScreen({super.key});
 
-  final CreatePostController controller = Get.put(CreatePostController());
+  final ViewMessageController controller = Get.put(ViewMessageController());
 
   @override
   Widget build(BuildContext context) {
@@ -55,57 +55,15 @@ class PostDetailsScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // User Row
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 20.r,
-                              backgroundImage: AssetImage("assets/images/profile_image.png"),
-                              backgroundColor: Colors.grey[300],
-                            ),
-                            SizedBox(width: 12.w),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  CommonText(
-                                    text: post.userName,
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Icon(Icons.timer_outlined,size: 14.sp,color: Colors.grey,),
-                                      SizedBox(width: 6,),
-                                      CommonText(
-                                        text: "12 hours ago",
-                                        fontSize: 12.sp,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(width: 18.h,),
-                                      Icon(Icons.location_on_outlined,size: 14.sp,color: Colors.grey,),
-                                      SizedBox(width: 6,),
-                                      CommonText(
-                                        text: "Dhaka, Bangladesh",
-                                        fontSize: 12.sp,
-                                        color: Colors.grey,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 16.h),
 
                         // Post Image
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(12.r),
-                          child: CommonImage(
+                            borderRadius: BorderRadius.circular(12.r),
+                            child: CommonImage(
                               imageSrc: "assets/images/view_image_pic.png",
-                            height: 171.h,
-                            width: 330.w,
-                          )
+                              height: 171.h,
+                              width: 330.w,
+                            )
                         ),
                         SizedBox(height: 16.h),
 
@@ -141,7 +99,7 @@ class PostDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-            
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -154,7 +112,7 @@ class PostDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 12.h),
-            
+
                       // Date and Time
                       Row(
                         children: [
@@ -166,13 +124,13 @@ class PostDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-            
+
                 // About The Role Section
                 _buildSection(
                   title: "About The Role",
                   content: post.description,
                 ),
-            
+
                 // Requirements Section
                 _buildListSection(
                   title: "Requirements",
@@ -182,16 +140,18 @@ class PostDetailsScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CommonButton(
-                    titleText: "Start Conversation",
-                    buttonRadius: 10,
-                    buttonColor: Color(0xFF008F37),
-                    onTap: () => MessageDetailsDialog.show(
-                      context,
-                      onSend: (){
-                        Get.back();
-                      }
-                    )
-                ),
+                      titleText: "Running",
+                      buttonRadius: 10,
+                      buttonColor: Colors.transparent,
+                      titleColor: AppColors.primaryColor,
+                      borderColor: AppColors.primaryColor,
+                      onTap: () => MessageDetailsDialog.show(
+                          context,
+                          onSend: (){
+                            Get.back();
+                          }
+                      )
+                  ),
                 ),
                 SizedBox(height: 20.h,),
               ],

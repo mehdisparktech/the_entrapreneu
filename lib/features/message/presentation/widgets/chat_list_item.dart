@@ -19,7 +19,7 @@ Widget chatListItem({required ChatModel item}) {
             CircleAvatar(
               radius: 35.sp,
               child: ClipOval(
-                child: CommonImage(imageSrc: item.participant.image, size: 70),
+                child: CommonImage(imageSrc: "", size: 70),
               ),
             ),
             12.width,

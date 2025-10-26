@@ -160,6 +160,7 @@ class CustomOfferRequestDialog {
                       text: serviceDate,
                       fontSize: 16.sp,
                       color: AppColors.textColorFirst,
+                      textAlign: TextAlign.start,
                     ),
                   ),
                   SizedBox(height: 16.h),
@@ -190,6 +191,7 @@ class CustomOfferRequestDialog {
                     ),
                     child: CommonText(
                       text: serviceTime,
+                      textAlign: TextAlign.start,
                       fontSize: 16.sp,
                       color: AppColors.textColorFirst,
                     ),
@@ -224,6 +226,7 @@ class CustomOfferRequestDialog {
                       text: budget,
                       fontSize: 16.sp,
                       color: AppColors.textColorFirst,
+                      textAlign: TextAlign.start,
                     ),
                   ),
                   SizedBox(height: 24.h),

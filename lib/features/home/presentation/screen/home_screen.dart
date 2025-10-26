@@ -46,6 +46,7 @@ class HomeScreen extends StatelessWidget {
                   CommonButton(
                     titleText: "Create Post",
                     buttonRadius: 100,
+                    buttonHeight: 40,
                     onTap: () => _showCreatePostBottomSheet(context),
                   ),
                   SizedBox(height: 24.h),
@@ -121,9 +122,7 @@ class CreatePostBottomSheet extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
-                  // Handle category selection
-                  Navigator.pop(context);
-                  // Navigate to create post screen with selected category
+                 Get.toNamed(AppRoutes.postScreen);
                 },
                 child: Row(
                   children: [

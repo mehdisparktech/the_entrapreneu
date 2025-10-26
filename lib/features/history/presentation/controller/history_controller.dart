@@ -40,7 +40,7 @@ class HistoryController extends GetxController {
 
   // Navigate to details screen
   void navigateToDetails(RequestModel request) {
-    Get.toNamed(AppRoutes.historyDetailsScreen, arguments: request);
+    Get.toNamed(AppRoutes.completeHistoryScreen, arguments: request);
   }
 
   // Get current tab data

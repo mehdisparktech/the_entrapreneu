@@ -5,6 +5,7 @@ import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
+import 'package:the_entrapreneu/features/history/presentation/controller/complete_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
@@ -12,12 +13,12 @@ import '../controller/history_details_controller.dart';
 import '../widgets/detail_row.dart';
 import '../widgets/status_badge.dart';
 
-class HistoryDetailsScreen extends StatelessWidget {
-  const HistoryDetailsScreen({super.key});
+class CompleteHistoryScreen extends StatelessWidget {
+  const CompleteHistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HistoryDetailsController());
+    final controller = Get.put(CompleteHistoryController());
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -77,9 +78,9 @@ class HistoryDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildServiceInfoCard(
-    dynamic request,
-    HistoryDetailsController controller,
-  ) {
+      dynamic request,
+      CompleteHistoryController controller,
+      ) {
     return Container(
       padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
@@ -134,7 +135,7 @@ class HistoryDetailsScreen extends StatelessWidget {
                   children: [
                     ...List.generate(
                       5,
-                      (index) =>
+                          (index) =>
                           Icon(Icons.star, color: Colors.amber, size: 16.sp),
                     ),
                     CommonText(
@@ -185,9 +186,9 @@ class HistoryDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildDetailsCard(
-    dynamic request,
-    HistoryDetailsController controller,
-  ) {
+      dynamic request,
+      CompleteHistoryController controller,
+      ) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -227,9 +228,9 @@ class HistoryDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButtons(HistoryDetailsController controller) {
+  Widget _buildActionButtons(CompleteHistoryController controller) {
     return Obx(
-      () => Row(
+          () => Row(
         children: [
           Expanded(
             child: CommonButton(
@@ -244,29 +245,15 @@ class HistoryDetailsScreen extends StatelessWidget {
             ),
           ),
           SizedBox(width: 16.w),
-          Expanded(
-            child: CommonButton(
-              titleText: 'Complete',
-              titleColor: AppColors.white,
-              buttonColor: AppColors.green,
-              borderColor: AppColors.green,
-              buttonHeight: 48.h,
-              titleSize: 16,
-              isLoading: controller.isAcceptLoading.value,
-              onTap: (){
-                confirmDialog();
-              },
-            ),
-          ),
         ],
       ),
     );
   }
 
   Widget _buildRejectReasonField(
-    HistoryDetailsController controller,
-    BuildContext context,
-  ) {
+      CompleteHistoryController controller,
+      BuildContext context,
+      ) {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -297,7 +284,7 @@ class HistoryDetailsScreen extends StatelessWidget {
             SizedBox(height: 10.h),
             CommonText(
               text:
-                  'Sorry, I am unable to accept this order due to a scheduling conflict. Please reschedule or choose another available provider.',
+              'Sorry, I am unable to accept this order due to a scheduling conflict. Please reschedule or choose another available provider.',
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.textPrimary,

@@ -21,7 +21,7 @@ class CustomSearchField extends StatelessWidget {
     this.backgroundColor = Colors.white,
     this.borderColor = const Color(0xFFEDEDED),
     this.textColor = AppColors.black,
-    this.hintColor = AppColors.textSecond,
+    this.hintColor = AppColors.textFiledColor,
     this.height = 44,
     this.borderRadius = 10,
     this.showClearButton = true,

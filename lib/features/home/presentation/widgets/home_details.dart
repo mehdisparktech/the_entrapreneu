@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
 import '../../../../utils/constants/app_images.dart';
+import '../../../notifications/presentation/screen/notifications_screen.dart';
 
 class HomeDetails extends StatelessWidget {
   const HomeDetails({
@@ -53,9 +56,12 @@ class HomeDetails extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: Icon(
-                Icons.notifications_outlined,
-                size: 28,
+              child: GestureDetector(
+                onTap: ()=>Get.toNamed(AppRoutes.notifications),
+                child: Icon(
+                  Icons.notifications_outlined,
+                  size: 28,
+                ),
               ),
             ),
             if (notificationCount > 0)

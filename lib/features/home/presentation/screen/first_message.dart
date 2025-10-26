@@ -4,31 +4,33 @@ import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
-import '../../data/model/chat_message_model.dart';
+import '../../../message/data/model/chat_message_model.dart';
+import '../../../message/presentation/controller/message_controller.dart';
+import '../../../message/presentation/screen/message_screen.dart';
 import '../../../../../../utils/extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../controller/message_controller.dart';
 import '../../../../../../utils/constants/app_colors.dart';
-import '../widgets/chat_bubble_message.dart';
+import '../../../message/presentation/widgets/chat_bubble_message.dart';
+import '../controller/first_message_controller.dart';
 
-class MessageScreen extends StatefulWidget {
-  const MessageScreen({super.key});
+class FirstMessage extends StatefulWidget {
+  const FirstMessage({super.key});
 
   @override
-  State<MessageScreen> createState() => _MessageScreenState();
+  State<FirstMessage> createState() => _MessageScreenState();
 }
 
-class _MessageScreenState extends State<MessageScreen> {
+class _MessageScreenState extends State<FirstMessage> {
   String chatId = Get.parameters["chatId"] ?? "";
   String name = Get.parameters["name"] ?? "";
   String image = Get.parameters["image"] ?? "";
 
   @override
   void initState() {
-    MessageController.instance.name = name;
-    MessageController.instance.chatId = chatId;
-    MessageController.instance.getMessageRepo();
+    FirstMessageController.instance.name = name;
+    FirstMessageController.instance.chatId = chatId;
+    FirstMessageController.instance.getMessageRepo();
     super.initState();
   }
 
@@ -78,7 +80,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
                 onTap: () async {
                   Get.back();
-                  await MessageController.instance.pickImageFromGallery();
+                  await FirstMessageController.instance.pickImageFromGallery();
                 },
               ),
               SizedBox(height: 10.h),
@@ -101,7 +103,7 @@ class _MessageScreenState extends State<MessageScreen> {
                 ),
                 onTap: () async {
                   Get.back();
-                  await MessageController.instance.pickImageFromCamera();
+                  await FirstMessageController.instance.pickImageFromCamera();
                 },
               ),
             ],
@@ -113,7 +115,7 @@ class _MessageScreenState extends State<MessageScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MessageController>(
+    return GetBuilder<FirstMessageController>(
       builder: (controller) {
         return Scaffold(
           backgroundColor: Colors.grey[100],
@@ -172,64 +174,59 @@ class _MessageScreenState extends State<MessageScreen> {
                             fill: BoxFit.cover,
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.all(12.w),
-                          child: InkWell(
-                            onTap: (){
-                              Get.toNamed(AppRoutes.viewMessageScreen);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CommonText(
-                                      text:
-                                      "I Need Experienced Plumber",
-                                      fontSize: 14.sp,
-                                      color: AppColors.textColorFirst,
-                                      fontWeight: FontWeight.w600,
-                                      maxLines: 2,
-                                    ),
-                                    CommonText(
-                                      text: "\$100",
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.orange,
-                                    ),
-                                  ],
-                                ),
-                                6.height,
-                                CommonText(
-                                  text: "California, Fresno",
-                                  fontSize: 12.sp,
-                                  color: AppColors.textColorFirst,
-                                ),
-                                10.height,
-                                GestureDetector(
-                                  onTap: () =>Get.toNamed(AppRoutes.viewMessageScreen),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 12.w,
-                                      vertical: 6.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(6.r),
-                                    ),
-                                    child: CommonText(
-                                      text: "Running",
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CommonText(
+                                    text:
+                                    "I Need Experienced Plumber",
+                                    fontSize: 14.sp,
+                                    color: AppColors.textColorFirst,
+                                    fontWeight: FontWeight.w600,
+                                    maxLines: 2,
+                                  ),
+                                  CommonText(
+                                    text: "\$100",
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.orange,
+                                  ),
+                                ],
+                              ),
+                              6.height,
+                              CommonText(
+                                text: "California, Fresno",
+                                fontSize: 12.sp,
+                                color: AppColors.textColorFirst,
+                              ),
+                              12.height,
+                              GestureDetector(
+                                onTap: () =>Get.toNamed(AppRoutes.customOffer),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                    vertical: 6.h,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: BorderRadius.circular(6.r),
+                                  ),
+                                  child: CommonText(
+                                    text: "Custom Offer",
+                                    fontSize: 12.sp,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              10.height,
+                            ],
                           ),
                         ),
                       ],

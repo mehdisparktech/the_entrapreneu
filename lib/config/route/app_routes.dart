@@ -1,11 +1,17 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/complete_history_screen.dart';
 import 'package:the_entrapreneu/features/history/presentation/screen/history_details_screen.dart';
 import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
+import 'package:the_entrapreneu/features/history/presentation/screen/review_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/create_post_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/custom_offe_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/first_message.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/home_nav_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/home_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/post_job_screen.dart';
+import 'package:the_entrapreneu/features/message/presentation/screen/view_message.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/provider_info_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';
 import '../../features/auth/change_password/presentation/screen/change_password_screen.dart';
 import '../../features/auth/forgot password/presentation/screen/create_password.dart';
@@ -52,6 +58,12 @@ class AppRoutes {
   static const String history = "/history_screen.dart";
   static const String historyDetailsScreen = "/history_details_screen.dart";
   static const String customOffer = "/customOffer";
+  static const String postScreen = "/postScreen";
+  static const String firstMessageScreen = "/firstMessageScreen";
+  static const String viewMessageScreen = "/viewMessageScreen";
+  static const String reviewScreen = "/reviewScreen";
+  static const String completeHistoryScreen = "/completeHistoryScreen";
+  static const String serviceProviderInfo = "/serviceProviderInfo";
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
@@ -78,5 +90,11 @@ class AppRoutes {
     GetPage(name: createPost, page: () => PostDetailsScreen()),
     GetPage(name: historyDetailsScreen, page: () => HistoryDetailsScreen()),
     GetPage(name: customOffer, page: () => CustomOfferScreen()),
+    GetPage(name: postScreen, page: () => PostJobScreen()),
+    GetPage(name: firstMessageScreen, page: () => FirstMessage()),
+    GetPage(name: viewMessageScreen, page: () => ViewMessageScreen()),
+    GetPage(name: reviewScreen, page: () => ReviewScreen()),
+    GetPage(name: completeHistoryScreen, page: () => CompleteHistoryScreen()),
+    GetPage(name: serviceProviderInfo, page: () => ServiceProviderInfoScreen()),
   ];
 }

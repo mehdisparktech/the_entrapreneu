@@ -11,7 +11,7 @@ class SuccessDialog {
   static void show(
       BuildContext context, {
         required String title,
-        String? message,
+        String? message="Your Custom Offer Submit Has been Successful. Please Wait for User Confirmations.",
         String buttonText = "OK",
         VoidCallback? onPressed,
       }) {
@@ -37,7 +37,7 @@ class SuccessDialog {
 
               // ✅ Title
               CommonText(
-                text: "Your Custom Offer Submit Has been Successful. Please Wait for User Confirmations.",
+                text: message.toString(),
                 fontSize: 16.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,

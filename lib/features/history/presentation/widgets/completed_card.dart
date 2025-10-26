@@ -9,13 +9,13 @@ import '../../../../utils/constants/app_colors.dart';
 import '../controller/history_controller.dart';
 import '../controller/history_details_controller.dart';
 
-class RequestCard extends StatelessWidget {
+class CompletedCard extends StatelessWidget {
   final RequestModel request;
   final bool showActions;
 
   final VoidCallback? onTap;
 
-  const RequestCard({
+  const CompletedCard({
     super.key,
     required this.request,
     this.showActions = false,
@@ -50,7 +50,7 @@ class RequestCard extends StatelessWidget {
               child: CommonImage(
                 imageSrc: "assets/images/profile_image.png",
                 fill: BoxFit.cover,
-                size: 57,
+                size: 80,
               ),
             ),
 
@@ -61,13 +61,25 @@ class RequestCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CommonText(
-                    text: request.title,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
-                    textAlign: TextAlign.left,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CommonText(
+                        text: request.title,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textPrimary,
+                        textAlign: TextAlign.left,
+                      ),
+                      CommonText(
+                        text: request.price,
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.checkColor,
+                      ),
+                    ],
                   ),
+
                   SizedBox(height: 4.h),
                   CommonText(
                     text: request.subtitle,
@@ -79,52 +91,52 @@ class RequestCard extends StatelessWidget {
                   SizedBox(height: 4.h),
                   Row(
                     children: [
-                      ...List.generate(
-                        5,
-                        (index) =>
-                            Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                      Icon(
+                        Icons.calendar_today_outlined,
+                        size: 12.sp,
+                        color: AppColors.primaryColor,
+                      ),
+                      SizedBox(width: 4.w),
+                      CommonText(
+                        text: request.date,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textPrimary,
+                        textAlign: TextAlign.left,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          ...List.generate(
+                            5,
+                                (index) =>
+                                Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                          ),
+                          CommonText(
+                            text: '(150)',
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary,
+                          ),
+                        ],
                       ),
                       CommonText(
-                        text: '(150)',
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
+                        text: "Completed",
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.green,
+                        textAlign: TextAlign.left,
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
-
-            // Price
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                CommonText(
-                  text: request.price,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryColor,
-                ),
-                SizedBox(height: 20.h),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.calendar_today_outlined,
-                      size: 12.sp,
-                      color: AppColors.primaryColor,
-                    ),
-                    SizedBox(width: 4.w),
-                    CommonText(
-                      text: request.date,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textPrimary,
-                      textAlign: TextAlign.left,
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),
