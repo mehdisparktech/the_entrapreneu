@@ -82,7 +82,7 @@ class RequestCard extends StatelessWidget {
                       ...List.generate(
                         5,
                         (index) =>
-                            Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                            Icon(Icons.star, color: AppColors.checkColor, size: 16.sp),
                       ),
                       CommonText(
                         text: '(150)',
@@ -104,7 +104,7 @@ class RequestCard extends StatelessWidget {
                   text: request.price,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.primaryColor,
+                  color: AppColors.checkColor,
                 ),
                 SizedBox(height: 20.h),
                 Row(

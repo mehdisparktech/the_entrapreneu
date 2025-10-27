@@ -26,7 +26,7 @@ class NotificationScreen extends StatelessWidget {
             child: SafeArea(
               child: Column(
                 children: [
-                  CustomAppBar(title: "Notification",),
+                  CustomAppBar(title: "Notification"),
                   controller.isLoading
                   /// Loading bar here
                   ? Center(child: const CommonLoader())

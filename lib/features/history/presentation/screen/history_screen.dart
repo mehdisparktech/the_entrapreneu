@@ -105,7 +105,7 @@ class HistoryScreen extends StatelessWidget {
                 return RequestCard(
                   request: request,
                   showActions: isPendingTab,
-                  onTap: () => controller.navigateToDetails(request),
+                  onTap: () => controller.navigateHistoryDetails(request),
                 );
               },
             )

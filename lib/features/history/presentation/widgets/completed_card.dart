@@ -116,7 +116,7 @@ class CompletedCard extends StatelessWidget {
                           ...List.generate(
                             5,
                                 (index) =>
-                                Icon(Icons.star, color: Colors.amber, size: 16.sp),
+                                Icon(Icons.star, color: AppColors.checkColor, size: 16.sp),
                           ),
                           CommonText(
                             text: '(150)',

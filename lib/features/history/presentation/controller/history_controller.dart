@@ -39,6 +39,9 @@ class HistoryController extends GetxController {
   }
 
   // Navigate to details screen
+  void navigateHistoryDetails(RequestModel request) {
+    Get.toNamed(AppRoutes.historyDetailsScreen, arguments: request);
+  }
   void navigateToDetails(RequestModel request) {
     Get.toNamed(AppRoutes.completeHistoryScreen, arguments: request);
   }
