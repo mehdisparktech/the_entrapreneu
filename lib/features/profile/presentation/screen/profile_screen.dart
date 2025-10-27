@@ -9,6 +9,7 @@ import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/features/auth/change_password/presentation/screen/change_password_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/profile_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/help_support_screen.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/my_post_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/my_profile_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';
@@ -110,7 +111,13 @@ final List<ProfileItemData> profileItems = [
       Get.to(() => const ChangePasswordScreen());
     },
   ),
-  ProfileItemData(imageSrc: AppIcons.profile, title: 'My Post', onTap: () {}),
+  ProfileItemData(
+    imageSrc: AppIcons.profile,
+    title: 'My Post',
+    onTap: () {
+      Get.to(() => const MyPostScreen());
+    },
+  ),
   ProfileItemData(
     imageSrc: AppIcons.privacy,
     title: 'Privacy Policy',

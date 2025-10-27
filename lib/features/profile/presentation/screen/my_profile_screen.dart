@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:get/get.dart';
+import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
+import 'package:the_entrapreneu/features/profile/presentation/controller/my_profile_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
@@ -13,215 +14,192 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.black, size: 20.sp),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        title: CommonText(
-          text: 'My Profile',
-          fontWeight: FontWeight.w600,
-          fontSize: 20.sp,
-          color: AppColors.black,
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Column(
-            children: [
-              16.height,
-
-              /// Profile Header Section
-              _buildProfileHeader(),
-
-              48.height,
-
-              /// Menu Items
-              _buildMenuItem(
-                color: AppColors.secondary.withOpacity(0.1),
-                imageSrc: AppIcons.personal,
-                title: 'Personal Info',
-                subtitle: 'Complete',
-                onTap: () {
-                  // Get.toNamed(JobSeekerRoutes.personalInfo);
-                },
+    return GetBuilder<MyProfileController>(
+      init: MyProfileController(),
+      builder: (controller) {
+        return Scaffold(
+          backgroundColor: AppColors.background,
+          appBar: AppBar(
+            backgroundColor: AppColors.background,
+            elevation: 0,
+            leading: GestureDetector(
+              onTap: controller.goBack,
+              child: Container(
+                margin: EdgeInsets.only(left: 20.w),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.black,
+                  size: 20.sp,
+                ),
               ),
-              16.height,
-
-              _buildMenuItem(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                imageSrc: AppIcons.profile,
-                title: 'Education',
-                subtitle: 'Complete',
-                onTap: () {},
-              ),
-              16.height,
-              _buildMenuItem(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                imageSrc: AppIcons.workEdit,
-                title: 'Work Experience',
-                subtitle: 'Complete',
-                onTap: () {},
-              ),
-              16.height,
-              _buildMenuItem(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                imageSrc: AppIcons.profile,
-                title: 'Skills',
-                subtitle: 'Complete',
-                onTap: () {},
-                isLast: true,
-              ),
-            ],
+            ),
+            leadingWidth: 50.w,
           ),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Column(
+                children: [
+                  20.height,
+
+                  /// Profile Image
+                  _buildProfileImage(controller),
+
+                  16.height,
+
+                  /// Name
+                  CommonText(
+                    text: controller.userName,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.black,
+                  ),
+
+                  32.height,
+
+                  /// About Section
+                  _buildAboutSection(controller),
+
+                  24.height,
+
+                  /// Profile Details
+                  _buildProfileDetails(controller),
+
+                  32.height,
+
+                  /// Edit Profile Button
+                  _buildEditProfileButton(controller),
+
+                  32.height,
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  /// Profile Image Widget
+  Widget _buildProfileImage(MyProfileController controller) {
+    return Container(
+      width: 120.w,
+      height: 120.h,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.white,
+          width: 4.w,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x1A000000),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: ClipOval(
+        child: controller.userImage.isNotEmpty
+            ? CommonImage(
+                imageSrc: controller.userImage,
+                width: 120.w,
+                height: 120.h,
+                fill: BoxFit.cover,
+              )
+            : CommonImage(
+                imageSrc: AppImages.profile,
+                width: 120.w,
+                height: 120.h,
+                fill: BoxFit.cover,
+              ),
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
+  /// About Section Widget
+  Widget _buildAboutSection(MyProfileController controller) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        /// Profile Image
-        Container(
-          width: 100.w,
-          height: 100.h,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: AppColors.borderColor.withOpacity(0.3),
-              width: 1.w,
-            ),
-          ),
-          child: ClipOval(
-            child: CommonImage(
-              imageSrc: AppImages.profile,
-              width: 100.w,
-              height: 100.h,
-            ),
-          ),
-        ),
-
-        16.height,
-
-        /// Name
         CommonText(
-          text: 'Shoaib Ahmad',
-          fontSize: 20.sp,
+          text: 'About',
+          fontSize: 16.sp,
           fontWeight: FontWeight.w600,
           color: AppColors.black,
+          textAlign: TextAlign.start,
         ),
-
-        4.height,
-
-        /// Designation
+        8.height,
         CommonText(
-          text: 'UX Designer',
+          text: controller.about,
           fontSize: 14.sp,
           fontWeight: FontWeight.w400,
           color: AppColors.secondaryText,
+          textAlign: TextAlign.start,
+          maxLines: 10,
         ),
       ],
     );
   }
 
-  Widget _buildMenuItem({
-    required String imageSrc,
-    required String title,
-    required String subtitle,
-    required Color color,
-    required VoidCallback onTap,
-    bool isLast = false,
-  }) {
+  /// Profile Details Widget
+  Widget _buildProfileDetails(MyProfileController controller) {
     return Column(
       children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-            decoration: ShapeDecoration(
-              color: Colors.white,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: 1,
-                  color: const Color(0xFFEDEDED) /* Cart-BG-8 */,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              shadows: [
-                BoxShadow(
-                  color: Color(0x19000000),
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                /// Icon Container
-                Container(
-                  padding: EdgeInsets.all(10.w),
-                  width: 48.w,
-                  height: 48.h,
-                  decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: CommonImage(imageSrc: imageSrc, width: 24, height: 24),
-                ),
+        _buildDetailRow('Mobile', controller.mobile),
+        16.height,
+        _buildDetailRow('E-mail', controller.userEmail),
+        16.height,
+        _buildDetailRow('Date o\' Birth', controller.dateOfBirth),
+        16.height,
+        _buildDetailRow('Gender', controller.gender),
+        16.height,
+        _buildDetailRow('Experience', controller.experience),
+        16.height,
+        _buildDetailRow('Address', controller.address),
+      ],
+    );
+  }
 
-                16.width,
-
-                /// Title and Subtitle
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CommonText(
-                        text: title,
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.black,
-                        textAlign: TextAlign.start,
-                      ),
-                      2.height,
-                      CommonText(
-                        text: subtitle,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.secondaryText,
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
-                ),
-
-                /// Arrow Icon
-                Icon(
-                  Icons.arrow_forward_ios,
-                  color: AppColors.secondaryText,
-                  size: 16.sp,
-                ),
-              ],
-            ),
+  /// Detail Row Widget
+  Widget _buildDetailRow(String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        CommonText(
+          text: label,
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
+          color: AppColors.black,
+          textAlign: TextAlign.start,
+        ),
+        Flexible(
+          child: CommonText(
+            text: value,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.secondaryText,
+            textAlign: TextAlign.end,
+            maxLines: 2,
           ),
         ),
-
-        /// Divider (except for last item)
-        if (!isLast)
-          Divider(
-            color: AppColors.borderColor.withOpacity(0.3),
-            thickness: 0.5.h,
-            height: 0,
-          ),
       ],
+    );
+  }
+
+  /// Edit Profile Button Widget
+  Widget _buildEditProfileButton(MyProfileController controller) {
+    return CommonButton(
+      titleText: 'Edit Profile',
+      onTap: controller.navigateToEditProfile,
+      buttonColor: AppColors.primaryColor,
+      titleColor: AppColors.white,
+      buttonHeight: 56.h,
+      buttonRadius: 8.r,
+      titleSize: 16.sp,
+      titleWeight: FontWeight.w600,
     );
   }
 }

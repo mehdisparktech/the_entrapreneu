@@ -7,6 +7,7 @@ import '../../features/auth/sign up/presentation/controller/sign_up_controller.d
 import '../../features/message/presentation/controller/chat_controller.dart';
 import '../../features/message/presentation/controller/message_controller.dart';
 import '../../features/notifications/presentation/controller/notifications_controller.dart';
+import '../../features/profile/presentation/controller/my_profile_controller.dart';
 import '../../features/profile/presentation/controller/profile_controller.dart';
 import '../../features/profile/presentation/controller/privacy_policy_controller.dart';
 import '../../features/profile/presentation/controller/terms_of_services_controller.dart';
@@ -22,6 +23,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => ChatController(), fenix: true);
     Get.lazyPut(() => MessageController(), fenix: true);
     Get.lazyPut(() => ProfileController(), fenix: true);
+    Get.lazyPut(() => MyProfileController(), fenix: true);
     Get.lazyPut(() => PrivacyPolicyController(), fenix: true);
     Get.lazyPut(() => TermsOfServicesController(), fenix: true);
   }

@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../../../../../../utils/extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../component/button/common_button.dart';
-import '../../../../component/image/common_image.dart';
-import '../../../../component/text/common_text.dart';
-import '../controller/profile_controller.dart';
-import '../../../../../../utils/constants/app_images.dart';
-import '../../../../../../utils/constants/app_string.dart';
-import '../widgets/edit_profile_all_filed.dart';
+import 'package:the_entrapreneu/component/button/common_button.dart';
+import 'package:the_entrapreneu/component/image/common_image.dart';
+import 'package:the_entrapreneu/component/text/common_text.dart';
+import 'package:the_entrapreneu/features/profile/presentation/controller/profile_controller.dart';
+import 'package:the_entrapreneu/utils/constants/app_colors.dart';
+import 'package:the_entrapreneu/utils/constants/app_images.dart';
+import 'package:the_entrapreneu/utils/extensions/extension.dart';
+import 'package:the_entrapreneu/features/profile/presentation/widgets/edit_profile_all_filed.dart';
 
 class EditProfile extends StatelessWidget {
   const EditProfile({super.key});
@@ -19,81 +19,143 @@ class EditProfile extends StatelessWidget {
     return GetBuilder<ProfileController>(
       builder: (controller) {
         return Scaffold(
-          /// App Bar Sections Starts here
+          backgroundColor: AppColors.background,
+          
+          /// App Bar
           appBar: AppBar(
+            backgroundColor: AppColors.background,
+            elevation: 0,
+            leading: GestureDetector(
+              onTap: () => Get.back(),
+              child: Container(
+                margin: EdgeInsets.only(left: 20.w),
+                alignment: Alignment.center,
+                child: Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.black,
+                  size: 20.sp,
+                ),
+              ),
+            ),
+            leadingWidth: 50.w,
             centerTitle: true,
-            title: const CommonText(
-              text: AppString.profile,
-              fontSize: 20,
+            title: CommonText(
+              text: 'Edit Profile',
+              fontSize: 18.sp,
               fontWeight: FontWeight.w600,
+              color: AppColors.black,
             ),
           ),
 
-          /// Body Sections Starts here
+          /// Body
           body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-            child: Form(
-              key: controller.formKey,
-              child: Column(
-                children: [
-                  /// User Profile image here
-                  Stack(
-                    children: [
-                      Center(
-                        child: CircleAvatar(
-                          radius: 85.sp,
-                          backgroundColor: Colors.transparent,
-                          child: ClipOval(
-                            child:
-                                controller.image != null
-                                    ? Image.file(
-                                      File(controller.image!),
-                                      width: 170,
-                                      height: 170,
-                                      fit: BoxFit.fill,
-                                    )
-                                    : const CommonImage(
-                                      imageSrc: AppImages.profile,
-                                      height: 170,
-                                      width: 170,
-                                    ),
-                          ),
-                        ),
-                      ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  children: [
+                    20.height,
 
-                      /// image change icon here
-                      Positioned(
-                        bottom: 0,
-                        left: Get.width * 0.53,
-                        child: IconButton(
-                          style: ButtonStyle(
-                            backgroundColor: WidgetStateColor.resolveWith(
-                              (states) => Colors.black,
-                            ),
-                          ),
-                          onPressed: controller.getProfileImage,
-                          icon: const Icon(Icons.edit, color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
+                    /// Profile Image
+                    _buildProfileImage(controller),
 
-                  /// user all information filed here
-                  EditProfileAllFiled(controller: controller),
-                  30.height,
+                    32.height,
 
-                  /// Submit Button here
-                  CommonButton(
-                    titleText: AppString.saveAndChanges,
-                    isLoading: controller.isLoading,
-                    onTap: controller.editProfileRepo,
-                  ),
-                ],
+                    /// All Form Fields
+                    EditProfileAllFiled(controller: controller),
+
+                    32.height,
+
+                    /// Update Button
+                    CommonButton(
+                      titleText: 'Update',
+                      onTap: controller.editProfileRepo,
+                      isLoading: controller.isLoading,
+                      buttonColor: AppColors.primaryColor,
+                      titleColor: AppColors.white,
+                      buttonHeight: 56.h,
+                      buttonRadius: 8.r,
+                      titleSize: 16.sp,
+                      titleWeight: FontWeight.w600,
+                    ),
+
+                    32.height,
+                  ],
+                ),
               ),
             ),
           ),
         );
       },
+    );
+  }
+
+  /// Profile Image Widget
+  Widget _buildProfileImage(ProfileController controller) {
+    return Stack(
+      children: [
+        Container(
+          width: 100.w,
+          height: 100.h,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: AppColors.white,
+              width: 3.w,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Color(0x1A000000),
+                blurRadius: 8,
+                offset: Offset(0, 2),
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: ClipOval(
+            child: controller.image != null
+                ? Image.file(
+                    File(controller.image!),
+                    width: 100.w,
+                    height: 100.h,
+                    fit: BoxFit.cover,
+                  )
+                : CommonImage(
+                    imageSrc: AppImages.profile,
+                    width: 100.w,
+                    height: 100.h,
+                    fill: BoxFit.cover,
+                  ),
+          ),
+        ),
+        
+        /// Edit Icon
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: controller.getProfileImage,
+            child: Container(
+              width: 32.w,
+              height: 32.h,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: AppColors.white,
+                  width: 2.w,
+                ),
+              ),
+              child: Icon(
+                Icons.edit,
+                color: AppColors.white,
+                size: 16.sp,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
