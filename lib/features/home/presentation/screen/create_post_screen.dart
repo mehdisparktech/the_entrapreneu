@@ -6,10 +6,8 @@ import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
-import 'package:the_entrapreneu/features/home/presentation/widgets/confirm_message_dialog.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/message_details_dialog.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
 class PostDetailsScreen extends StatelessWidget {
   PostDetailsScreen({super.key});
@@ -38,13 +36,14 @@ class PostDetailsScreen extends StatelessWidget {
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomAppBar(
-                    title: "View Post",
-                  ),
+                  child: CustomAppBar(title: "View Post"),
                 ),
                 // User Info Card
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
                   child: Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -59,7 +58,9 @@ class PostDetailsScreen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 20.r,
-                              backgroundImage: AssetImage("assets/images/profile_image.png"),
+                              backgroundImage: AssetImage(
+                                "assets/images/profile_image.png",
+                              ),
                               backgroundColor: Colors.grey[300],
                             ),
                             SizedBox(width: 12.w),
@@ -74,16 +75,24 @@ class PostDetailsScreen extends StatelessWidget {
                                   ),
                                   Row(
                                     children: [
-                                      Icon(Icons.timer_outlined,size: 14.sp,color: Colors.grey,),
-                                      SizedBox(width: 6,),
+                                      Icon(
+                                        Icons.timer_outlined,
+                                        size: 14.sp,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(width: 6),
                                       CommonText(
                                         text: "12 hours ago",
                                         fontSize: 12.sp,
                                         color: Colors.grey,
                                       ),
-                                      SizedBox(width: 18.h,),
-                                      Icon(Icons.location_on_outlined,size: 14.sp,color: Colors.grey,),
-                                      SizedBox(width: 6,),
+                                      SizedBox(width: 18.h),
+                                      Icon(
+                                        Icons.location_on_outlined,
+                                        size: 14.sp,
+                                        color: Colors.grey,
+                                      ),
+                                      SizedBox(width: 6),
                                       CommonText(
                                         text: "Dhaka, Bangladesh",
                                         fontSize: 12.sp,
@@ -102,10 +111,10 @@ class PostDetailsScreen extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12.r),
                           child: CommonImage(
-                              imageSrc: "assets/images/view_image_pic.png",
+                            imageSrc: "assets/images/view_image_pic.png",
                             height: 171.h,
                             width: 330.w,
-                          )
+                          ),
                         ),
                         SizedBox(height: 16.h),
 
@@ -141,7 +150,7 @@ class PostDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-            
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -154,7 +163,7 @@ class PostDetailsScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 12.h),
-            
+
                       // Date and Time
                       Row(
                         children: [
@@ -166,19 +175,19 @@ class PostDetailsScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-            
+
                 // About The Role Section
                 _buildSection(
                   title: "About The Role",
                   content: post.description,
                 ),
-            
+
                 // Requirements Section
                 _buildListSection(
                   title: "Requirements",
                   items: post.requirements,
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 20.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CommonButton(
@@ -187,13 +196,13 @@ class PostDetailsScreen extends StatelessWidget {
                     buttonColor: Color(0xFF008F37),
                     onTap: () => MessageDetailsDialog.show(
                       context,
-                      onSend: (){
+                      onSend: () {
                         Get.back();
-                      }
-                    )
+                      },
+                    ),
+                  ),
                 ),
-                ),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 20.h),
               ],
             ),
           ),
@@ -236,11 +245,7 @@ class PostDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            text: title,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 4.h),
           CommonText(
             text: content,
@@ -254,7 +259,10 @@ class PostDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListSection({required String title, required List<String> items}) {
+  Widget _buildListSection({
+    required String title,
+    required List<String> items,
+  }) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -265,39 +273,37 @@ class PostDetailsScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            text: title,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 12.h),
-          ...items.map((item) => Padding(
-            padding: EdgeInsets.only(bottom: 8.h),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 6.h, right: 8.w),
-                  width: 6.w,
-                  height: 6.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    shape: BoxShape.circle,
+          ...items.map(
+            (item) => Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 6.h, right: 8.w),
+                    width: 6.w,
+                    height: 6.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                // ✅ Flexible দিয়ে wrap করো
-                Flexible(
-                  child: CommonText(
-                    text: item,
-                    fontSize: 14.sp,
-                    color: Colors.grey,
-                    maxLines: 8,
-                    textAlign: TextAlign.start,
+                  // ✅ Flexible দিয়ে wrap করো
+                  Flexible(
+                    child: CommonText(
+                      text: item,
+                      fontSize: 14.sp,
+                      color: Colors.grey,
+                      maxLines: 8,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );

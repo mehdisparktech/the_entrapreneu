@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/features/history/presentation/widgets/success_dialog.dart';
-import 'package:the_entrapreneu/utils/constants/success_dialog.dart';
 
 import '../../../../utils/constants/app_colors.dart';
 import 'review_controller.dart';
@@ -58,33 +57,35 @@ class ReviewScreen extends StatelessWidget {
 
               // Star Rating
               Center(
-                child: Obx(() => Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(5, (index) {
-                    return GestureDetector(
-                      onTap: () => controller.setRating(index + 1),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                        child: Icon(
-                          index < controller.selectedRating.value
-                              ? Icons.star
-                              : Icons.star_border,
-                          size: 40,
-                          color: index < controller.selectedRating.value
-                              ? const Color(0xFF1E5AA8)
-                              : const Color(0xFF1E5AA8),
+                child: Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return GestureDetector(
+                        onTap: () => controller.setRating(index + 1),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: Icon(
+                            index < controller.selectedRating.value
+                                ? Icons.star
+                                : Icons.star_border,
+                            size: 40,
+                            color: index < controller.selectedRating.value
+                                ? const Color(0xFF1E5AA8)
+                                : const Color(0xFF1E5AA8),
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-                )),
+                      );
+                    }),
+                  ),
+                ),
               ),
 
               const SizedBox(height: 40),
 
               // Text field label
               CommonText(
-                  text: "Type Your Review",
+                text: "Type Your Review",
                 fontSize: 14,
                 color: AppColors.textPrimary,
               ),
@@ -118,15 +119,13 @@ class ReviewScreen extends StatelessWidget {
 
               // Share button
               CommonButton(
-                  titleText: "Share",
+                titleText: "Share",
                 buttonRadius: 12,
                 buttonHeight: 48,
                 onTap: () {
-                    SuccessReview.show(
-                        Get.context!, title: "ksdjfkl"
-                    );
+                  SuccessReview.show(Get.context!, title: "ksdjfkl");
                 },
-              )
+              ),
             ],
           ),
         ),

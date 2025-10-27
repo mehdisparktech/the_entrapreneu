@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
 import '../../../../component/button/common_button.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
@@ -9,12 +7,12 @@ import '../../../../utils/constants/app_colors.dart';
 
 class SuccessReview {
   static void show(
-      BuildContext context, {
-        required String title,
-        String? message,
-        String buttonText = "OK",
-        VoidCallback? onPressed,
-      }) {
+    BuildContext context, {
+    required String title,
+    String? message,
+    String buttonText = "OK",
+    VoidCallback? onPressed,
+  }) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -23,7 +21,10 @@ class SuccessReview {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.r),
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 24.h,
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -51,8 +52,6 @@ class SuccessReview {
                 buttonColor: AppColors.primaryColor,
                 onTap: () {
                   Navigator.pop(context); // Close current dialog
-
-
                 },
               ),
             ],

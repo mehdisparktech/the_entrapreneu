@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/posts_complete.dart';
 
 import '../../../../utils/constants/app_colors.dart';
@@ -48,12 +47,7 @@ class PostJobController extends GetxController {
   ];
 
   // Priority levels
-  final List<String> priorityLevels = [
-    'Emergency',
-    'High',
-    'Medium',
-    'Low',
-  ];
+  final List<String> priorityLevels = ['Emergency', 'High', 'Medium', 'Low'];
 
   @override
   void onClose() {
@@ -157,14 +151,14 @@ class PostJobController extends GetxController {
               SizedBox(height: 20.h),
               Text(
                 "Select Image",
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 20.h),
               ListTile(
-                leading: Icon(Icons.photo_library, color: AppColors.primaryColor),
+                leading: Icon(
+                  Icons.photo_library,
+                  color: AppColors.primaryColor,
+                ),
                 title: Text("Choose from Gallery"),
                 onTap: () => pickImageFromGallery(),
               ),
@@ -192,7 +186,8 @@ class PostJobController extends GetxController {
       lastDate: DateTime(2100),
     );
     if (picked != null) {
-      serviceDateController.text = "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
+      serviceDateController.text =
+          "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
     }
   }
 
@@ -211,8 +206,18 @@ class PostJobController extends GetxController {
 
   String _getMonthName(int month) {
     const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
     ];
     return months[month - 1];
   }
@@ -271,8 +276,6 @@ class PostJobController extends GetxController {
         );
       },
     );
-
-
 
     isLoading.value = true;
 

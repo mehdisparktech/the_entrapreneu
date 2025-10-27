@@ -6,7 +6,6 @@ import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
 import '../controller/history_details_controller.dart';
 import '../widgets/detail_row.dart';
@@ -211,7 +210,7 @@ class HistoryDetailsScreen extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
-          SizedBox(height: 12.h,),
+          SizedBox(height: 12.h),
           DetailRow(
             label: 'Service Status',
             valueWidget: StatusBadge(
@@ -253,7 +252,7 @@ class HistoryDetailsScreen extends StatelessWidget {
               buttonHeight: 48.h,
               titleSize: 16,
               isLoading: controller.isAcceptLoading.value,
-              onTap: (){
+              onTap: () {
                 confirmDialog();
               },
             ),
@@ -322,6 +321,7 @@ class HistoryDetailsScreen extends StatelessWidget {
         return StatusType.running;
     }
   }
+
   static void confirmDialog() {
     showDialog(
       context: Get.context!,
@@ -331,7 +331,8 @@ class HistoryDetailsScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Added spacing
             children: [
-              Expanded( // Added to prevent overflow
+              Expanded(
+                // Added to prevent overflow
                 child: CommonButton(
                   titleText: "No",
                   buttonColor: AppColors.grey,
@@ -340,7 +341,8 @@ class HistoryDetailsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8), // Added spacing between buttons
-              Expanded( // Added to prevent overflow
+              Expanded(
+                // Added to prevent overflow
                 child: CommonButton(
                   titleText: "Yes",
                   buttonColor: AppColors.red,
