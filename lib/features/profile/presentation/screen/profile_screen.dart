@@ -6,6 +6,7 @@ import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/other_widgets/item.dart';
 import 'package:the_entrapreneu/component/pop_up/common_pop_menu.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
+import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/features/auth/change_password/presentation/screen/change_password_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/profile_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/help_support_screen.dart';
@@ -45,9 +46,9 @@ class ProfileScreen extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         child: const ClipOval(
                           child: CommonImage(
-                            imageSrc: AppImages.profile,
+                            imageSrc: AppImages.profileImage,
                             size: 100,
-                            defaultImage: AppImages.profile,
+                            defaultImage: AppImages.profileImage,
                           ),
                         ),
                       ),
@@ -55,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
 
                     /// User Name here
                     const CommonText(
-                      text: LocalStorageKeys.myName,
+                      text: "Mehdi Hasan",
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       top: 16,
@@ -63,7 +64,9 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     CommonButton(
                       titleText: 'Be a Service Provider',
-                      onTap: () {},
+                      onTap: () {
+                        Get.toNamed(AppRoutes.serviceProviderInfo);
+                      },
                       buttonWidth: Get.width * 0.5,
                       titleSize: 12,
                     ),

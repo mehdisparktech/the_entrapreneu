@@ -122,6 +122,7 @@ class CreatePostBottomSheet extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {
+                  Get.back();
                  Get.toNamed(AppRoutes.postScreen);
                 },
                 child: Row(

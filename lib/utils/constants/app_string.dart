@@ -39,7 +39,7 @@ class AppString {
   static const String signIn = "Sign in";
   static const String doNotHaveAccount = "Don’t have an account";
   static const String signUp = "Sign up";
-  static const String alreadyHaveAccount = "Already have an account";
+  static const String alreadyHaveAccount = "Already have an account?";
   static const String fullName = "Full Name";
   static const String createYourAccount = "Registration";
   static const String otpVerify = "OTP Verification";

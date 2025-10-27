@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import '../../../../../../../utils/extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -46,16 +48,123 @@ class SignUpScreen extends StatelessWidget {
                     isLoading: controller.isLoading,
                     onTap: () => controller.signUpUser(signUpFormKey),
                   ),
+                  SizedBox(height: 20,),
+                  
+                  CommonText(
+                      text: "Or Sign Up With",
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.grey,
+                  ),
+                  
                   24.height,
 
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 48.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(color: Colors.grey,width: 2),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                blurRadius: 8,
+                                spreadRadius: 2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Apple Icon
+                              SvgPicture.asset(
+                                'assets/icons/googleicon.svg',
+                                height: 24.h,
+                                width: 24.w,
+                              ),
+                              SizedBox(width: 10.w),
+
+                              // Apple Text
+                              Text(
+                                'Google',
+                                style: TextStyle(
+                                  color: AppColors.textColorFirst,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12.h,),
+                      Expanded(
+                        child: Container(
+                          height: 48.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            borderRadius: BorderRadius.circular(12.r),
+                            border: Border.all(color: Colors.grey,width: 2),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                blurRadius: 8,
+                                spreadRadius: 2,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Apple Icon
+                              SvgPicture.asset(
+                                'assets/icons/apple_fons.svg',
+                                height: 24.h,
+                                width: 24.w,
+                              ),
+                              SizedBox(width: 10.w),
+
+                              // Apple Text
+                              Text(
+                                'Apple',
+                                style: TextStyle(
+                                  color: AppColors.textColorFirst,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 1,)
+
+
                   ///  Sign In Instruction here
-                  const AlreadyAccountRichText(),
-                  30.height,
+
                 ],
               ),
             ),
           );
         },
+      ),
+      bottomNavigationBar: Container(
+        height: 60.h,
+        child: Column(
+          children: [
+            const AlreadyAccountRichText(),
+          ],
+        ),
+
       ),
     );
   }

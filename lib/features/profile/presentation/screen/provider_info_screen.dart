@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/edit_service_provider_profile.dart';
 
+import '../../../../config/route/app_routes.dart';
 import '../controller/provider_info_controller.dart';
 
 class ServiceProviderInfoScreen extends StatelessWidget {
@@ -216,28 +218,13 @@ class ServiceProviderInfoScreen extends StatelessWidget {
               const SizedBox(height: 40),
 
               // Confirm Button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () => Get.to(EditProfileScreen()),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1E5AA8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    'Confirm',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
+              CommonButton(
+                  titleText: "Confirm",
+                buttonHeight: 40,
+                onTap: (){
+                    Get.toNamed(AppRoutes.profile);
+                },
+              )
             ],
           ),
         ),

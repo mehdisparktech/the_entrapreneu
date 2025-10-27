@@ -48,7 +48,7 @@ class _VerifyUserState extends State<VerifyUser> {
               key: formKey,
               child: Column(
                 children: [
-                  CommonImage(imageSrc: AppIcons.forgotPassword, size: 250),
+                  CommonImage(imageSrc: AppIcons.enterotp, size: 250),
                   20.height,
                   const CommonText(
                     text: AppString.otpVerify,
@@ -108,7 +108,7 @@ class _VerifyUserState extends State<VerifyUser> {
                   ),
 
                   /// Resent OTP or show Timer
-                  GestureDetector(
+                  /*GestureDetector(
                     onTap: controller.time == '00:00'
                         ? () {
                             controller.startTimer();
@@ -122,7 +122,30 @@ class _VerifyUserState extends State<VerifyUser> {
                       bottom: 20,
                       fontSize: 18,
                     ),
+                  ),*/
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      CommonText(
+                          text: "Didn't receive the code?",
+                        fontSize: 16,
+                        bottom: 40,
+                        maxLines: 3,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textPrimary,
+                      ),
+                      CommonText(
+                        text: "Resend",
+                        fontSize: 16,
+                        bottom: 40,
+                        fontWeight: FontWeight.w700,
+                        maxLines: 3,
+                        color: AppColors.primaryColor,
+                      ),
+                    ],
                   ),
+
 
                   ///  Submit Button here
                   CommonButton(

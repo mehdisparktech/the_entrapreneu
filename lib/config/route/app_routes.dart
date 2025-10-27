@@ -10,6 +10,8 @@ import 'package:the_entrapreneu/features/home/presentation/screen/home_nav_scree
 import 'package:the_entrapreneu/features/home/presentation/screen/home_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/post_job_screen.dart';
 import 'package:the_entrapreneu/features/message/presentation/screen/view_message.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/edit_post_screen.dart';
+import 'package:the_entrapreneu/features/profile/presentation/screen/edit_service_provider_profile.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/my_profile_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/provider_info_screen.dart';
@@ -66,6 +68,8 @@ class AppRoutes {
   static const String completeHistoryScreen = "/completeHistoryScreen";
   static const String serviceProviderInfo = "/serviceProviderInfo";
   static const String myProfile = "/my_profile_screen.dart";
+  static const String editProfileScreen = "/editProfileScreen";
+  static const String editPost = "/editPost";
 
   static List<GetPage> routes = [
     GetPage(name: splash, page: () => const SplashScreen()),
@@ -98,6 +102,7 @@ class AppRoutes {
     GetPage(name: reviewScreen, page: () => ReviewScreen()),
     GetPage(name: completeHistoryScreen, page: () => CompleteHistoryScreen()),
     GetPage(name: serviceProviderInfo, page: () => ServiceProviderInfoScreen()),
-    GetPage(name: myProfile, page: () => const MyProfileScreen()),
+    GetPage(name: editProfileScreen, page: () => EditProfileScreen()),
+    GetPage(name: editPost, page: () => EditPostScreen()),
   ];
 }

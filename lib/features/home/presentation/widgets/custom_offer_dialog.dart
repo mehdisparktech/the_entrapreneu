@@ -129,6 +129,7 @@ class CustomOfferRequestDialog {
                     text: description,
                     fontSize: 12.sp,
                     color: AppColors.textColorFirst,
+                    textAlign: TextAlign.start,
                     maxLines: 10,
                   ),
                   SizedBox(height: 20.h),

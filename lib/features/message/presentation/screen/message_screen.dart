@@ -190,7 +190,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                             text: "\$100",
                                             fontSize: 16.sp,
                                             fontWeight: FontWeight.w600,
-                                            color: Colors.orange,
+                                            color: AppColors.checkColor,
                                           ),
                                         ],
                                       ),

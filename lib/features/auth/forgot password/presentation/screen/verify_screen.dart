@@ -101,8 +101,8 @@ class _VerifyScreenState extends State<VerifyScreen> {
                   ),
                 ),
 
-                /// Resent OTP or show Timer
-                GestureDetector(
+
+                /*GestureDetector(
                   onTap: controller.time == '00:00'
                       ? () {
                           controller.startTimer();
@@ -117,6 +117,28 @@ class _VerifyScreenState extends State<VerifyScreen> {
                     bottom: 20,
                     fontSize: 16,
                   ),
+                ),*/
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CommonText(
+                      text: "Didn't receive the code?",
+                      fontSize: 16,
+                      bottom: 40,
+                      maxLines: 3,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.textPrimary,
+                    ),
+                    CommonText(
+                      text: "Resend",
+                      fontSize: 16,
+                      bottom: 40,
+                      fontWeight: FontWeight.w700,
+                      maxLines: 3,
+                      color: AppColors.primaryColor,
+                    ),
+                  ],
                 ),
 
                 ///  Submit Button here
