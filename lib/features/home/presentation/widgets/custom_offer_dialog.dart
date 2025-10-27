@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-
 import '../../../../component/button/common_button.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
 
 class CustomOfferRequestDialog {
   static void show(
-      BuildContext context, {
-        required String userName,
-        required String userRole,
-        required String userImage,
-        required double rating,
-        required int reviewCount,
-        required String description,
-        required String serviceDate,
-        required String serviceTime,
-        required String budget,
-        VoidCallback? onAccept,
-        VoidCallback? onReject,
-      }) {
+    BuildContext context, {
+    required String userName,
+    required String userRole,
+    required String userImage,
+    required double rating,
+    required int reviewCount,
+    required String description,
+    required String serviceDate,
+    required String serviceTime,
+    required String budget,
+    VoidCallback? onAccept,
+    VoidCallback? onReject,
+  }) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -55,7 +53,10 @@ class CustomOfferRequestDialog {
 
                   // User Info Section
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 12.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 12.h,
+                    ),
                     decoration: BoxDecoration(
                       color: AppColors.card,
                       borderRadius: BorderRadius.circular(12.r),
@@ -141,7 +142,10 @@ class CustomOfferRequestDialog {
                   ),
                   SizedBox(height: 8.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
+                    ),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppColors.white,
@@ -174,7 +178,10 @@ class CustomOfferRequestDialog {
                   ),
                   SizedBox(height: 8.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
+                    ),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppColors.white,
@@ -207,7 +214,10 @@ class CustomOfferRequestDialog {
                   ),
                   SizedBox(height: 8.h),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 12.w,
+                      vertical: 8.h,
+                    ),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       color: AppColors.white,
@@ -252,7 +262,11 @@ class CustomOfferRequestDialog {
                           buttonRadius: 8,
                           onTap: () {
                             Navigator.pop(context);
-                            showCustomDialog(context, title: "Start Payment System.Fully Backend Development Process.");
+                            showCustomDialog(
+                              context,
+                              title:
+                                  "Start Payment System.Fully Backend Development Process.",
+                            );
                           },
                         ),
                       ),
@@ -266,7 +280,13 @@ class CustomOfferRequestDialog {
       },
     );
   }
-  static void showCustomDialog(BuildContext context, {required String title, String? message, String buttonText = "OK"}) {
+
+  static void showCustomDialog(
+    BuildContext context, {
+    required String title,
+    String? message,
+    String buttonText = "OK",
+  }) {
     showDialog(
       context: context,
 
@@ -276,27 +296,28 @@ class CustomOfferRequestDialog {
             borderRadius: BorderRadius.circular(16),
           ),
           title: CommonText(
-              text: title,
-              fontSize: 24.sp,
-              fontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
-              color: AppColors.textColorFirst,
+            text: title,
+            fontSize: 24.sp,
+            fontWeight: FontWeight.w600,
+            textAlign: TextAlign.center,
+            color: AppColors.textColorFirst,
             maxLines: 3,
           ),
-          content: message != null ? Text(message, style: TextStyle(fontSize: 14)) : null,
+          content: message != null
+              ? Text(message, style: TextStyle(fontSize: 14))
+              : null,
           actions: [
             CommonButton(
-                titleText: "Done",
-                buttonRadius: 8,
-                buttonColor: AppColors.primaryColor,
-                onTap: () {
-                  Navigator.pop(context);
-                },
-            )
+              titleText: "Done",
+              buttonRadius: 8,
+              buttonColor: AppColors.primaryColor,
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
           ],
         );
       },
     );
   }
-
 }

@@ -7,13 +7,9 @@ import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
 import '../../../../utils/constants/app_images.dart';
-import '../../../notifications/presentation/screen/notifications_screen.dart';
 
 class HomeDetails extends StatelessWidget {
-  const HomeDetails({
-    super.key,
-    required this.notificationCount,
-  });
+  const HomeDetails({super.key, required this.notificationCount});
 
   final int notificationCount;
 
@@ -47,7 +43,7 @@ class HomeDetails extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ],
-            )
+            ),
           ],
         ),
         // Notification icon with badge
@@ -57,11 +53,8 @@ class HomeDetails extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
-                onTap: ()=>Get.toNamed(AppRoutes.notifications),
-                child: Icon(
-                  Icons.notifications_outlined,
-                  size: 28,
-                ),
+                onTap: () => Get.toNamed(AppRoutes.notifications),
+                child: Icon(Icons.notifications_outlined, size: 28),
               ),
             ),
             if (notificationCount > 0)

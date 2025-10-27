@@ -5,8 +5,6 @@ import 'package:the_entrapreneu/component/app_bar/custom_appbar.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
-import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
-import 'package:the_entrapreneu/features/home/presentation/widgets/confirm_message_dialog.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/message_details_dialog.dart';
 import 'package:the_entrapreneu/features/message/presentation/controller/view_message_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
@@ -38,13 +36,14 @@ class ViewMessageScreen extends StatelessWidget {
                 //
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomAppBar(
-                    title: "View Post",
-                  ),
+                  child: CustomAppBar(title: "View Post"),
                 ),
                 // User Info Card
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 20),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
                   child: Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -58,12 +57,12 @@ class ViewMessageScreen extends StatelessWidget {
 
                         // Post Image
                         ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: CommonImage(
-                              imageSrc: "assets/images/view_image_pic.png",
-                              height: 171.h,
-                              width: 330.w,
-                            )
+                          borderRadius: BorderRadius.circular(12.r),
+                          child: CommonImage(
+                            imageSrc: "assets/images/view_image_pic.png",
+                            height: 171.h,
+                            width: 330.w,
+                          ),
                         ),
                         SizedBox(height: 16.h),
 
@@ -136,24 +135,24 @@ class ViewMessageScreen extends StatelessWidget {
                   title: "Requirements",
                   items: post.requirements,
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 20.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CommonButton(
-                      titleText: "Running",
-                      buttonRadius: 10,
-                      buttonColor: Colors.transparent,
-                      titleColor: AppColors.primaryColor,
-                      borderColor: AppColors.primaryColor,
-                      onTap: () => MessageDetailsDialog.show(
-                          context,
-                          onSend: (){
-                            Get.back();
-                          }
-                      )
+                    titleText: "Running",
+                    buttonRadius: 10,
+                    buttonColor: Colors.transparent,
+                    titleColor: AppColors.primaryColor,
+                    borderColor: AppColors.primaryColor,
+                    onTap: () => MessageDetailsDialog.show(
+                      context,
+                      onSend: () {
+                        Get.back();
+                      },
+                    ),
                   ),
                 ),
-                SizedBox(height: 20.h,),
+                SizedBox(height: 20.h),
               ],
             ),
           ),
@@ -196,11 +195,7 @@ class ViewMessageScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            text: title,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 4.h),
           CommonText(
             text: content,
@@ -214,7 +209,10 @@ class ViewMessageScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildListSection({required String title, required List<String> items}) {
+  Widget _buildListSection({
+    required String title,
+    required List<String> items,
+  }) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -225,39 +223,37 @@ class ViewMessageScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CommonText(
-            text: title,
-            fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 12.h),
-          ...items.map((item) => Padding(
-            padding: EdgeInsets.only(bottom: 8.h),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(top: 6.h, right: 8.w),
-                  width: 6.w,
-                  height: 6.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    shape: BoxShape.circle,
+          ...items.map(
+            (item) => Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 6.h, right: 8.w),
+                    width: 6.w,
+                    height: 6.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryColor,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                // ✅ Flexible দিয়ে wrap করো
-                Flexible(
-                  child: CommonText(
-                    text: item,
-                    fontSize: 14.sp,
-                    color: Colors.grey,
-                    maxLines: 8,
-                    textAlign: TextAlign.start,
+                  // ✅ Flexible দিয়ে wrap করো
+                  Flexible(
+                    child: CommonText(
+                      text: item,
+                      fontSize: 14.sp,
+                      color: Colors.grey,
+                      maxLines: 8,
+                      textAlign: TextAlign.start,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ),
         ],
       ),
     );

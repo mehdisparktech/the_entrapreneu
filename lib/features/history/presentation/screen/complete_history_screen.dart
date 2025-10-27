@@ -7,9 +7,7 @@ import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/features/history/presentation/controller/complete_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
-import 'package:the_entrapreneu/utils/constants/app_images.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
-import '../controller/history_details_controller.dart';
 import '../widgets/detail_row.dart';
 import '../widgets/status_badge.dart';
 
@@ -78,9 +76,9 @@ class CompleteHistoryScreen extends StatelessWidget {
   }
 
   Widget _buildServiceInfoCard(
-      dynamic request,
-      CompleteHistoryController controller,
-      ) {
+    dynamic request,
+    CompleteHistoryController controller,
+  ) {
     return Container(
       padding: EdgeInsets.all(10.w),
       decoration: BoxDecoration(
@@ -135,7 +133,7 @@ class CompleteHistoryScreen extends StatelessWidget {
                   children: [
                     ...List.generate(
                       5,
-                          (index) =>
+                      (index) =>
                           Icon(Icons.star, color: Colors.amber, size: 16.sp),
                     ),
                     CommonText(
@@ -186,9 +184,9 @@ class CompleteHistoryScreen extends StatelessWidget {
   }
 
   Widget _buildDetailsCard(
-      dynamic request,
-      CompleteHistoryController controller,
-      ) {
+    dynamic request,
+    CompleteHistoryController controller,
+  ) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -212,7 +210,7 @@ class CompleteHistoryScreen extends StatelessWidget {
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
-          SizedBox(height: 12.h,),
+          SizedBox(height: 12.h),
           DetailRow(
             label: 'Service Status',
             valueWidget: StatusBadge(
@@ -230,7 +228,7 @@ class CompleteHistoryScreen extends StatelessWidget {
 
   Widget _buildActionButtons(CompleteHistoryController controller) {
     return Obx(
-          () => Row(
+      () => Row(
         children: [
           Expanded(
             child: CommonButton(
@@ -251,9 +249,9 @@ class CompleteHistoryScreen extends StatelessWidget {
   }
 
   Widget _buildRejectReasonField(
-      CompleteHistoryController controller,
-      BuildContext context,
-      ) {
+    CompleteHistoryController controller,
+    BuildContext context,
+  ) {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -284,7 +282,7 @@ class CompleteHistoryScreen extends StatelessWidget {
             SizedBox(height: 10.h),
             CommonText(
               text:
-              'Sorry, I am unable to accept this order due to a scheduling conflict. Please reschedule or choose another available provider.',
+                  'Sorry, I am unable to accept this order due to a scheduling conflict. Please reschedule or choose another available provider.',
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: AppColors.textPrimary,
@@ -309,6 +307,7 @@ class CompleteHistoryScreen extends StatelessWidget {
         return StatusType.running;
     }
   }
+
   static void confirmDialog() {
     showDialog(
       context: Get.context!,
@@ -318,7 +317,8 @@ class CompleteHistoryScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Added spacing
             children: [
-              Expanded( // Added to prevent overflow
+              Expanded(
+                // Added to prevent overflow
                 child: CommonButton(
                   titleText: "No",
                   buttonColor: AppColors.grey,
@@ -327,7 +327,8 @@ class CompleteHistoryScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8), // Added spacing between buttons
-              Expanded( // Added to prevent overflow
+              Expanded(
+                // Added to prevent overflow
                 child: CommonButton(
                   titleText: "Yes",
                   buttonColor: AppColors.red,

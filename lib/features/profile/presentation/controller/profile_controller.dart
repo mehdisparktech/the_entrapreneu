@@ -28,6 +28,10 @@ class ProfileController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController numberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController aboutController = TextEditingController();
+  TextEditingController dateOfBirthController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
 
   /// select image function here
   getProfileImage() async {
@@ -40,6 +44,40 @@ class ProfileController extends GetxController {
     selectedLanguage = languages[index];
     update();
     Get.back();
+  }
+
+  /// select date of birth function here
+  Future<void> selectDateOfBirth() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: DateTime(2000, 1, 1),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
+    );
+    
+    if (pickedDate != null) {
+      dateOfBirthController.text = "${pickedDate.day.toString().padLeft(2, '0')} ${_getMonthName(pickedDate.month)} ${pickedDate.year}";
+      update();
+    }
+  }
+
+  /// Get month name
+  String _getMonthName(int month) {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+    return months[month - 1];
+  }
+
+  /// select gender function here
+  void selectGender(String gender) {
+    genderController.text = gender;
+    update();
+  }
+
+  /// select address function here
+  Future<void> selectAddress() async {
+    // This would typically open a location picker
+    // For now, we'll just allow manual input
   }
 
   /// update profile function here

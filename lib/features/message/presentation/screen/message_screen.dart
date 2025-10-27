@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
@@ -72,10 +70,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     size: 24.sp,
                   ),
                 ),
-                title: CommonText(
-                  text: "Choose from Gallery",
-                  fontSize: 16.sp,
-                ),
+                title: CommonText(text: "Choose from Gallery", fontSize: 16.sp),
                 onTap: () async {
                   Get.back();
                   await MessageController.instance.pickImageFromGallery();
@@ -95,10 +90,7 @@ class _MessageScreenState extends State<MessageScreen> {
                     size: 24.sp,
                   ),
                 ),
-                title: CommonText(
-                  text: "Take Photo",
-                  fontSize: 16.sp,
-                ),
+                title: CommonText(text: "Take Photo", fontSize: 16.sp),
                 onTap: () async {
                   Get.back();
                   await MessageController.instance.pickImageFromCamera();
@@ -138,135 +130,140 @@ class _MessageScreenState extends State<MessageScreen> {
           body: controller.isLoading
               ? const Center(child: CircularProgressIndicator())
               : SingleChildScrollView(
-            controller: controller.scrollController,
-            padding: EdgeInsets.only(bottom: 20.h),
-            child: Column(
-              children: [
-                /// Banner Section
-                InkWell(
-                  onTap: () => Get.toNamed(AppRoutes.createPost),
-                  child: Container(
-                    margin: EdgeInsets.all(16.w),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(12.r),
+                  controller: controller.scrollController,
+                  padding: EdgeInsets.only(bottom: 20.h),
+                  child: Column(
+                    children: [
+                      /// Banner Section
+                      InkWell(
+                        onTap: () => Get.toNamed(AppRoutes.createPost),
+                        child: Container(
+                          margin: EdgeInsets.all(16.w),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12.r),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
                           ),
-                          child: CommonImage(
-                            imageSrc: "assets/images/view_image_pic.png",
-                            width: double.infinity,
-                            height: 170.h,
-                            fill: BoxFit.cover,
-                          ),
-                        ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12.r),
+                                ),
+                                child: CommonImage(
+                                  imageSrc: "assets/images/view_image_pic.png",
+                                  width: double.infinity,
+                                  height: 170.h,
+                                  fill: BoxFit.cover,
+                                ),
+                              ),
 
-                        Padding(
-                          padding: EdgeInsets.all(12.w),
-                          child: InkWell(
-                            onTap: (){
-                              Get.toNamed(AppRoutes.viewMessageScreen);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    CommonText(
-                                      text:
-                                      "I Need Experienced Plumber",
-                                      fontSize: 14.sp,
-                                      color: AppColors.textColorFirst,
-                                      fontWeight: FontWeight.w600,
-                                      maxLines: 2,
-                                    ),
-                                    CommonText(
-                                      text: "\$100",
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.orange,
-                                    ),
-                                  ],
-                                ),
-                                6.height,
-                                CommonText(
-                                  text: "California, Fresno",
-                                  fontSize: 12.sp,
-                                  color: AppColors.textColorFirst,
-                                ),
-                                10.height,
-                                GestureDetector(
-                                  onTap: () =>Get.toNamed(AppRoutes.viewMessageScreen),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 12.w,
-                                      vertical: 6.h,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(6.r),
-                                    ),
-                                    child: CommonText(
-                                      text: "Running",
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
+                              Padding(
+                                padding: EdgeInsets.all(12.w),
+                                child: InkWell(
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.viewMessageScreen);
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          CommonText(
+                                            text: "I Need Experienced Plumber",
+                                            fontSize: 14.sp,
+                                            color: AppColors.textColorFirst,
+                                            fontWeight: FontWeight.w600,
+                                            maxLines: 2,
+                                          ),
+                                          CommonText(
+                                            text: "\$100",
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.orange,
+                                          ),
+                                        ],
+                                      ),
+                                      6.height,
+                                      CommonText(
+                                        text: "California, Fresno",
+                                        fontSize: 12.sp,
+                                        color: AppColors.textColorFirst,
+                                      ),
+                                      10.height,
+                                      GestureDetector(
+                                        onTap: () => Get.toNamed(
+                                          AppRoutes.viewMessageScreen,
+                                        ),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 12.w,
+                                            vertical: 6.h,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.primaryColor,
+                                            borderRadius: BorderRadius.circular(
+                                              6.r,
+                                            ),
+                                          ),
+                                          child: CommonText(
+                                            text: "Running",
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+
+                      /// Messages Section
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        reverse: true,
+                        itemCount: controller.isMoreLoading
+                            ? controller.messages.length + 1
+                            : controller.messages.length,
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        itemBuilder: (context, index) {
+                          if (index < controller.messages.length) {
+                            ChatMessageModel message =
+                                controller.messages[index];
+                            return ChatBubbleMessage(
+                              index: index,
+                              image: message.image,
+                              time: message.time,
+                              text: message.text,
+                              isMe: message.isMe,
+                              onTap: () {},
+                            );
+                          } else {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ),
-
-                /// Messages Section
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  reverse: true,
-                  itemCount: controller.isMoreLoading
-                      ? controller.messages.length + 1
-                      : controller.messages.length,
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  itemBuilder: (context, index) {
-                    if (index < controller.messages.length) {
-                      ChatMessageModel message =
-                      controller.messages[index];
-                      return ChatBubbleMessage(
-                        index: index,
-                        image: message.image,
-                        time: message.time,
-                        text: message.text,
-                        isMe: message.isMe,
-                        onTap: () {},
-                      );
-                    } else {
-                      return const Center(
-                          child: CircularProgressIndicator());
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
 
           /// Bottom Navigation Bar
           bottomNavigationBar: Container(
@@ -310,10 +307,7 @@ class _MessageScreenState extends State<MessageScreen> {
                           ),
                         ),
                       ),
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.black,
-                      ),
+                      style: TextStyle(fontSize: 14.sp, color: Colors.black),
                       onSubmitted: (p0) => controller.addNewMessage(),
                     ),
                   ),
@@ -327,11 +321,7 @@ class _MessageScreenState extends State<MessageScreen> {
                       color: AppColors.primaryColor,
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                      size: 20.sp,
-                    ),
+                    child: Icon(Icons.send, color: Colors.white, size: 20.sp),
                   ),
                 ),
               ],
