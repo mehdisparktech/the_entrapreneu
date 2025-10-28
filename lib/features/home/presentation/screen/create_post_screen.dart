@@ -5,14 +5,23 @@ import 'package:the_entrapreneu/component/app_bar/custom_appbar.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
-import 'package:the_entrapreneu/features/home/presentation/data/create_post_controller.dart';
+import 'package:the_entrapreneu/config/api/api_end_point.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/message_details_dialog.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
+
+import '../controller/create_post_controller.dart';
 
 class PostDetailsScreen extends StatelessWidget {
   PostDetailsScreen({super.key});
 
   final CreatePostController controller = Get.put(CreatePostController());
+
+  String _getImageUrl(String imagePath) {
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    return 'https://your-api-base-url.com$imagePath'; // Replace with your actual base URL
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +42,15 @@ class PostDetailsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: CustomAppBar(title: "View Post"),
                 ),
+
                 // User Info Card
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 20,
                   ),
                   child: Container(
                     padding: EdgeInsets.all(16.w),
@@ -58,9 +66,7 @@ class PostDetailsScreen extends StatelessWidget {
                           children: [
                             CircleAvatar(
                               radius: 20.r,
-                              backgroundImage: AssetImage(
-                                "assets/images/profile_image.png",
-                              ),
+                              backgroundImage: NetworkImage(post.user.image),
                               backgroundColor: Colors.grey[300],
                             ),
                             SizedBox(width: 12.w),
@@ -69,7 +75,7 @@ class PostDetailsScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CommonText(
-                                    text: post.userName,
+                                    text: post.user.name,
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -82,19 +88,7 @@ class PostDetailsScreen extends StatelessWidget {
                                       ),
                                       SizedBox(width: 6),
                                       CommonText(
-                                        text: "12 hours ago",
-                                        fontSize: 12.sp,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(width: 18.h),
-                                      Icon(
-                                        Icons.location_on_outlined,
-                                        size: 14.sp,
-                                        color: Colors.grey,
-                                      ),
-                                      SizedBox(width: 6),
-                                      CommonText(
-                                        text: "Dhaka, Bangladesh",
+                                        text: controller.getTimeAgo(post.createdAt),
                                         fontSize: 12.sp,
                                         color: Colors.grey,
                                       ),
@@ -110,11 +104,16 @@ class PostDetailsScreen extends StatelessWidget {
                         // Post Image
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12.r),
-                          child: CommonImage(
-                            imageSrc: "assets/images/view_image_pic.png",
+                          child: /*CommonImage(
+                            imageSrc: _getImageUrl(post.image),
                             height: 171.h,
                             width: 330.w,
-                          ),
+                            imageType: ImageType.network,
+                          ),*/
+                          Image.network(_getImageUrl(ApiEndPoint.imageUrl+post.image),height: 171.h,
+                            width: 330.w,
+                            fit: BoxFit.fill,
+                          )
                         ),
                         SizedBox(height: 16.h),
 
@@ -122,30 +121,25 @@ class PostDetailsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CommonText(
-                              text: post.title,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: CommonText(
+                                text: post.title,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold,
+                                textAlign: TextAlign.start,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             CommonText(
-                              text: post.price,
+                              text: '\$${post.price}',
                               fontSize: 20.sp,
                               fontWeight: FontWeight.bold,
                               color: Color(0xffFF5B26),
                             ),
                           ],
                         ),
-                        SizedBox(height: 8.h),
-
-                        // Location
-                        CommonText(
-                          text: post.location,
-                          fontSize: 12.sp,
-                          color: AppColors.textColorFirst,
-                          fontWeight: FontWeight.w400,
-                        ),
                         SizedBox(height: 16.h),
-                        // Category and Subcategory
                       ],
                     ),
                   ),
@@ -157,9 +151,15 @@ class PostDetailsScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _buildInfoChip(Icons.category, post.category),
+                          _buildInfoChip(
+                            Icons.category,
+                            post.category ?? 'No Category',
+                          ),
                           SizedBox(width: 12.w),
-                          _buildInfoChip(Icons.work, post.subCategory),
+                          _buildInfoChip(
+                            Icons.work,
+                            'No Subcategory',
+                          ),
                         ],
                       ),
                       SizedBox(height: 12.h),
@@ -167,9 +167,15 @@ class PostDetailsScreen extends StatelessWidget {
                       // Date and Time
                       Row(
                         children: [
-                          _buildInfoChip(Icons.calendar_today, post.date),
+                          _buildInfoChip(
+                            Icons.calendar_today,
+                            controller.getFormattedDate(post.serviceDate),
+                          ),
                           SizedBox(width: 12.w),
-                          _buildInfoChip(Icons.access_time, post.time),
+                          _buildInfoChip(
+                            Icons.access_time,
+                            post.serviceTime,
+                          ),
                         ],
                       ),
                     ],
@@ -182,11 +188,13 @@ class PostDetailsScreen extends StatelessWidget {
                   content: post.description,
                 ),
 
-                // Requirements Section
-                _buildListSection(
-                  title: "Requirements",
-                  items: post.requirements,
-                ),
+                // Skills Section (if user has skills)
+                if (post.user.skill.isNotEmpty)
+                  _buildListSection(
+                    title: "Provider Skills",
+                    items: post.user.skill,
+                  ),
+
                 SizedBox(height: 20.h),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -198,6 +206,7 @@ class PostDetailsScreen extends StatelessWidget {
                       context,
                       onSend: () {
                         Get.back();
+                        controller.startConversation();
                       },
                     ),
                   ),
@@ -250,7 +259,7 @@ class PostDetailsScreen extends StatelessWidget {
           CommonText(
             text: content,
             fontSize: 14.sp,
-            maxLines: 8,
+            maxLines: 20,
             color: Colors.grey,
             textAlign: TextAlign.start,
           ),
@@ -276,7 +285,7 @@ class PostDetailsScreen extends StatelessWidget {
           CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 12.h),
           ...items.map(
-            (item) => Padding(
+                (item) => Padding(
               padding: EdgeInsets.only(bottom: 8.h),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,7 +299,6 @@ class PostDetailsScreen extends StatelessWidget {
                       shape: BoxShape.circle,
                     ),
                   ),
-                  // ✅ Flexible দিয়ে wrap করো
                   Flexible(
                     child: CommonText(
                       text: item,

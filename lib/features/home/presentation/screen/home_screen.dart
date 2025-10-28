@@ -8,13 +8,13 @@ import 'package:the_entrapreneu/utils/extensions/custom_search.dart';
 
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
+import '../controller/home_controller.dart';
 import '../widgets/home_details.dart';
 import '../widgets/home_items.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  // Example: notification count
   final int notificationCount = 5;
 
   void _showCreatePostBottomSheet(BuildContext context) {
@@ -32,47 +32,85 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: Container(
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  HomeDetails(notificationCount: notificationCount),
-                  SizedBox(height: 20.h),
-                  CustomSearchField(),
-                  SizedBox(height: 20.h),
-                  CommonButton(
-                    titleText: "Create Post",
-                    buttonRadius: 100,
-                    buttonHeight: 40,
-                    onTap: () => _showCreatePostBottomSheet(context),
-                  ),
-                  SizedBox(height: 24.h),
-                  GridView.builder(
-                    itemCount: 10,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10.w,
-                      mainAxisSpacing: 10.h,
-                      childAspectRatio: 0.95,
-                    ),
-                    itemBuilder: (context, index) {
-                      return HomeItem(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.createPost);
+      body: GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (controller) {
+          return Container(
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      HomeDetails(notificationCount: notificationCount),
+                      SizedBox(height: 20.h),
+                      CustomSearchField(
+                        onChanged: (value) {
+                          controller.searchPosts(value);
                         },
-                      );
-                    },
+                      ),
+                      SizedBox(height: 20.h),
+                      CommonButton(
+                        titleText: "Create Post",
+                        buttonRadius: 100,
+                        buttonHeight: 40,
+                        onTap: () => _showCreatePostBottomSheet(context),
+                      ),
+                      SizedBox(height: 24.h),
+
+                      // Loading indicator
+                      if (controller.isLoading)
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 50.h),
+                            child: CircularProgressIndicator(
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                        )
+                      // Empty state
+                      else if (controller.filteredPosts.isEmpty)
+                        Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 50.h),
+                            child: CommonText(
+                              text: controller.searchQuery.isEmpty
+                                  ? "No posts available"
+                                  : "No results found",
+                              fontSize: 16.sp,
+                              color: AppColors.textColorFirst,
+                            ),
+                          ),
+                        )
+                      // Posts grid
+                      else
+                        GridView.builder(
+                          itemCount: controller.filteredPosts.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 10.w,
+                            mainAxisSpacing: 10.h,
+                            childAspectRatio: 0.95,
+                          ),
+                          itemBuilder: (context, index) {
+                            final post = controller.filteredPosts[index];
+                            return HomeItem(
+                              post: post,
+                              onTap: () {
+                                Get.toNamed(AppRoutes.createPost, arguments: post.id);
+                              },
+                            );
+                          },
+                        ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
@@ -104,7 +142,6 @@ class CreatePostBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title
           CommonText(
             text: "Create Post",
             fontSize: 20.sp,
@@ -112,8 +149,6 @@ class CreatePostBottomSheet extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           SizedBox(height: 20.h),
-
-          // Category List
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -123,7 +158,7 @@ class CreatePostBottomSheet extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   Get.back();
-                 Get.toNamed(AppRoutes.postScreen);
+                  Get.toNamed(AppRoutes.postScreen);
                 },
                 child: Row(
                   children: [

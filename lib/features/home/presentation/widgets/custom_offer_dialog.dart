@@ -6,19 +6,19 @@ import '../../../../utils/constants/app_colors.dart';
 
 class CustomOfferRequestDialog {
   static void show(
-    BuildContext context, {
-    required String userName,
-    required String userRole,
-    required String userImage,
-    required double rating,
-    required int reviewCount,
-    required String description,
-    required String serviceDate,
-    required String serviceTime,
-    required String budget,
-    VoidCallback? onAccept,
-    VoidCallback? onReject,
-  }) {
+      BuildContext context, {
+        required String userName,
+        required String userRole,
+        required String userImage,
+        required double rating,
+        required int reviewCount,
+        required String description,
+        required String serviceDate,
+        required String serviceTime,
+        required String budget,
+        VoidCallback? onAccept,
+        VoidCallback? onReject,
+      }) {
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -266,7 +266,7 @@ class CustomOfferRequestDialog {
                             showCustomDialog(
                               context,
                               title:
-                                  "Start Payment System.Fully Backend Development Process.",
+                              "Start Payment System.Fully Backend Development Process.",
                             );
                           },
                         ),
@@ -283,11 +283,11 @@ class CustomOfferRequestDialog {
   }
 
   static void showCustomDialog(
-    BuildContext context, {
-    required String title,
-    String? message,
-    String buttonText = "OK",
-  }) {
+      BuildContext context, {
+        required String title,
+        String? message,
+        String buttonText = "OK",
+      }) {
     showDialog(
       context: context,
 

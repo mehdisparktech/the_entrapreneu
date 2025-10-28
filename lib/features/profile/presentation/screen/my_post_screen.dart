@@ -1,81 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:the_entrapreneu/component/app_bar/custom_appbar.dart';
-import 'package:the_entrapreneu/features/profile/presentation/widgets/my_post.dart';
-import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
-import '../../../../component/button/common_button.dart';
 import '../../../../config/route/app_routes.dart';
-import '../../../../utils/constants/app_colors.dart';
-import '../../../home/presentation/widgets/home_items.dart';
+import '../controller/post_controller.dart';
+import '../widgets/my_post.dart';
 
 class MyPostScreen extends StatelessWidget {
   const MyPostScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final MyPostController controller = Get.put(MyPostController());
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Post"),
+        title: const Text("My Post"),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: GridView.builder(
-            itemCount: 10,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 10.w,
-              mainAxisSpacing: 10.h,
-              childAspectRatio: 0.95,
-            ),
-            itemBuilder: (context, index) {
-              return PostCard(onTap: (){
-                Get.toNamed(AppRoutes.createPost);
-              });
-            },
-          ),
-        ),
-      ),
-    );
-  }
-  static void confirmDialog() {
-    showDialog(
-      context: Get.context!,
-      builder: (context) => AlertDialog(
-        title: const Text('Are you sure you want to Complete This Order?'),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Added spacing
-            children: [
-              Expanded(
-                // Added to prevent overflow
-                child: CommonButton(
-                  titleText: "No",
-                  buttonColor: AppColors.grey,
-                  titleColor: Colors.black,
-                  onTap: () => Get.back(),
-                ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        if (controller.posts.isEmpty) {
+          return const Center(
+            child: Text("No posts found"),
+          );
+        }
+
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: GridView.builder(
+              itemCount: controller.posts.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10.w,
+                mainAxisSpacing: 10.h,
+                childAspectRatio: 0.95,
               ),
-              const SizedBox(width: 8), // Added spacing between buttons
-              Expanded(
-                // Added to prevent overflow
-                child: CommonButton(
-                  titleText: "Yes",
-                  buttonColor: AppColors.red,
-                  titleColor: Colors.white,
+              itemBuilder: (context, index) {
+                var post = controller.posts[index];
+                return PostCard(
+                  postData: post,
                   onTap: () {
-                    Get.toNamed(AppRoutes.reviewScreen);
+                    Get.toNamed(AppRoutes.createPost, arguments: post.id);
                   },
-                ),
-              ),
-            ],
+                  onDelete: (postId) {
+                    controller.deletePost(postId);
+                  },
+                  onEdit: (postId) {
+                    Get.toNamed(AppRoutes.editPost, arguments: post);
+                  },
+                );
+              },
+            ),
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }

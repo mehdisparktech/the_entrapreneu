@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:the_entrapreneu/features/home/presentation/data/post_model.dart';
+
+import '../../../home/data/post_model.dart';
 
 class ViewMessageController extends GetxController {
   var isLoading = true.obs;

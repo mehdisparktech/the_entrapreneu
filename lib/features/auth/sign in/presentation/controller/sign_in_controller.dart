@@ -48,6 +48,8 @@ class SignInController extends GetxController {
       LocalStorage.setBool(LocalStorageKeys.isLogIn, LocalStorage.isLogIn);
       LocalStorage.setString(LocalStorageKeys.token, LocalStorage.token);
 
+      getUserData();
+
       Get.toNamed(AppRoutes.homeNav);
 
       emailController.clear();

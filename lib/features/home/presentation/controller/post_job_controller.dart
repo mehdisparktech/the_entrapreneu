@@ -3,9 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/posts_complete.dart';
-
+import '../../../../services/api/api_service.dart';
 import '../../../../utils/constants/app_colors.dart';
+//import '../../../../core/service/api_service.dart';
+import '../../../../config/api/api_end_point.dart';
 
 class PostJobController extends GetxController {
   final titleController = TextEditingController();
@@ -19,35 +22,36 @@ class PostJobController extends GetxController {
   var selectedImageName = ''.obs;
 
   var selectedCategory = ''.obs;
+  var selectedCategoryId = ''.obs;
   var selectedSubCategory = ''.obs;
   var selectedPricingOption = ''.obs; // 'pay', 'accepting_offer', 'free'
   var selectedPriorityLevel = ''.obs;
 
+  var latitude = 0.0.obs;
+  var longitude = 0.0.obs;
+
   var isLoading = false.obs;
+  var isCategoryLoading = false.obs;
 
   final ImagePicker _picker = ImagePicker();
 
-  // Category options
-  final List<String> categories = [
-    'Home & Property',
-    'Automotive Help',
-    'Vehicles & Transport',
-    'Personal Help',
-    'Business & Tech',
-    'Miscellanies',
-  ];
+  // Category options - will be populated from API
+  var categories = <String>[].obs;
+  var categoryMap = <String, String>{}.obs; // name -> id mapping
+  var categorySubCategoryMap = <String, List<String>>{}.obs; // id -> subcategories
 
-  // Sub category options
-  final List<String> subCategories = [
-    'Plumbing',
-    'Electrical',
-    'Carpentry',
-    'Painting',
-    'Cleaning',
-  ];
+  // Sub category options - will be updated based on selected category
+  var subCategories = <String>[].obs;
 
   // Priority levels
-  final List<String> priorityLevels = ['Emergency', 'High', 'Medium', 'Low'];
+  final List<String> priorityLevels = ['EMERGENCY', 'HIGH', 'MEDIUM', 'LOW'];
+
+  @override
+  void onInit() {
+    super.onInit();
+    _getCurrentLocation();
+    fetchCategories();
+  }
 
   @override
   void onClose() {
@@ -58,6 +62,133 @@ class PostJobController extends GetxController {
     serviceTimeController.dispose();
     priceController.dispose();
     super.onClose();
+  }
+
+  /// Get current location
+  Future<void> _getCurrentLocation() async {
+    try {
+      // Check if location services are enabled
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        Get.snackbar(
+          'Error',
+          'Location services are disabled. Please enable them.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      // Check location permission
+      LocationPermission permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          Get.snackbar(
+            'Error',
+            'Location permission denied',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+          return;
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        Get.snackbar(
+          'Error',
+          'Location permissions are permanently denied',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+        return;
+      }
+
+      // Get current position
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      latitude.value = position.latitude;
+      longitude.value = position.longitude;
+
+      print('Location obtained: ${latitude.value}, ${longitude.value}');
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to get location: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  /// Fetch categories from API
+  Future<void> fetchCategories() async {
+    try {
+      isCategoryLoading.value = true;
+
+      final response = await ApiService.get(
+        ApiEndPoint.category, // Replace with your actual endpoint
+        header: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['success'] == true) {
+        final List<dynamic> categoryData = response.data['data'];
+
+        categories.clear();
+        categoryMap.clear();
+        categorySubCategoryMap.clear();
+
+        for (var category in categoryData) {
+          String categoryName = category['name'];
+          String categoryId = category['_id'];
+          List<String> subCats = List<String>.from(category['subCategories'] ?? []);
+
+          categories.add(categoryName);
+          categoryMap[categoryName] = categoryId;
+          categorySubCategoryMap[categoryId] = subCats;
+        }
+
+        print('Categories loaded: ${categories.length}');
+      } else {
+        Get.snackbar(
+          'Error',
+          response.data['message'] ?? 'Failed to load categories',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to fetch categories: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isCategoryLoading.value = false;
+    }
+  }
+
+  /// Update subcategories when category is selected
+  void onCategoryChanged(String categoryName) {
+    selectedCategory.value = categoryName;
+    selectedCategoryId.value = categoryMap[categoryName] ?? '';
+
+    // Update subcategories based on selected category
+    subCategories.value = categorySubCategoryMap[selectedCategoryId.value] ?? [];
+
+    // Clear selected subcategory
+    selectedSubCategory.value = '';
   }
 
   Future<void> pickImageFromGallery() async {
@@ -187,7 +318,7 @@ class PostJobController extends GetxController {
     );
     if (picked != null) {
       serviceDateController.text =
-          "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
+      "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
     }
   }
 
@@ -199,7 +330,7 @@ class PostJobController extends GetxController {
     if (picked != null) {
       final hour = picked.hourOfPeriod.toString().padLeft(2, '0');
       final minute = picked.minute.toString().padLeft(2, '0');
-      final period = picked.period == DayPeriod.am ? 'Am' : 'Pm';
+      final period = picked.period == DayPeriod.am ? 'AM' : 'PM';
       serviceTimeController.text = "$hour:$minute $period";
     }
   }
@@ -224,24 +355,40 @@ class PostJobController extends GetxController {
 
   Future<void> createPost() async {
     // Validation
-    /*if (titleController.text.trim().isEmpty) {
+    if (titleController.text.trim().isEmpty) {
       Get.snackbar('Error', 'Please enter title',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white);
       return;
-    }*/
+    }
 
-    /*if (descriptionController.text.trim().isEmpty) {
+    if (descriptionController.text.trim().isEmpty) {
       Get.snackbar('Error', 'Please enter description',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white);
       return;
-    }*/
+    }
 
-    /*if (selectedCategory.value.isEmpty) {
+    if (selectedCategory.value.isEmpty) {
       Get.snackbar('Error', 'Please select category',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    if (selectedSubCategory.value.isEmpty) {
+      Get.snackbar('Error', 'Please select sub category',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return;
+    }
+
+    if (latitude.value == 0.0 || longitude.value == 0.0) {
+      Get.snackbar('Error', 'Location not available. Please enable location.',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white);
@@ -262,37 +409,112 @@ class PostJobController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white);
       return;
-    }*/
+    }
 
-    PostPublishingDialog.show(
-      Get.context!,
-      onComplete: () {
+    try {
+      isLoading.value = true;
+
+      // Prepare form data
+      Map<String, String> body = {
+        'title': titleController.text.trim(),
+        'description': descriptionController.text.trim(),
+        'category': selectedCategoryId.value,
+        'subCategory': selectedSubCategory.value,
+        'lat': latitude.value.toString(),
+        'long': longitude.value.toString(),
+        'serviceDate': serviceDateController.text.isNotEmpty
+            ? _formatDateForAPI(serviceDateController.text)
+            : '',
+        'serviceTime': serviceTimeController.text,
+        'price': selectedPricingOption.value == 'pay'
+            ? priceController.text.trim()
+            : '0',
+        'priority': selectedPriorityLevel.value.isNotEmpty
+            ? selectedPriorityLevel.value
+            : 'MEDIUM',
+      };
+
+      // API call with image
+      final response = await ApiService.multipartImage(
+        ApiEndPoint.post, // Replace with your actual endpoint
+        body: body,
+        method: 'POST',
+        files: selectedImage.value != null
+            ? [
+          {
+            'name': 'image',
+            'image': selectedImage.value!.path,
+          }
+        ]
+            : [],
+      );
+
+      isLoading.value = false;
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Show success dialog
+        PostPublishingDialog.show(
+          Get.context!,
+          onComplete: () {
+            // Clear form
+            _clearForm();
+            // Navigate back
+            Get.back();
+          },
+        );
+      } else {
         Get.snackbar(
-          'Success',
-          'Post published successfully!',
+          'Error',
+          response.data['message'] ?? 'Failed to create post',
           snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      },
-    );
+      }
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to create post: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
 
-    isLoading.value = true;
+  String _formatDateForAPI(String displayDate) {
+    // Convert "01 January 2000" to "2025-10-30T00:00:00.000Z" format
+    try {
+      final parts = displayDate.split(' ');
+      final day = parts[0];
+      final month = _getMonthNumber(parts[1]);
+      final year = parts[2];
+      return '$year-$month-${day}T00:00:00.000Z';
+    } catch (e) {
+      return '';
+    }
+  }
 
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
+  String _getMonthNumber(String monthName) {
+    const months = {
+      'January': '01',
+      'February': '02',
+      'March': '03',
+      'April': '04',
+      'May': '05',
+      'June': '06',
+      'July': '07',
+      'August': '08',
+      'September': '09',
+      'October': '10',
+      'November': '11',
+      'December': '12',
+    };
+    return months[monthName] ?? '01';
+  }
 
-    isLoading.value = false;
-
-    Get.snackbar(
-      'Success',
-      'Post created successfully!',
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: Colors.green,
-      colorText: Colors.white,
-    );
-
-    // Clear form
+  void _clearForm() {
     titleController.clear();
     descriptionController.clear();
     addressController.clear();
@@ -301,11 +523,9 @@ class PostJobController extends GetxController {
     priceController.clear();
     selectedImage.value = null;
     selectedCategory.value = '';
+    selectedCategoryId.value = '';
     selectedSubCategory.value = '';
     selectedPricingOption.value = '';
     selectedPriorityLevel.value = '';
-
-    // Navigate back
-    Get.back();
   }
 }
