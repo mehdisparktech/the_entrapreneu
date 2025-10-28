@@ -54,7 +54,7 @@ class MyPostScreen extends StatelessWidget {
                     controller.deletePost(postId);
                   },
                   onEdit: (postId) {
-                    Get.toNamed(AppRoutes.editPost, arguments: post);
+                    Get.toNamed(AppRoutes.editPost, arguments: post.id);
                   },
                 );
               },

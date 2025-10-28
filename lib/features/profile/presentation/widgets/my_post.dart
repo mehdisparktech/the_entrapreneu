@@ -133,7 +133,7 @@ class PostCard extends StatelessWidget {
                     if (onEdit != null) {
                       onEdit!(postData.id ?? '');
                     } else {
-                      Get.toNamed(AppRoutes.editPost, arguments: postData);
+                      Get.toNamed(AppRoutes.editPost, arguments: postData.id);
                     }
                   } else if (value == 'delete') {
                     _showDeleteConfirmDialog(context, postData.id ?? '');

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/home/presentation/controller/home_controller.dart';
 import 'package:the_entrapreneu/services/storage/storage_services.dart';
 
 import '../../../../services/api/api_response_model.dart';
@@ -65,6 +66,7 @@ class MyPostController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
+        Get.find<HomeController>().fetchPosts();
       } else {
         Get.snackbar(
           'Error',
