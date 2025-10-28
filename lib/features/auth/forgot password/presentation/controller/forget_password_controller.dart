@@ -108,7 +108,7 @@ class ForgetPasswordController extends GetxController {
     update();
     Map<String, String> body = {
       "email": emailController.text,
-      "otp": otpController.text,
+      "oneTimeCode": otpController.text,
     };
     var response = await ApiService.post(ApiEndPoint.verifyOtp, body: body);
 
