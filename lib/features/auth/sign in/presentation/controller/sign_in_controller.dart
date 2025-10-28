@@ -23,8 +23,8 @@ class SignInController extends GetxController {
 
   Future<void> signInUser(GlobalKey<FormState> formKey) async {
     if (!formKey.currentState!.validate()) return;
-    Get.toNamed(AppRoutes.homeNav);
-    return;
+    //
+    // return;
 
     isLoading = true;
     update();
@@ -43,28 +43,46 @@ class SignInController extends GetxController {
       var data = response.data;
 
       LocalStorage.token = data['data']["accessToken"];
-      LocalStorage.userId = data['data']["attributes"]["_id"];
-      LocalStorage.myImage = data['data']["attributes"]["image"];
-      LocalStorage.myName = data['data']["attributes"]["fullName"];
-
-      LocalStorage.myEmail = data['data']["attributes"]["email"];
       LocalStorage.isLogIn = true;
 
       LocalStorage.setBool(LocalStorageKeys.isLogIn, LocalStorage.isLogIn);
       LocalStorage.setString(LocalStorageKeys.token, LocalStorage.token);
+
+      Get.toNamed(AppRoutes.homeNav);
+
+      emailController.clear();
+      passwordController.clear();
+    } else {
+      Get.snackbar(response.statusCode.toString(), response.message);
+    }
+
+    isLoading = false;
+    update();
+  }
+
+  Future<void> getUserData() async {
+    isLoading = true;
+    update();
+
+    var response = await ApiService.get(
+      ApiEndPoint.user,
+    ).timeout(const Duration(seconds: 30));
+
+    if (response.statusCode == 200) {
+      var data = response.data;
+
+      LocalStorage.userId = data['data']?["_id"];
+      LocalStorage.myImage = data['data']?["image"];
+      LocalStorage.myName = data['data']?["name"];
+      LocalStorage.myEmail = data['data']?["email"];
+      LocalStorage.myRole = data['data']?["role"];
+
+      LocalStorage.setBool(LocalStorageKeys.isLogIn, LocalStorage.isLogIn);
       LocalStorage.setString(LocalStorageKeys.userId, LocalStorage.userId);
       LocalStorage.setString(LocalStorageKeys.myImage, LocalStorage.myImage);
       LocalStorage.setString(LocalStorageKeys.myName, LocalStorage.myName);
       LocalStorage.setString(LocalStorageKeys.myEmail, LocalStorage.myEmail);
-
-      // if (LocalStorage.myRole == 'consultant') {
-      //   Get.offAllNamed(AppRoutes.doctorHome);
-      // } else {
-      //   Get.offAllNamed(AppRoutes.patientsHome);
-      // }
-
-      emailController.clear();
-      passwordController.clear();
+      LocalStorage.setString(LocalStorageKeys.myRole, LocalStorage.myRole);
     } else {
       Get.snackbar(response.statusCode.toString(), response.message);
     }

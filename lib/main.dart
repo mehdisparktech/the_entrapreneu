@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
-
 import 'app.dart';
 import 'config/dependency/dependency_injection.dart';
 import 'services/notification/notification_service.dart';

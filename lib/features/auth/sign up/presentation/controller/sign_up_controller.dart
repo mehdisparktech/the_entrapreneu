@@ -87,19 +87,16 @@ class SignUpController extends GetxController {
     isLoading = true;
     update();
     Map<String, String> body = {
-      "fullName": nameController.text,
+      "name": nameController.text,
       "email": emailController.text,
-      "phoneNumber": numberController.text,
-      "countryCode": countryCode,
       "password": passwordController.text,
+      "confirmPassword": confirmPasswordController.text,
       "role": selectRole.toLowerCase(),
     };
 
     var response = await ApiService.post(ApiEndPoint.signUp, body: body);
 
     if (response.statusCode == 200) {
-      var data = response.data;
-      signUpToken = data['data']['signUpToken'];
       Get.toNamed(AppRoutes.verifyUser);
     } else {
       Utils.errorSnackBar(response.statusCode.toString(), response.message);
@@ -127,12 +124,12 @@ class SignUpController extends GetxController {
   }
 
   Future<void> verifyOtpRepo() async {
-    Get.toNamed(AppRoutes.completeProfile);
-    return;
-
     isLoadingVerify = true;
     update();
-    Map<String, String> body = {"otp": otpController.text};
+    Map<String, String> body = {
+      "email": emailController.text,
+      "oneTimeCode": otpController.text,
+    };
     Map<String, String> header = {"SignUpToken": "signUpToken $signUpToken"};
     var response = await ApiService.post(
       ApiEndPoint.verifyEmail,
@@ -146,8 +143,9 @@ class SignUpController extends GetxController {
       LocalStorage.token = data['data']["accessToken"];
       LocalStorage.userId = data['data']["attributes"]["_id"];
       LocalStorage.myImage = data['data']["attributes"]["image"];
-      LocalStorage.myName = data['data']["attributes"]["fullName"];
+      LocalStorage.myName = data['data']["attributes"]["name"];
       LocalStorage.myEmail = data['data']["attributes"]["email"];
+      LocalStorage.myRole = data['data']["attributes"]["role"];
       LocalStorage.isLogIn = true;
 
       LocalStorage.setBool(LocalStorageKeys.isLogIn, LocalStorage.isLogIn);
@@ -157,11 +155,7 @@ class SignUpController extends GetxController {
       LocalStorage.setString(LocalStorageKeys.myName, LocalStorage.myName);
       LocalStorage.setString(LocalStorageKeys.myEmail, LocalStorage.myEmail);
 
-      // if (LocalStorage.myRole == 'consultant') {
-      //   Get.toNamed(AppRoutes.personalInformation);
-      // } else {
-      //   Get.offAllNamed(AppRoutes.patientsHome);
-      // }
+      Get.toNamed(AppRoutes.completeProfile);
     } else {
       Get.snackbar(response.statusCode.toString(), response.message);
     }
@@ -291,11 +285,11 @@ class SignUpController extends GetxController {
       // Get current camera position
       if (mapController != null) {
         final LatLng center = await mapController!.getVisibleRegion().then(
-              (bounds) => LatLng(
-                (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
-                (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
-              ),
-            );
+          (bounds) => LatLng(
+            (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+            (bounds.northeast.longitude + bounds.southwest.longitude) / 2,
+          ),
+        );
 
         // Add marker at center
         markers.clear();
@@ -303,10 +297,10 @@ class SignUpController extends GetxController {
           Marker(
             markerId: const MarkerId('selected_location'),
             position: center,
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-            infoWindow: const InfoWindow(
-              title: 'Selected Location',
+            icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueRed,
             ),
+            infoWindow: const InfoWindow(title: 'Selected Location'),
           ),
         );
         update();
