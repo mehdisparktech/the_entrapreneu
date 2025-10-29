@@ -1,7 +1,7 @@
 class ApiEndPoint {
-  static const baseUrl = "http://10.10.7.46:5001/api/v1/";
-  static const imageUrl = "http://10.10.7.46:5001";
-  static const socketUrl = "http://10.10.7.46:5001";
+  static const baseUrl = "http://206.162.244.172:5001/api/v1/";
+  static const imageUrl = "http://206.162.244.172:5001";
+  static const socketUrl = "http://206.162.244.172:5001";
 
   static const signUp = "user";
   static const verifyEmail = "auth/verify-email";
@@ -15,8 +15,9 @@ class ApiEndPoint {
   static const profile = "user/profile";
   static const notifications = "notifications";
   static const category = "category/service";
-  static const privacyPolicies = "privacy-policies";
-  static const termsOfServices = "terms-and-conditions";
+  static const privacyPolicies = "app/rule/privacy";
+  static const termsOfServices = "app/rule/terms";
+  static const helpSupport = "help/support";
   static const chats = "chats";
   static const messages = "messages";
 }

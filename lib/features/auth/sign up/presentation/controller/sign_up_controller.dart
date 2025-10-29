@@ -39,7 +39,7 @@ class SignUpController extends GetxController {
 
   List selectedOption = ["User", "Consultant"];
 
-  String selectRole = "SERVICE_PROVIDER";
+  String selectRole = "USER";
   String countryCode = "+880";
   String? image;
 

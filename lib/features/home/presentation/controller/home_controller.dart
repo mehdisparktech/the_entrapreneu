@@ -12,6 +12,7 @@ class HomeController extends GetxController {
   String searchQuery = '';
   RxString name="".obs;
   RxString image="".obs;
+  String subCategory="";
 
   @override
   void onInit() {

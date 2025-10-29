@@ -145,7 +145,7 @@ class MyProfileScreen extends StatelessWidget {
   Widget _buildProfileDetails(MyProfileController controller) {
     return Column(
       children: [
-        _buildDetailRow('Mobile', controller.mobile),
+       // _buildDetailRow('Mobile', controller.mobile),
         16.height,
         _buildDetailRow('E-mail', controller.userEmail),
         16.height,
