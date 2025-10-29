@@ -10,6 +10,8 @@ class HomeController extends GetxController {
   List<Post> allPosts = [];
   List<Post> filteredPosts = [];
   String searchQuery = '';
+  RxString name="".obs;
+  RxString image="".obs;
 
   @override
   void onInit() {
@@ -33,6 +35,28 @@ class HomeController extends GetxController {
         final postResponse = PostResponseModel.fromJson(response.data);
         allPosts = postResponse.data;
         filteredPosts = allPosts;
+      }
+    } catch (e) {
+      print('Error fetching posts: $e');
+    } finally {
+      isLoading = false;
+      update();
+    }
+  }
+
+  void getProfile()async{
+    try {
+      final response = await ApiService.get(
+        "user/profile",
+        header: {
+          "Authorization": "Bearer ${LocalStorage.token}",
+        },
+      ); // Replace with your actual endpoint
+
+      if (response.statusCode == 200 && response.data != null) {
+        //final postResponse = PostResponseModel.fromJson(response.data);
+        name.value=response.data["data"]["name"];
+        image.value=response.data["data"]["image"];
       }
     } catch (e) {
       print('Error fetching posts: $e');

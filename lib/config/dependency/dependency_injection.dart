@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/home/presentation/controller/create_post_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/controller/home_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/controller/post_job_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/edit_post_controller.dart';
@@ -39,5 +40,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => EditProfileController(), fenix: true);
     Get.lazyPut(() => PostJobController(), fenix: true);
     Get.lazyPut(() => ServiceProviderController(), fenix: true);
+    Get.lazyPut(() => CreatePostController(), fenix: true);
   }
 }

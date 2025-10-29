@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
+import 'package:the_entrapreneu/utils/constants/success_dialog.dart';
 
 class OfferDialog {
   static void show(
       BuildContext context, {
         required double budget,
         required DateTime serviceDate,
-        required TimeOfDay serviceTime,
+        required String serviceTime,
         required VoidCallback onSubmit,
       }) {
     final TextEditingController budgetController =
@@ -18,7 +20,7 @@ class OfferDialog {
     );
 
     final TextEditingController timeController = TextEditingController(
-      text: serviceTime.format(context),
+      //text: serviceTime.format(context),
     );
 
     showDialog(
@@ -101,13 +103,13 @@ class OfferDialog {
                     ),
                   ),
                   onTap: () async {
-                    TimeOfDay? pickedTime = await showTimePicker(
+                    /*TimeOfDay? pickedTime = await showTimePicker(
                       context: context,
                       initialTime: serviceTime,
                     );
                     if (pickedTime != null) {
                       timeController.text = pickedTime.format(context);
-                    }
+                    }*/
                   },
                 ),
                 SizedBox(height: 20.h),
@@ -124,8 +126,7 @@ class OfferDialog {
                       ),
                     ),
                     onPressed: () {
-                      onSubmit();
-                      Navigator.pop(context);
+                      SuccessDialog();
                     },
                     child: Text(
                       'Submit',
