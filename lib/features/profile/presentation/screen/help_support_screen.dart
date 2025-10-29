@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
@@ -8,6 +9,7 @@ import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import 'package:the_entrapreneu/utils/constants/app_string.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
+import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
 
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
@@ -121,6 +123,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     return InkWell(
       onTap: () {
         // Handle file attachment
+        OtherHelper.openGallery();
       },
       borderRadius: BorderRadius.circular(4.r),
       child: Container(
@@ -162,6 +165,13 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
       titleText: 'Submit',
       onTap: () {
         // Handle submit action
+        Get.snackbar(
+          'Success',
+          'Your issue has been submitted successfully!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.green,
+          colorText: AppColors.white,
+        );
       },
     );
   }

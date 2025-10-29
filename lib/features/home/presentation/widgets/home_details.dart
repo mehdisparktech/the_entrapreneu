@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
+import 'package:the_entrapreneu/services/storage/storage_services.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
 
 import '../../../../component/image/common_image.dart';
@@ -22,7 +23,7 @@ class HomeDetails extends StatelessWidget {
           children: [
             ClipOval(
               child: CommonImage(
-                imageSrc: AppImages.profileImage,
+                imageSrc: LocalStorage.myImage,
                 size: 40,
                 defaultImage: AppImages.profileImage,
               ),
@@ -32,7 +33,7 @@ class HomeDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CommonText(
-                  text: "Shakir Ahmed",
+                  text: LocalStorage.myName,
                   fontSize: 16,
                   color: AppColors.textColorFirst,
                   fontWeight: FontWeight.w600,

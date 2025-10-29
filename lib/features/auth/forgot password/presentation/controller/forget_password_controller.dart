@@ -78,8 +78,6 @@ class ForgetPasswordController extends GetxController {
   /// Forget Password Api Call
 
   Future<void> forgotPasswordRepo() async {
-    Get.toNamed(AppRoutes.verifyEmail);
-    return;
     isLoadingEmail = true;
     update();
 
@@ -102,8 +100,6 @@ class ForgetPasswordController extends GetxController {
   /// Verify OTP Api Call
 
   Future<void> verifyOtpRepo() async {
-    Get.toNamed(AppRoutes.createPassword);
-    return;
     isLoadingVerify = true;
     update();
     Map<String, String> body = {
@@ -114,7 +110,7 @@ class ForgetPasswordController extends GetxController {
 
     if (response.statusCode == 200) {
       var data = response.data;
-      forgetPasswordToken = data['data']['forgetPasswordToken'];
+      forgetPasswordToken = data['data'];
       Get.toNamed(AppRoutes.createPassword);
     } else {
       Get.snackbar(response.statusCode.toString(), response.message);
@@ -131,13 +127,11 @@ class ForgetPasswordController extends GetxController {
     return;
     isLoadingReset = true;
     update();
-    Map<String, String> header = {
-      "Forget-password": "Forget-password $forgetPasswordToken",
-    };
+    Map<String, String> header = {"Authorization": forgetPasswordToken};
 
     Map<String, String> body = {
-      "email": emailController.text,
-      "password": passwordController.text,
+      "newPassword": passwordController.text,
+      "confirmPassword": confirmPasswordController.text,
     };
     var response = await ApiService.post(
       ApiEndPoint.resetPassword,

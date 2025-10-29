@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
+import 'package:the_entrapreneu/services/storage/storage_services.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
@@ -47,7 +48,7 @@ class RequestCard extends StatelessWidget {
             // Service icon
             ClipOval(
               child: CommonImage(
-                imageSrc: "assets/images/profile_image.png",
+                imageSrc: LocalStorage.myImage,
                 fill: BoxFit.cover,
                 size: 57,
               ),
@@ -80,11 +81,14 @@ class RequestCard extends StatelessWidget {
                     children: [
                       ...List.generate(
                         5,
-                        (index) =>
-                            Icon(Icons.star, color: AppColors.checkColor, size: 16.sp),
+                        (index) => Icon(
+                          Icons.star,
+                          color: AppColors.checkColor,
+                          size: 16.sp,
+                        ),
                       ),
                       CommonText(
-                        text: '(150)',
+                        text: '(2)',
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textPrimary,

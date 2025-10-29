@@ -13,66 +13,56 @@ class NotificationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12.h),
-      padding: EdgeInsets.all(12.sp),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: AppColors.primaryColor),
-      ),
-      child: Row(
-        children: [
-          /// icon or image here
-          CircleAvatar(
-            backgroundColor: AppColors.background,
-            radius: 35.r,
-            child: const ClipOval(
-              child: Icon(Icons.date_range, color: AppColors.primaryColor),
-            ),
+      padding: const EdgeInsets.all(10),
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: ShapeDecoration(
+        color: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shadows: [
+          BoxShadow(
+            color: Color(0x14000000),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+            spreadRadius: 0,
           ),
-          16.width,
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    /// Notification Title here
-                    Flexible(
-                      child: CommonText(
-                        text: item.type,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
-                      ),
-                    ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CommonText(
+            text: item.type,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            textAlign: TextAlign.start,
+            maxLines: 1,
+          ),
 
-                    /// Notification Time here
-                    CommonText(
-                      text: item.createdAt.checkTime,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      textAlign: TextAlign.start,
-                      color: AppColors.black,
-                      maxLines: 1,
-                    ),
-                  ],
-                ),
-
-                /// Notification Message here
-                CommonText(
+          /// Notification Message here
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: CommonText(
                   text: item.message,
-                  fontSize: 14,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
                   maxLines: 2,
                   color: AppColors.black,
                   textAlign: TextAlign.start,
-                  bottom: 10,
-                  top: 4,
                 ),
-              ],
-            ),
+              ),
+
+              /// Notification Time here
+              CommonText(
+                text: item.createdAt.checkTime,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                textAlign: TextAlign.start,
+                color: AppColors.black,
+                maxLines: 1,
+              ),
+            ],
           ),
         ],
       ),

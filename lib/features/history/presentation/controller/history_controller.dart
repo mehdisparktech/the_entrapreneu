@@ -42,6 +42,7 @@ class HistoryController extends GetxController {
   void navigateHistoryDetails(RequestModel request) {
     Get.toNamed(AppRoutes.historyDetailsScreen, arguments: request);
   }
+
   void navigateToDetails(RequestModel request) {
     Get.toNamed(AppRoutes.completeHistoryScreen, arguments: request);
   }
@@ -203,7 +204,7 @@ class HistoryController extends GetxController {
         id: '6',
         title: 'AC Installation',
         subtitle: 'Electrical',
-        date: '31st March 25',
+        date: '21st Oct 25',
         price: '\$100',
         customerName: 'Leslie Alexander',
         customerLocation: 'Cape Town',
@@ -214,7 +215,7 @@ class HistoryController extends GetxController {
         id: '7',
         title: 'Plumbing Service',
         subtitle: 'Pipe Repair & Maintenance',
-        date: '30th March 25',
+        date: '23th Oct 25',
         price: '\$80',
         customerName: 'John Doe',
         customerLocation: 'Johannesburg',
@@ -225,7 +226,7 @@ class HistoryController extends GetxController {
         id: '8',
         title: 'Electrical Work',
         subtitle: 'Wiring & Installation',
-        date: '29th March 25',
+        date: '28th Oct 25',
         price: '\$150',
         customerName: 'Jane Smith',
         customerLocation: 'Durban',

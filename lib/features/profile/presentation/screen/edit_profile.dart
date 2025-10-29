@@ -20,7 +20,7 @@ class EditProfile extends StatelessWidget {
       builder: (controller) {
         return Scaffold(
           backgroundColor: AppColors.background,
-          
+
           /// App Bar
           appBar: AppBar(
             backgroundColor: AppColors.background,
@@ -100,10 +100,7 @@ class EditProfile extends StatelessWidget {
           height: 100.h,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            border: Border.all(
-              color: AppColors.white,
-              width: 3.w,
-            ),
+            border: Border.all(color: AppColors.white, width: 3.w),
             boxShadow: [
               BoxShadow(
                 color: Color(0x1A000000),
@@ -129,7 +126,7 @@ class EditProfile extends StatelessWidget {
                   ),
           ),
         ),
-        
+
         /// Edit Icon
         Positioned(
           bottom: 0,
@@ -142,16 +139,9 @@ class EditProfile extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.primaryColor,
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.white,
-                  width: 2.w,
-                ),
+                border: Border.all(color: AppColors.white, width: 2.w),
               ),
-              child: Icon(
-                Icons.edit,
-                color: AppColors.white,
-                size: 16.sp,
-              ),
+              child: Icon(Icons.edit, color: AppColors.white, size: 16.sp),
             ),
           ),
         ),

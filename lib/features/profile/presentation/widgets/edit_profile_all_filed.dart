@@ -38,7 +38,8 @@ class EditProfileAllFiled extends StatelessWidget {
         8.height,
         CommonTextField(
           controller: controller.aboutController,
-          hintText: 'Skilled professionals offering reliable, on-demand services...',
+          hintText:
+              'Skilled professionals offering reliable, on-demand services...',
           keyboardType: TextInputType.multiline,
           maxLines: 3,
           borderColor: AppColors.borderColor,
@@ -111,12 +112,23 @@ class EditProfileAllFiled extends StatelessWidget {
 
   /// Build Gender Dropdown
   Widget _buildGenderDropdown() {
+    final genderOptions = ['Male', 'Female', 'Other'];
+    
+    // Normalize the current value to match dropdown items
+    String? currentValue;
+    if (controller.genderController.text.isNotEmpty) {
+      final normalizedGender = controller.genderController.text.toLowerCase();
+      currentValue = genderOptions.firstWhere(
+        (option) => option.toLowerCase() == normalizedGender,
+        orElse: () => '',
+      );
+      if (currentValue.isEmpty) currentValue = null;
+    }
+    
     return Container(
       decoration: ShapeDecoration(
         color: AppColors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.r),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         shadows: [
           BoxShadow(
             color: Color(0x19000000),
@@ -127,14 +139,14 @@ class EditProfileAllFiled extends StatelessWidget {
         ],
       ),
       child: DropdownButtonFormField<String>(
-        value: controller.genderController.text.isEmpty ? null : controller.genderController.text,
+        value: currentValue,
         decoration: InputDecoration(
           hintText: 'Male',
-          hintStyle: TextStyle(
-            fontSize: 14.sp,
-            color: AppColors.secondaryText,
+          hintStyle: TextStyle(fontSize: 14.sp, color: AppColors.secondaryText),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 14.h,
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
             borderSide: BorderSide(color: AppColors.borderColor),
@@ -153,7 +165,7 @@ class EditProfileAllFiled extends StatelessWidget {
           color: AppColors.secondaryText,
           size: 24.sp,
         ),
-        items: ['Male', 'Female', 'Other'].map((String value) {
+        items: genderOptions.map((String value) {
           return DropdownMenuItem<String>(
             value: value,
             child: CommonText(

@@ -33,9 +33,9 @@ extension TimeFormater on DateTime {
     Duration difference = currentDateTime.difference(this);
     if (difference.inDays == 0) {
       if (difference.inHours == 0) {
-        return ("${difference.inMinutes} minutes ago");
+        return ("${difference.inMinutes} min ago");
       } else {
-        return ("${difference.inHours} hours ago");
+        return ("${difference.inHours} h ago");
       }
     } else {
       var createdAtTime = toIso8601String().split(".")[0];

@@ -14,6 +14,18 @@ class LocalStorage {
   static String myName = "";
   static String myEmail = "";
   static String myRole = "";
+  static String mobile = "";
+  static String dateOfBirth = "";
+  static String gender = "";
+  static String experience = "";
+  static double balance = 0.0;
+  static bool verified = false;
+  static String bio = "";
+  static double lat = 0.0;
+  static double log = 0.0;
+  static bool accountInfoStatus = false;
+  static String createdAt = "";
+  static String updatedAt = "";
 
   // Create Local Storage Instance
   static SharedPreferences? preferences;
@@ -36,7 +48,18 @@ class LocalStorage {
     myName = localStorage.getString(LocalStorageKeys.myName) ?? "";
     myEmail = localStorage.getString(LocalStorageKeys.myEmail) ?? "";
     myRole = localStorage.getString(LocalStorageKeys.myRole) ?? "";
-
+    mobile = localStorage.getString(LocalStorageKeys.mobile) ?? "";
+    dateOfBirth = localStorage.getString(LocalStorageKeys.dateOfBirth) ?? "";
+    gender = localStorage.getString(LocalStorageKeys.gender) ?? "";
+    experience = localStorage.getString(LocalStorageKeys.experience) ?? "";
+    balance = localStorage.getDouble(LocalStorageKeys.balance) ?? 0.0;
+    verified = localStorage.getBool(LocalStorageKeys.verified) ?? false;
+    bio = localStorage.getString(LocalStorageKeys.bio) ?? "";
+    lat = localStorage.getDouble(LocalStorageKeys.lat) ?? 0.0;
+    log = localStorage.getDouble(LocalStorageKeys.log) ?? 0.0;
+    accountInfoStatus = localStorage.getBool(LocalStorageKeys.accountInfoStatus) ?? false;
+    createdAt = localStorage.getString(LocalStorageKeys.createdAt) ?? "";
+    updatedAt = localStorage.getString(LocalStorageKeys.updatedAt) ?? "";
     appLog(userId, source: "Local Storage");
   }
 
@@ -59,6 +82,18 @@ class LocalStorage {
     localStorage.setString(LocalStorageKeys.myName, "");
     localStorage.setString(LocalStorageKeys.myEmail, "");
     localStorage.setString(LocalStorageKeys.myRole, "");
+    localStorage.setString(LocalStorageKeys.mobile, "");
+    localStorage.setString(LocalStorageKeys.dateOfBirth, "");
+    localStorage.setString(LocalStorageKeys.gender, "");
+    localStorage.setString(LocalStorageKeys.experience, "");
+    localStorage.setDouble(LocalStorageKeys.balance, 0.0);
+    localStorage.setBool(LocalStorageKeys.verified, false);
+    localStorage.setString(LocalStorageKeys.bio, "");
+    localStorage.setDouble(LocalStorageKeys.lat, 0.0);
+    localStorage.setDouble(LocalStorageKeys.log, 0.0);
+    localStorage.setBool(LocalStorageKeys.accountInfoStatus, false);
+    localStorage.setString(LocalStorageKeys.createdAt, "");
+    localStorage.setString(LocalStorageKeys.updatedAt, "");
     localStorage.setBool(LocalStorageKeys.isLogIn, false);
   }
 
@@ -76,5 +111,10 @@ class LocalStorage {
   static Future<void> setInt(String key, int value) async {
     final localStorage = await _getStorage();
     await localStorage.setInt(key, value);
+  }
+
+  static Future<void> setDouble(String key, double value) async {
+    final localStorage = await _getStorage();
+    await localStorage.setDouble(key, value);
   }
 }

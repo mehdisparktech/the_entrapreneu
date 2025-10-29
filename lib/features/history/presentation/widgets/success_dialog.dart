@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:the_entrapreneu/config/route/app_routes.dart';
 import '../../../../component/button/common_button.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
@@ -51,7 +54,13 @@ class SuccessReview {
                 buttonRadius: 10,
                 buttonColor: AppColors.primaryColor,
                 onTap: () {
-                  Navigator.pop(context); // Close current dialog
+                  Get.toNamed(AppRoutes.homeNav);
+                  Get.snackbar(
+                    title,
+                    "Your review has been submitted successfully",
+                    backgroundColor: AppColors.green,
+                    colorText: AppColors.white,
+                  );
                 },
               ),
             ],

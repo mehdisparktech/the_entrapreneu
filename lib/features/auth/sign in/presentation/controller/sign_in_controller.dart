@@ -67,7 +67,7 @@ class SignInController extends GetxController {
     update();
 
     var response = await ApiService.get(
-      ApiEndPoint.user,
+      ApiEndPoint.profile,
     ).timeout(const Duration(seconds: 30));
 
     if (response.statusCode == 200) {

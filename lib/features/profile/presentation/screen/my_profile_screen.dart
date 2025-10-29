@@ -88,10 +88,7 @@ class MyProfileScreen extends StatelessWidget {
       height: 120.h,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-          color: AppColors.white,
-          width: 4.w,
-        ),
+        border: Border.all(color: AppColors.white, width: 4.w),
         boxShadow: [
           BoxShadow(
             color: Color(0x1A000000),

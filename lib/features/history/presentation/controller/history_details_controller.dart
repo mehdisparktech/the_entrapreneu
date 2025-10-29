@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/utils/enum/enum.dart';
 import 'history_controller.dart';
 
@@ -71,6 +72,10 @@ class HistoryDetailsController extends GetxController {
       // Get the history controller to update the data
       final historyController = Get.find<HistoryController>();
       await historyController.rejectRequest(selectedRequest.value!.id);
+      Get.toNamed(
+        AppRoutes.firstMessageScreen,
+        arguments: selectedRequest.value,
+      );
 
       // Show success message
       Get.snackbar(

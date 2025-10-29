@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/app_bar/custom_appbar.dart';
 import '../../../../component/other_widgets/common_loader.dart';
@@ -30,27 +29,26 @@ class NotificationScreen extends StatelessWidget {
                       ///  data is Empty then show default Data
                       ? Expanded(child: Center(child: const NoData()))
                       /// show all Notifications here
-                      : ListView.builder(
-                          controller: controller.scrollController,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20.sp,
-                            vertical: 10.sp,
-                          ),
-                          itemCount: controller.isLoadingMore
-                              ? controller.notifications.length + 1
-                              : controller.notifications.length,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            ///  Notification More Data Loading Bar
-                            if (index > controller.notifications.length) {
-                              return CommonLoader(size: 40, strokeWidth: 2);
-                            }
-                            NotificationModel item =
-                                controller.notifications[index];
+                      : Expanded(
+                          child: ListView.builder(
+                            controller: controller.scrollController,
 
-                            ///  Notification card item
-                            return NotificationItem(item: item);
-                          },
+                            itemCount: controller.isLoadingMore
+                                ? controller.notifications.length + 1
+                                : controller.notifications.length,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              ///  Notification More Data Loading Bar
+                              if (index > controller.notifications.length) {
+                                return CommonLoader(size: 40, strokeWidth: 2);
+                              }
+                              NotificationModel item =
+                                  controller.notifications[index];
+
+                              ///  Notification card item
+                              return NotificationItem(item: item);
+                            },
+                          ),
                         ),
                 ],
               ),

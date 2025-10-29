@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/services/storage/storage_services.dart';
 
 import '../../../../../services/api/api_service.dart';
 import '../../../../../config/api/api_end_point.dart';
@@ -17,23 +18,25 @@ class ChangePasswordController extends GetxController {
 
   Future<void> changePasswordRepo() async {
     if (!formKey.currentState!.validate()) return;
-    Get.back();
-    return;
     isLoading = true;
     update();
 
     Map<String, String> body = {
-      "oldPassword": currentPasswordController.text,
+      "currentPassword": currentPasswordController.text,
       "newPassword": newPasswordController.text,
+      "confirmPassword": confirmPasswordController.text,
     };
-    var response = await ApiService.patch(
+    Map<String, String> header = {
+      "Authorization": "Bearer ${LocalStorage.token}",
+    };
+    var response = await ApiService.post(
       ApiEndPoint.changePassword,
       body: body,
+      header: header,
     );
 
     if (response.statusCode == 200) {
       Utils.successSnackBar(response.statusCode.toString(), response.message);
-
       currentPasswordController.clear();
       newPasswordController.clear();
       confirmPasswordController.clear();

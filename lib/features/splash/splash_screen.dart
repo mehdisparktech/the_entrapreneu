@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_entrapreneu/services/storage/storage_services.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
 import '../../../../config/route/app_routes.dart';
 import 'package:get/get.dart';
@@ -16,14 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 3), () {
-      // if (LocalStorage.isLogIn) {
-      //   if (LocalStorage.myRole == 'consultant') {
-      //     Get.offAllNamed(AppRoutes.doctorHome);
-      //   } else {
-      //     Get.offAllNamed(AppRoutes.patientsHome);
-      //   }
-      // } else {
-      Get.offAllNamed(AppRoutes.onboarding);
+      if (LocalStorage.isLogIn || LocalStorage.token.isNotEmpty) {
+        Get.offAllNamed(AppRoutes.homeNav);
+      } else {
+        Get.offAllNamed(AppRoutes.onboarding);
+      }
     });
     super.initState();
   }

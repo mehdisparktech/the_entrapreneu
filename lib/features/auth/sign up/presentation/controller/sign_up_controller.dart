@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -11,7 +10,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
-
 import '../../../../../config/route/app_routes.dart';
 import '../../../../../services/api/api_service.dart';
 import '../../../../../services/storage/storage_keys.dart';
