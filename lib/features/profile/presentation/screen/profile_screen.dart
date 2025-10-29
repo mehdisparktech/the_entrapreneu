@@ -6,7 +6,6 @@ import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/other_widgets/item.dart';
 import 'package:the_entrapreneu/component/pop_up/common_pop_menu.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
-import 'package:the_entrapreneu/config/api/api_end_point.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/features/auth/change_password/presentation/screen/change_password_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/profile_controller.dart';

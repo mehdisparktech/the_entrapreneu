@@ -1,9 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
 import '../../../../utils/constants/app_colors.dart';
 import '../../../../utils/constants/app_images.dart';
 import '../../../../config/api/api_end_point.dart';
@@ -40,9 +37,7 @@ class EditPostScreen extends StatelessWidget {
       body: Obx(() {
         if (controller.isFetchingData.value) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFF1E5AA8),
-            ),
+            child: CircularProgressIndicator(color: Color(0xFF1E5AA8)),
           );
         }
 
@@ -98,7 +93,8 @@ class EditPostScreen extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: CachedNetworkImage(
-                            imageUrl: '${ApiEndPoint.imageUrl}${controller.existingImageUrl.value}',
+                            imageUrl:
+                                '${ApiEndPoint.imageUrl}${controller.existingImageUrl.value}',
                             width: double.infinity,
                             height: 150,
                             fit: BoxFit.cover,
@@ -201,32 +197,36 @@ class EditPostScreen extends StatelessWidget {
                 // Category
                 _buildLabel('Category'),
                 const SizedBox(height: 8),
-                Obx(() => _buildDropdown(
-                  value: controller.selectedCategory.value.isEmpty
-                      ? null
-                      : controller.selectedCategory.value,
-                  hint: 'Select category',
-                  items: controller.categories,
-                  onChanged: (value) {
-                    controller.selectedCategory.value = value!;
-                  },
-                )),
+                Obx(
+                  () => _buildDropdown(
+                    value: controller.selectedCategory.value.isEmpty
+                        ? null
+                        : controller.selectedCategory.value,
+                    hint: 'Select category',
+                    items: controller.categories,
+                    onChanged: (value) {
+                      controller.selectedCategory.value = value!;
+                    },
+                  ),
+                ),
 
                 const SizedBox(height: 16),
 
                 // Sub Category
                 _buildLabel('Sub Category'),
                 const SizedBox(height: 8),
-                Obx(() => _buildDropdown(
-                  value: controller.selectedSubCategory.value.isEmpty
-                      ? null
-                      : controller.selectedSubCategory.value,
-                  hint: 'Select sub category',
-                  items: controller.subCategories,
-                  onChanged: (value) {
-                    controller.selectedSubCategory.value = value!;
-                  },
-                )),
+                Obx(
+                  () => _buildDropdown(
+                    value: controller.selectedSubCategory.value.isEmpty
+                        ? null
+                        : controller.selectedSubCategory.value,
+                    hint: 'Select sub category',
+                    items: controller.subCategories,
+                    onChanged: (value) {
+                      controller.selectedSubCategory.value = value!;
+                    },
+                  ),
+                ),
 
                 const SizedBox(height: 16),
 
@@ -294,33 +294,40 @@ class EditPostScreen extends StatelessWidget {
                 // Pricing / Fee Options
                 _buildLabel('Pricing / Fee Options'),
                 const SizedBox(height: 8),
-                Obx(() => Row(
-                  children: [
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: 'Pay',
-                        isSelected: controller.selectedPricingOption.value == 'pay',
-                        onTap: () => controller.selectPricingOption('pay'),
+                Obx(
+                  () => Row(
+                    children: [
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: 'Pay',
+                          isSelected:
+                              controller.selectedPricingOption.value == 'pay',
+                          onTap: () => controller.selectPricingOption('pay'),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: 'Accepting Offer',
-                        isSelected: controller.selectedPricingOption.value == 'accepting_offer',
-                        onTap: () => controller.selectPricingOption('accepting_offer'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: 'Accepting Offer',
+                          isSelected:
+                              controller.selectedPricingOption.value ==
+                              'accepting_offer',
+                          onTap: () =>
+                              controller.selectPricingOption('accepting_offer'),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: 'Free',
-                        isSelected: controller.selectedPricingOption.value == 'free',
-                        onTap: () => controller.selectPricingOption('free'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: 'Free',
+                          isSelected:
+                              controller.selectedPricingOption.value == 'free',
+                          onTap: () => controller.selectPricingOption('free'),
+                        ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  ),
+                ),
 
                 const SizedBox(height: 16),
 
@@ -346,53 +353,57 @@ class EditPostScreen extends StatelessWidget {
                 // Priority Level
                 _buildLabel('Priority Level'),
                 const SizedBox(height: 8),
-                Obx(() => _buildDropdown(
-                  value: controller.selectedPriorityLevel.value.isEmpty
-                      ? null
-                      : controller.selectedPriorityLevel.value,
-                  hint: 'Select priority',
-                  items: controller.priorityLevels,
-                  onChanged: (value) {
-                    controller.selectedPriorityLevel.value = value!;
-                  },
-                )),
+                Obx(
+                  () => _buildDropdown(
+                    value: controller.selectedPriorityLevel.value.isEmpty
+                        ? null
+                        : controller.selectedPriorityLevel.value,
+                    hint: 'Select priority',
+                    items: controller.priorityLevels,
+                    onChanged: (value) {
+                      controller.selectedPriorityLevel.value = value!;
+                    },
+                  ),
+                ),
 
                 const SizedBox(height: 32),
 
                 // Update Button
-                Obx(() => SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: controller.isLoading.value
-                        ? null
-                        : () => controller.updatePost(),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF1E5AA8),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                Obx(
+                  () => SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : () => controller.updatePost(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF1E5AA8),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        elevation: 0,
                       ),
-                      elevation: 0,
-                    ),
-                    child: controller.isLoading.value
-                        ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
-                        : const Text(
-                      'Update',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      child: controller.isLoading.value
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : const Text(
+                              'Update',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
                     ),
                   ),
-                )),
+                ),
 
                 const SizedBox(height: 20),
               ],
@@ -431,13 +442,17 @@ class EditPostScreen extends StatelessWidget {
                 color: isSelected ? const Color(0xffE6EEFB) : Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
-                  color: isSelected ? const Color(0xFF1E5AA8) : Colors.grey.shade300,
+                  color: isSelected
+                      ? const Color(0xFF1E5AA8)
+                      : Colors.grey.shade300,
                   width: 1.5,
                 ),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? AppColors.primaryColor : const Color(0xFF1E5AA8),
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : const Color(0xFF1E5AA8),
                 size: 28,
               ),
             ),
@@ -473,19 +488,12 @@ class EditPostScreen extends StatelessWidget {
               color: const Color(0xFF1E5AA8).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: const Color(0xFF1E5AA8),
-              size: 24,
-            ),
+            child: Icon(icon, color: const Color(0xFF1E5AA8), size: 24),
           ),
           const SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: Colors.black87,
-            ),
+            style: const TextStyle(fontSize: 11, color: Colors.black87),
           ),
         ],
       ),
@@ -525,7 +533,10 @@ class EditPostScreen extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           suffixIcon: suffixIcon != null
               ? Icon(suffixIcon, color: Colors.grey[600], size: 20)
               : null,
@@ -550,13 +561,19 @@ class EditPostScreen extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          hint: Text(hint, style: TextStyle(fontSize: 14, color: Colors.grey[400])),
+          hint: Text(
+            hint,
+            style: TextStyle(fontSize: 14, color: Colors.grey[400]),
+          ),
           isExpanded: true,
           icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey[600]),
           items: items.map((String item) {
             return DropdownMenuItem<String>(
               value: item,
-              child: Text(item, style: const TextStyle(fontSize: 14, color: Colors.black)),
+              child: Text(
+                item,
+                style: const TextStyle(fontSize: 14, color: Colors.black),
+              ),
             );
           }).toList(),
           onChanged: onChanged,

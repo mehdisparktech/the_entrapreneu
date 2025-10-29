@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +6,6 @@ import 'package:dio/dio.dart';
 
 import '../../../../services/api/api_service.dart';
 import '../../../../services/socket/socket_service.dart';
-import '../../../../config/api/api_end_point.dart';
 import '../../../../services/storage/storage_services.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/enum/enum.dart';
@@ -47,7 +44,8 @@ class FirstMessageController extends GetxController {
 
   final ImagePicker _picker = ImagePicker();
 
-  static FirstMessageController get instance => Get.put(FirstMessageController());
+  static FirstMessageController get instance =>
+      Get.put(FirstMessageController());
 
   MessageModel messageModel = MessageModel.fromJson({});
 
@@ -253,10 +251,7 @@ class FirstMessageController extends GetxController {
         ),
       });
 
-      final response = await ApiService.post(
-        "message/create",
-        body: formData,
-      );
+      final response = await ApiService.post("message/create", body: formData);
 
       // Remove uploading message from BOTTOM
       messages.removeLast();

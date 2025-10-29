@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 import 'package:the_entrapreneu/utils/constants/success_dialog.dart';
 
 class OfferDialog {
   static void show(
-      BuildContext context, {
-        required double budget,
-        required DateTime serviceDate,
-        required String serviceTime,
-        required VoidCallback onSubmit,
-      }) {
-    final TextEditingController budgetController =
-    TextEditingController(text: '\$${budget.toStringAsFixed(0)}');
+    BuildContext context, {
+    required double budget,
+    required DateTime serviceDate,
+    required String serviceTime,
+    required VoidCallback onSubmit,
+  }) {
+    final TextEditingController budgetController = TextEditingController(
+      text: '\$${budget.toStringAsFixed(0)}',
+    );
 
     final TextEditingController dateController = TextEditingController(
       text: DateFormat('dd MMMM yyyy').format(serviceDate),
@@ -85,8 +85,9 @@ class OfferDialog {
                       lastDate: DateTime(2100),
                     );
                     if (pickedDate != null) {
-                      dateController.text =
-                          DateFormat('dd MMMM yyyy').format(pickedDate);
+                      dateController.text = DateFormat(
+                        'dd MMMM yyyy',
+                      ).format(pickedDate);
                     }
                   },
                 ),

@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/features/home/presentation/controller/create_post_controller.dart';
+import 'package:the_entrapreneu/features/home/presentation/controller/first_message_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/controller/home_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/controller/post_job_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/edit_post_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/edit_service_provider_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/post_controller.dart';
 import 'package:the_entrapreneu/features/profile/presentation/controller/provider_info_controller.dart';
-import 'package:the_entrapreneu/features/profile/presentation/screen/edit_post_screen.dart';
 
 import '../../features/auth/change_password/presentation/controller/change_password_controller.dart';
 import '../../features/auth/forgot password/presentation/controller/forget_password_controller.dart';
@@ -41,5 +41,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => PostJobController(), fenix: true);
     Get.lazyPut(() => ServiceProviderController(), fenix: true);
     Get.lazyPut(() => CreatePostController(), fenix: true);
+    Get.lazyPut(() => FirstMessageController(), fenix: true);
   }
 }

@@ -71,7 +71,7 @@ class CreatePostController extends GetxController {
         '/chat/room/${post.value!.user.id}',
       );
 
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.statusCode == 200) {
         final chatRoomId = response.data['data']['_id'];
         print("kldfjdkfj 😍😍😍😍$chatRoomId");
         print("service id : 😂😂😂😂 $serviceId");

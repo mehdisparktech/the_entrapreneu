@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_entrapreneu/config/route/app_routes.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/offer_dialog.dart';
-import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../config/api/api_end_point.dart';
 import '../../../message/data/model/chat_message_model.dart';
@@ -145,7 +143,13 @@ class _MessageScreenState extends State<FirstMessage> {
                     children: [
                       /// Banner Section
                       InkWell(
-                        onTap: () => OfferDialog.show(Get.context!, budget: 100, serviceDate: DateTime.now(), serviceTime: "", onSubmit: (){}),
+                        onTap: () => OfferDialog.show(
+                          Get.context!,
+                          budget: 100,
+                          serviceDate: DateTime.now(),
+                          serviceTime: "",
+                          onSubmit: () {},
+                        ),
                         child: Container(
                           margin: EdgeInsets.all(16.w),
                           decoration: BoxDecoration(
@@ -166,10 +170,15 @@ class _MessageScreenState extends State<FirstMessage> {
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(12.r),
                                 ),
-                                child: Image.network(_getImageUrl(ApiEndPoint.imageUrl+controller.post!.image),height: 171.h,
+                                child: Image.network(
+                                  _getImageUrl(
+                                    ApiEndPoint.imageUrl +
+                                        controller.post!.image,
+                                  ),
+                                  height: 171.h,
                                   width: 330.w,
                                   fit: BoxFit.fill,
-                                )
+                                ),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(12.w),
@@ -203,7 +212,13 @@ class _MessageScreenState extends State<FirstMessage> {
                                     ),
                                     12.height,
                                     GestureDetector(
-                                      onTap: () =>OfferDialog.show(Get.context!, budget: 100, serviceDate: DateTime.now(), serviceTime: "", onSubmit: (){}),
+                                      onTap: () => OfferDialog.show(
+                                        Get.context!,
+                                        budget: 100,
+                                        serviceDate: DateTime.now(),
+                                        serviceTime: "",
+                                        onSubmit: () {},
+                                      ),
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 12.w,
@@ -243,14 +258,16 @@ class _MessageScreenState extends State<FirstMessage> {
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         itemBuilder: (context, index) {
                           if (index < controller.messages.length) {
-                            ChatMessageModel message = controller.messages[index];
-                            print("image : "+message.image);
+                            ChatMessageModel message =
+                                controller.messages[index];
+                            print("image : " + message.image);
                             return ChatBubbleMessage(
                               index: index,
                               image: message.image,
                               time: message.time,
                               text: message.text,
-                              messageImage: message.messageImage, // Add this line
+                              messageImage:
+                                  message.messageImage, // Add this line
                               isMe: message.isMe,
                               isUploading: message.isUploading, // Add this line
                               onTap: () {},
