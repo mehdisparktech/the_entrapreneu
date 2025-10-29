@@ -18,5 +18,6 @@ class ApiEndPoint {
   static const privacyPolicies = "privacy-policies";
   static const termsOfServices = "terms-and-conditions";
   static const chats = "chats";
+  static const chatRoom = "chat/room";
   static const messages = "messages";
 }

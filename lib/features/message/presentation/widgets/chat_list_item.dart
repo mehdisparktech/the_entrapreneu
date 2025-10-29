@@ -38,18 +38,19 @@ Widget chatListItem({required ChatModel item}) {
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 6,
-                  right: 2,
-                  child: Container(
-                    width: 10,
-                    height: 10,
-                    decoration: ShapeDecoration(
-                      color: const Color(0xFF0FE16D),
-                      shape: OvalBorder(),
+                if (item.status)
+                  Positioned(
+                    bottom: 6,
+                    right: 2,
+                    child: Container(
+                      width: 10,
+                      height: 10,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFF0FE16D),
+                        shape: OvalBorder(),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             12.width,
@@ -70,7 +71,7 @@ Widget chatListItem({required ChatModel item}) {
 
                         /// participant Last Message here
                         CommonText(
-                          text: item.latestMessage.message,
+                          text: "Tap to view messages",
                           fontWeight: FontWeight.w400,
                           fontSize: 12,
                           color: AppColors.secondaryText,
@@ -80,7 +81,7 @@ Widget chatListItem({required ChatModel item}) {
                   ),
                   12.width,
                   CommonText(
-                    text: "2 Min Ago",
+                    text: item.latestMessage.createdAt.checkTime,
                     fontWeight: FontWeight.w400,
                     fontSize: 12,
                     color: AppColors.secondaryText,
