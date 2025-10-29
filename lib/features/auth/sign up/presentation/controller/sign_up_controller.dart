@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
 
@@ -39,7 +41,7 @@ class SignUpController extends GetxController {
 
   List selectedOption = ["User", "Consultant"];
 
-  String selectRole = "User";
+  String selectRole = "SERVICE_PROVIDER";
   String countryCode = "+880";
   String? image;
 
@@ -66,6 +68,37 @@ class SignUpController extends GetxController {
     text: kDebugMode ? '123456' : '',
   );
 
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+
+  String selectedGender = 'Male';
+  final List<String> genderOptions = ['Male', 'Female', 'Other'];
+
+  Future<void> selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime(2000, 1, 1),
+      firstDate: DateTime(1950),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: AppColors.primaryColor,
+              onPrimary: AppColors.white,
+              onSurface: AppColors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      dateController.text = DateFormat('dd MMMM yyyy').format(picked);
+      update();
+    }
+  }
+
   onCountryChange(Country value) {
     countryCode = value.dialCode.toString();
   }
@@ -82,8 +115,6 @@ class SignUpController extends GetxController {
 
   signUpUser(GlobalKey<FormState> signUpFormKey) async {
     if (!signUpFormKey.currentState!.validate()) return;
-    Get.toNamed(AppRoutes.verifyUser);
-    return;
     isLoading = true;
     update();
     Map<String, String> body = {
@@ -91,7 +122,7 @@ class SignUpController extends GetxController {
       "email": emailController.text,
       "password": passwordController.text,
       "confirmPassword": confirmPasswordController.text,
-      "role": selectRole.toLowerCase(),
+      "role": selectRole,
     };
 
     var response = await ApiService.post(ApiEndPoint.signUp, body: body);
@@ -141,19 +172,10 @@ class SignUpController extends GetxController {
       var data = response.data;
 
       LocalStorage.token = data['data']["accessToken"];
-      LocalStorage.userId = data['data']["attributes"]["_id"];
-      LocalStorage.myImage = data['data']["attributes"]["image"];
-      LocalStorage.myName = data['data']["attributes"]["name"];
-      LocalStorage.myEmail = data['data']["attributes"]["email"];
-      LocalStorage.myRole = data['data']["attributes"]["role"];
       LocalStorage.isLogIn = true;
 
       LocalStorage.setBool(LocalStorageKeys.isLogIn, LocalStorage.isLogIn);
       LocalStorage.setString(LocalStorageKeys.token, LocalStorage.token);
-      LocalStorage.setString(LocalStorageKeys.userId, LocalStorage.userId);
-      LocalStorage.setString(LocalStorageKeys.myImage, LocalStorage.myImage);
-      LocalStorage.setString(LocalStorageKeys.myName, LocalStorage.myName);
-      LocalStorage.setString(LocalStorageKeys.myEmail, LocalStorage.myEmail);
 
       Get.toNamed(AppRoutes.completeProfile);
     } else {
@@ -326,6 +348,30 @@ class SignUpController extends GetxController {
         duration: const Duration(seconds: 2),
       );
     }
+  }
+
+  Future<void> updateProfile() async {
+    isLoading = true;
+    update();
+    Map<String, String> body = {
+      "birthDate": dateController.text,
+      "lat": currentPosition?.latitude.toString() ?? "",
+      "log": currentPosition?.longitude.toString() ?? "",
+      "gender": selectedGender,
+    };
+
+    var response = await ApiService.patch(ApiEndPoint.user, body: body);
+
+    if (response.statusCode == 200) {
+      SuccessProfileDialogHere.show(
+        Get.context!,
+        title: "Your Registration Successfully Complete.",
+      );
+    } else {
+      Utils.errorSnackBar(response.statusCode.toString(), response.message);
+    }
+    isLoading = false;
+    update();
   }
 
   @override

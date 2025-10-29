@@ -24,7 +24,7 @@ class CreatePostController extends GetxController {
     try {
       final response = await ApiService.get('/posts/$postId');
 
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.statusCode == 200) {
         final viewPostResponse = ViewPostResponseModel.fromJson(response.data);
         post.value = viewPostResponse.data;
       }

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/component/app_bar/custom_appbar.dart';
 import 'package:the_entrapreneu/component/button/common_button.dart';
-import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/config/api/api_end_point.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/message_details_dialog.dart';
@@ -49,9 +48,7 @@ class PostDetailsScreen extends StatelessWidget {
 
                 // User Info Card
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Container(
                     padding: EdgeInsets.all(16.w),
                     decoration: BoxDecoration(
@@ -88,7 +85,9 @@ class PostDetailsScreen extends StatelessWidget {
                                       ),
                                       SizedBox(width: 6),
                                       CommonText(
-                                        text: controller.getTimeAgo(post.createdAt),
+                                        text: controller.getTimeAgo(
+                                          post.createdAt,
+                                        ),
                                         fontSize: 12.sp,
                                         color: Colors.grey,
                                       ),
@@ -109,11 +108,12 @@ class PostDetailsScreen extends StatelessWidget {
                             height: 171.h,
                             width: 330.w,
                             imageType: ImageType.network,
-                          ),*/
-                          Image.network(_getImageUrl(ApiEndPoint.imageUrl+post.image),height: 171.h,
+                          ),*/ Image.network(
+                            _getImageUrl(ApiEndPoint.imageUrl + post.image),
+                            height: 171.h,
                             width: 330.w,
                             fit: BoxFit.fill,
-                          )
+                          ),
                         ),
                         SizedBox(height: 16.h),
 
@@ -156,10 +156,7 @@ class PostDetailsScreen extends StatelessWidget {
                             post.category ?? 'No Category',
                           ),
                           SizedBox(width: 12.w),
-                          _buildInfoChip(
-                            Icons.work,
-                            'No Subcategory',
-                          ),
+                          _buildInfoChip(Icons.work, 'No Subcategory'),
                         ],
                       ),
                       SizedBox(height: 12.h),
@@ -172,10 +169,7 @@ class PostDetailsScreen extends StatelessWidget {
                             controller.getFormattedDate(post.serviceDate),
                           ),
                           SizedBox(width: 12.w),
-                          _buildInfoChip(
-                            Icons.access_time,
-                            post.serviceTime,
-                          ),
+                          _buildInfoChip(Icons.access_time, post.serviceTime),
                         ],
                       ),
                     ],
@@ -285,7 +279,7 @@ class PostDetailsScreen extends StatelessWidget {
           CommonText(text: title, fontSize: 16.sp, fontWeight: FontWeight.bold),
           SizedBox(height: 12.h),
           ...items.map(
-                (item) => Padding(
+            (item) => Padding(
               padding: EdgeInsets.only(bottom: 8.h),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

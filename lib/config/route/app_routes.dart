@@ -12,7 +12,6 @@ import 'package:the_entrapreneu/features/home/presentation/screen/post_job_scree
 import 'package:the_entrapreneu/features/message/presentation/screen/view_message.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/edit_post_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/edit_service_provider_profile.dart';
-import 'package:the_entrapreneu/features/profile/presentation/screen/my_profile_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/privacy_policy_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/provider_info_screen.dart';
 import 'package:the_entrapreneu/features/profile/presentation/screen/terms_of_services_screen.dart';

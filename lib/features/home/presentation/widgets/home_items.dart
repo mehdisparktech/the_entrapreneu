@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:the_entrapreneu/config/api/api_end_point.dart';
-
-import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
 import '../../../../utils/constants/app_colors.dart';
 import '../../data/data_model.dart';
@@ -11,17 +9,14 @@ class HomeItem extends StatelessWidget {
   final VoidCallback? onTap;
   final Post post;
 
-  const HomeItem({
-    super.key,
-    required this.onTap,
-    required this.post,
-  });
+  const HomeItem({super.key, required this.onTap, required this.post});
 
   String _getImageUrl(String imagePath) {
     if (imagePath.startsWith('http')) {
       return imagePath;
     }
-    return ApiEndPoint.imageUrl+imagePath; // Replace with your actual base URL
+    return ApiEndPoint.imageUrl +
+        imagePath; // Replace with your actual base URL
   }
 
   @override
@@ -51,13 +46,12 @@ class HomeItem extends StatelessWidget {
                 height: 100.h,
                 width: 145.w,
                 imageType: ImageType.network,
-              ),*/
-              Image.network(
+              ),*/ Image.network(
                 _getImageUrl(post.image),
                 height: 100.h,
                 width: 145.w,
                 fit: BoxFit.cover,
-              )
+              ),
             ),
             SizedBox(height: 5.h),
             CommonText(

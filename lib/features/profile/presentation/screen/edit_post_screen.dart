@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -42,45 +41,62 @@ class EditPostScreen extends StatelessWidget {
               // Category Selection Row
               SizedBox(
                 height: 120.h,
-                child: Obx(() => ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildCategoryCard(
-                      icon: Icons.home,
-                      label: 'Home &\nProperty',
-                      isSelected: controller.selectedCategory.value == 'Home & Property',
-                      onTap: () => controller.selectedCategory.value = 'Home & Property',
-                    ),
-                    const SizedBox(width: 12),
-                    _buildCategoryCard(
-                      icon: Icons.directions_car,
-                      label: 'Automotive\nHelp',
-                      isSelected: controller.selectedCategory.value == 'Automotive Help',
-                      onTap: () => controller.selectedCategory.value = 'Automotive Help',
-                    ),
-                    const SizedBox(width: 12),
-                    _buildCategoryCard(
-                      icon: Icons.local_shipping,
-                      label: 'Vehicles &\nTransport',
-                      isSelected: controller.selectedCategory.value == 'Vehicles & Transport',
-                      onTap: () => controller.selectedCategory.value = 'Vehicles & Transport',
-                    ),
-                    const SizedBox(width: 12),
-                    _buildCategoryCard(
-                      icon: Icons.person,
-                      label: 'Personal\nHelp',
-                      isSelected: controller.selectedCategory.value == 'Personal Help',
-                      onTap: () => controller.selectedCategory.value = 'Personal Help',
-                    ),
-                    const SizedBox(width: 12),
-                    _buildCategoryCard(
-                      icon: Icons.business_center,
-                      label: 'Business\n& Tech',
-                      isSelected: controller.selectedCategory.value == 'Business & Tech',
-                      onTap: () => controller.selectedCategory.value = 'Business & Tech',
-                    ),
-                  ],
-                )),
+                child: Obx(
+                  () => ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      _buildCategoryCard(
+                        icon: Icons.home,
+                        label: 'Home &\nProperty',
+                        isSelected:
+                            controller.selectedCategory.value ==
+                            'Home & Property',
+                        onTap: () => controller.selectedCategory.value =
+                            'Home & Property',
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCategoryCard(
+                        icon: Icons.directions_car,
+                        label: 'Automotive\nHelp',
+                        isSelected:
+                            controller.selectedCategory.value ==
+                            'Automotive Help',
+                        onTap: () => controller.selectedCategory.value =
+                            'Automotive Help',
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCategoryCard(
+                        icon: Icons.local_shipping,
+                        label: 'Vehicles &\nTransport',
+                        isSelected:
+                            controller.selectedCategory.value ==
+                            'Vehicles & Transport',
+                        onTap: () => controller.selectedCategory.value =
+                            'Vehicles & Transport',
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCategoryCard(
+                        icon: Icons.person,
+                        label: 'Personal\nHelp',
+                        isSelected:
+                            controller.selectedCategory.value ==
+                            'Personal Help',
+                        onTap: () =>
+                            controller.selectedCategory.value = 'Personal Help',
+                      ),
+                      const SizedBox(width: 12),
+                      _buildCategoryCard(
+                        icon: Icons.business_center,
+                        label: 'Business\n& Tech',
+                        isSelected:
+                            controller.selectedCategory.value ==
+                            'Business & Tech',
+                        onTap: () => controller.selectedCategory.value =
+                            'Business & Tech',
+                      ),
+                    ],
+                  ),
+                ),
               ),
 
               const SizedBox(height: 20),
@@ -186,32 +202,36 @@ class EditPostScreen extends StatelessWidget {
               // Category
               _buildLabel('Category'),
               const SizedBox(height: 8),
-              Obx(() => _buildDropdown(
-                value: controller.selectedCategory.value.isEmpty
-                    ? null
-                    : controller.selectedCategory.value,
-                hint: 'Select category',
-                items: controller.categories,
-                onChanged: (value) {
-                  controller.selectedCategory.value = value!;
-                },
-              )),
+              Obx(
+                () => _buildDropdown(
+                  value: controller.selectedCategory.value.isEmpty
+                      ? null
+                      : controller.selectedCategory.value,
+                  hint: 'Select category',
+                  items: controller.categories,
+                  onChanged: (value) {
+                    controller.selectedCategory.value = value!;
+                  },
+                ),
+              ),
 
               const SizedBox(height: 16),
 
               // Sub Category
               _buildLabel('Sub Category'),
               const SizedBox(height: 8),
-              Obx(() => _buildDropdown(
-                value: controller.selectedSubCategory.value.isEmpty
-                    ? null
-                    : controller.selectedSubCategory.value,
-                hint: 'Select sub category',
-                items: controller.subCategories,
-                onChanged: (value) {
-                  controller.selectedSubCategory.value = value!;
-                },
-              )),
+              Obx(
+                () => _buildDropdown(
+                  value: controller.selectedSubCategory.value.isEmpty
+                      ? null
+                      : controller.selectedSubCategory.value,
+                  hint: 'Select sub category',
+                  items: controller.subCategories,
+                  onChanged: (value) {
+                    controller.selectedSubCategory.value = value!;
+                  },
+                ),
+              ),
 
               const SizedBox(height: 16),
 
@@ -279,77 +299,88 @@ class EditPostScreen extends StatelessWidget {
               // Pricing / Fee Options
               _buildLabel('Pricing / Fee Options'),
               const SizedBox(height: 8),
-              Obx(() => Row(
-                children: [
-                  Expanded(
-                    child: _buildPricingOption(
-                      title: 'Pay',
-                      isSelected: controller.selectedPricingOption.value == 'pay',
-                      onTap: () => controller.selectPricingOption('pay'),
+              Obx(
+                () => Row(
+                  children: [
+                    Expanded(
+                      child: _buildPricingOption(
+                        title: 'Pay',
+                        isSelected:
+                            controller.selectedPricingOption.value == 'pay',
+                        onTap: () => controller.selectPricingOption('pay'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildPricingOption(
-                      title: 'Accepting Offer',
-                      isSelected: controller.selectedPricingOption.value == 'accepting_offer',
-                      onTap: () => controller.selectPricingOption('accepting_offer'),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _buildPricingOption(
+                        title: 'Accepting Offer',
+                        isSelected:
+                            controller.selectedPricingOption.value ==
+                            'accepting_offer',
+                        onTap: () =>
+                            controller.selectPricingOption('accepting_offer'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: _buildPricingOption(
-                      title: 'Free',
-                      isSelected: controller.selectedPricingOption.value == 'free',
-                      onTap: () => controller.selectPricingOption('free'),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: _buildPricingOption(
+                        title: 'Free',
+                        isSelected:
+                            controller.selectedPricingOption.value == 'free',
+                        onTap: () => controller.selectPricingOption('free'),
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                ),
+              ),
 
               const SizedBox(height: 16),
 
               // Priority Level
               _buildLabel('Priority Level'),
               const SizedBox(height: 8),
-              Obx(() => _buildDropdown(
-                value: controller.selectedPriorityLevel.value.isEmpty
-                    ? null
-                    : controller.selectedPriorityLevel.value,
-                hint: 'Select priority',
-                items: controller.priorityLevels,
-                onChanged: (value) {
-                  controller.selectedPriorityLevel.value = value!;
-                },
-              )),
+              Obx(
+                () => _buildDropdown(
+                  value: controller.selectedPriorityLevel.value.isEmpty
+                      ? null
+                      : controller.selectedPriorityLevel.value,
+                  hint: 'Select priority',
+                  items: controller.priorityLevels,
+                  onChanged: (value) {
+                    controller.selectedPriorityLevel.value = value!;
+                  },
+                ),
+              ),
 
               const SizedBox(height: 32),
 
               // Update Button
-              Obx(() => SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: controller.isLoading.value
-                      ? null
-                      : () => controller.updatePost(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1E5AA8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () => controller.updatePost(),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF1E5AA8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 0,
                     ),
-                    elevation: 0,
-                  ),
-                  child: Text(
-                    controller.isLoading.value ? 'Updating...' : 'Update',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    child: Text(
+                      controller.isLoading.value ? 'Updating...' : 'Update',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-              )),
+              ),
 
               const SizedBox(height: 20),
             ],
@@ -387,13 +418,17 @@ class EditPostScreen extends StatelessWidget {
                 color: isSelected ? const Color(0xffE6EEFB) : Colors.white,
                 borderRadius: BorderRadius.circular(30),
                 border: Border.all(
-                  color: isSelected ? const Color(0xFF1E5AA8) : Colors.grey.shade300,
+                  color: isSelected
+                      ? const Color(0xFF1E5AA8)
+                      : Colors.grey.shade300,
                   width: 1.5,
                 ),
               ),
               child: Icon(
                 icon,
-                color: isSelected ? AppColors.primaryColor : const Color(0xFF1E5AA8),
+                color: isSelected
+                    ? AppColors.primaryColor
+                    : const Color(0xFF1E5AA8),
                 size: 28,
               ),
             ),
@@ -414,6 +449,7 @@ class EditPostScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildActionButton({
     required IconData icon,
     required String label,
@@ -429,19 +465,12 @@ class EditPostScreen extends StatelessWidget {
               color: const Color(0xFF1E5AA8).withOpacity(0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: const Color(0xFF1E5AA8),
-              size: 24,
-            ),
+            child: Icon(icon, color: const Color(0xFF1E5AA8), size: 24),
           ),
           const SizedBox(height: 6),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: Colors.black87,
-            ),
+            style: const TextStyle(fontSize: 11, color: Colors.black87),
           ),
         ],
       ),
@@ -481,7 +510,10 @@ class EditPostScreen extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           suffixIcon: suffixIcon != null
               ? Icon(suffixIcon, color: Colors.grey[600], size: 20)
               : null,
@@ -506,13 +538,19 @@ class EditPostScreen extends StatelessWidget {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
           value: value,
-          hint: Text(hint, style: TextStyle(fontSize: 14, color: Colors.grey[400])),
+          hint: Text(
+            hint,
+            style: TextStyle(fontSize: 14, color: Colors.grey[400]),
+          ),
           isExpanded: true,
           icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey[600]),
           items: items.map((String item) {
             return DropdownMenuItem<String>(
               value: item,
-              child: Text(item, style: const TextStyle(fontSize: 14, color: Colors.black)),
+              child: Text(
+                item,
+                style: const TextStyle(fontSize: 14, color: Colors.black),
+              ),
             );
           }).toList(),
           onChanged: onChanged,

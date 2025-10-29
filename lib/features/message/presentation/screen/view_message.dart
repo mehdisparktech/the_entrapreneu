@@ -9,8 +9,6 @@ import 'package:the_entrapreneu/features/home/presentation/widgets/message_detai
 import 'package:the_entrapreneu/features/message/presentation/controller/view_message_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 
-import '../../../../config/route/app_routes.dart';
-
 class ViewMessageScreen extends StatelessWidget {
   ViewMessageScreen({super.key});
 
@@ -95,26 +93,24 @@ class ViewMessageScreen extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                         ),
                         SizedBox(height: 16.h),
-                        // Category and Subcategory
 
+                        // Category and Subcategory
                         Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 12.w,
-                              vertical: 6.h,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
-                              borderRadius: BorderRadius.circular(
-                                6.r,
-                              ),
-                            ),
-                            child: CommonText(
-                              text: "Running",
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12.w,
+                            vertical: 6.h,
                           ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(6.r),
+                          ),
+                          child: CommonText(
+                            text: "Running",
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                          ),
+                        ),
                       ],
                     ),
                   ),

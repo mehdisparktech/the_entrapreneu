@@ -24,12 +24,10 @@ class HomeController extends GetxController {
     try {
       final response = await ApiService.get(
         ApiEndPoint.post,
-        header: {
-          "Authorization": "Bearer ${LocalStorage.token}",
-        },
+        header: {"Authorization": "Bearer ${LocalStorage.token}"},
       ); // Replace with your actual endpoint
 
-      if (response.statusCode == 200 && response.data != null) {
+      if (response.statusCode == 200) {
         final postResponse = PostResponseModel.fromJson(response.data);
         allPosts = postResponse.data;
         filteredPosts = allPosts;

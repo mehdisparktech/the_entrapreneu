@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
-import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 import '../../../../../component/button/common_button.dart';
 import '../../../../../component/image/common_image.dart';
 import '../../../../../component/text/common_text.dart';
@@ -21,44 +19,6 @@ class CompleteProfile extends StatefulWidget {
 
 class _CompleteProfileState extends State<CompleteProfile> {
   final SignUpController controller = Get.find<SignUpController>();
-  final TextEditingController dateController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
-
-  String selectedGender = 'Male';
-  final List<String> genderOptions = ['Male', 'Female', 'Other'];
-
-  @override
-  void dispose() {
-    dateController.dispose();
-    addressController.dispose();
-    super.dispose();
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime(2000, 1, 1),
-      firstDate: DateTime(1950),
-      lastDate: DateTime.now(),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: const ColorScheme.light(
-              primary: AppColors.primaryColor,
-              onPrimary: AppColors.white,
-              onSurface: AppColors.black,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null) {
-      setState(() {
-        dateController.text = DateFormat('dd MMMM yyyy').format(picked);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,12 +118,12 @@ class _CompleteProfileState extends State<CompleteProfile> {
               bottom: 8,
             ),
             GestureDetector(
-              onTap: () => _selectDate(context),
+              onTap: () => controller.selectDate(context),
               child: AbsorbPointer(
                 child: CommonTextField(
-                  controller: dateController,
+                  controller: controller.dateController,
                   hintText: '01 January 2000',
-                  onTap: () => _selectDate(context),
+                  onTap: () => controller.selectDate(context),
                   suffixIcon: Padding(
                     padding: EdgeInsets.all(12.w),
                     child: Icon(
@@ -204,7 +164,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                 ],
               ),
               child: DropdownButtonFormField<String>(
-                value: selectedGender,
+                value: controller.selectedGender,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 16.w,
@@ -235,16 +195,15 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   color: AppColors.black,
                   fontWeight: FontWeight.w400,
                 ),
-                items: genderOptions.map((String gender) {
+                items: controller.genderOptions.map((String gender) {
                   return DropdownMenuItem<String>(
                     value: gender,
                     child: Text(gender),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
-                  setState(() {
-                    selectedGender = newValue!;
-                  });
+                  controller.selectedGender = newValue!;
+                  controller.update();
                 },
               ),
             ),
@@ -261,7 +220,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
               bottom: 8,
             ),
             CommonTextField(
-              controller: addressController,
+              controller: controller.addressController,
               hintText: '8502 Preston Rd. Inglewood, Maine',
               suffixIcon: Padding(
                 padding: EdgeInsets.all(12.w),
@@ -285,8 +244,8 @@ class _CompleteProfileState extends State<CompleteProfile> {
             CommonButton(
               titleText: 'Confirm',
               onTap: () {
+                controller.updateProfile();
                 // Handle confirm action
-                SuccessProfileDialogHere.show(Get.context!, title: "Your Registration Successfully Complete.");
               },
               buttonHeight: 48.h,
               titleSize: 16,
