@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:the_entrapreneu/config/route/app_routes.dart';
+import 'package:the_entrapreneu/features/home/presentation/widgets/offer_dialog.dart';
 import '../../../../component/image/common_image.dart';
 import '../../../../component/text/common_text.dart';
+import '../../../../config/api/api_end_point.dart';
 import '../../../message/data/model/chat_message_model.dart';
 import '../../../../../../utils/extensions/extension.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,9 +20,16 @@ class FirstMessage extends StatefulWidget {
 }
 
 class _MessageScreenState extends State<FirstMessage> {
-  String chatId = Get.parameters["chatId"] ?? "";
+  String chatId = Get.parameters["chatRoomId"] ?? "";
   String name = Get.parameters["name"] ?? "";
   String image = Get.parameters["image"] ?? "";
+
+  String _getImageUrl(String imagePath) {
+    if (imagePath.startsWith('http')) {
+      return imagePath;
+    }
+    return 'https://your-api-base-url.com$imagePath'; // Replace with your actual base URL
+  }
 
   @override
   void initState() {
@@ -136,7 +145,7 @@ class _MessageScreenState extends State<FirstMessage> {
                     children: [
                       /// Banner Section
                       InkWell(
-                        onTap: () => Get.toNamed(AppRoutes.createPost),
+                        onTap: () => OfferDialog.show(Get.context!, budget: 100, serviceDate: DateTime.now(), serviceTime: "", onSubmit: (){}),
                         child: Container(
                           margin: EdgeInsets.all(16.w),
                           decoration: BoxDecoration(
@@ -157,12 +166,10 @@ class _MessageScreenState extends State<FirstMessage> {
                                 borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(12.r),
                                 ),
-                                child: CommonImage(
-                                  imageSrc: "assets/images/view_image_pic.png",
-                                  width: double.infinity,
-                                  height: 170.h,
-                                  fill: BoxFit.cover,
-                                ),
+                                child: Image.network(_getImageUrl(ApiEndPoint.imageUrl+controller.post!.image),height: 171.h,
+                                  width: 330.w,
+                                  fit: BoxFit.fill,
+                                )
                               ),
                               Padding(
                                 padding: EdgeInsets.all(12.w),
@@ -174,14 +181,14 @@ class _MessageScreenState extends State<FirstMessage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         CommonText(
-                                          text: "I Need Experienced Plumber",
+                                          text: controller.post!.title,
                                           fontSize: 14.sp,
                                           color: AppColors.textColorFirst,
                                           fontWeight: FontWeight.w600,
                                           maxLines: 2,
                                         ),
                                         CommonText(
-                                          text: "\$100",
+                                          text: "\$${controller.post!.price}",
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.orange,
@@ -196,8 +203,7 @@ class _MessageScreenState extends State<FirstMessage> {
                                     ),
                                     12.height,
                                     GestureDetector(
-                                      onTap: () =>
-                                          Get.toNamed(AppRoutes.customOffer),
+                                      onTap: () =>OfferDialog.show(Get.context!, budget: 100, serviceDate: DateTime.now(), serviceTime: "", onSubmit: (){}),
                                       child: Container(
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 12.w,
@@ -227,24 +233,26 @@ class _MessageScreenState extends State<FirstMessage> {
                       ),
 
                       /// Messages Section
+                      /// Messages Section
                       ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        reverse: true,
                         itemCount: controller.isMoreLoading
                             ? controller.messages.length + 1
                             : controller.messages.length,
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         itemBuilder: (context, index) {
                           if (index < controller.messages.length) {
-                            ChatMessageModel message =
-                                controller.messages[index];
+                            ChatMessageModel message = controller.messages[index];
+                            print("image : "+message.image);
                             return ChatBubbleMessage(
                               index: index,
                               image: message.image,
                               time: message.time,
                               text: message.text,
+                              messageImage: message.messageImage, // Add this line
                               isMe: message.isMe,
+                              isUploading: message.isUploading, // Add this line
                               onTap: () {},
                             );
                           } else {

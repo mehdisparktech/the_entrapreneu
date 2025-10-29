@@ -2,8 +2,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData, MultipartFile;
 import 'package:image_picker/image_picker.dart';
+import 'package:dio/dio.dart';
 
 import '../../../../services/api/api_service.dart';
 import '../../../../services/socket/socket_service.dart';
@@ -13,16 +14,21 @@ import '../../../../utils/app_utils.dart';
 import '../../../../utils/enum/enum.dart';
 import '../../../message/data/model/chat_message_model.dart';
 import '../../../message/data/model/message_model.dart';
+import '../../data/view_data.dart';
 
 class FirstMessageController extends GetxController {
   bool isLoading = false;
   bool isMoreLoading = false;
+  bool isUploadingImage = false;
   String? video;
 
   List messages = [];
 
   String chatId = "";
+  String chatRoomId = "";
   String name = "";
+  String image = "";
+  String serviceId = "";
 
   int page = 1;
   int currentIndex = 0;
@@ -32,10 +38,12 @@ class FirstMessageController extends GetxController {
   bool isInputField = false;
 
   File? selectedAttachment;
-  String? attachmentType; // 'image' or 'file'
+  String? attachmentType;
 
   ScrollController scrollController = ScrollController();
   TextEditingController messageController = TextEditingController();
+
+  ViewData? post;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -43,42 +51,126 @@ class FirstMessageController extends GetxController {
 
   MessageModel messageModel = MessageModel.fromJson({});
 
-  Future<void> getMessageRepo() async {
-    return;
-    if (page == 1) {
-      messages.clear();
-      status = Status.loading;
-      update();
+  @override
+  void onInit() {
+    super.onInit();
+
+    // Get arguments from previous screen
+    final args = Get.arguments as Map<String, dynamic>?;
+
+    if (args != null) {
+      chatId = args['chatRoomId'] ?? '';
+      chatRoomId = args['chatRoomId'] ?? '';
+      name = args['otherUserName'] ?? '';
+      image = args['otherUserImage'] ?? '';
+      serviceId = args['serviceId'] ?? '';
+      print("chat id 😍😍😍😍 $chatId");
+      print("chat room id 😍😍😍😍 $chatRoomId");
+      print("service id 😍😍😍😍 $serviceId");
+
+      // Get initial message if exists
+      String initialMessage = args['initialMessage'] ?? '';
+      if (initialMessage.isNotEmpty) {
+        messageController.text = initialMessage;
+      }
     }
 
-    var response = await ApiService.get(
-      "${ApiEndPoint.messages}?chatId=$chatId&page=$page&limit=15",
-    );
+    getCard();
 
-    if (response.statusCode == 200) {
-      var data = response.data['data']['attributes']['messages'];
+    // Load messages if chatId exists
+    if (chatId.isNotEmpty) {
+      getMessageRepo();
+    }
+  }
 
-      for (var messageData in data) {
-        messageModel = MessageModel.fromJson(messageData);
-
-        messages.add(
-          ChatMessageModel(
-            time: messageModel.createdAt.toLocal(),
-            text: messageModel.message,
-            image: messageModel.sender.image,
-            isNotice: messageModel.type == "notice" ? true : false,
-            isMe: LocalStorage.userId == messageModel.sender.id ? true : false,
-          ),
+  // Scroll to bottom with animation
+  void scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
         );
       }
+    });
+  }
 
-      page = page + 1;
-      status = Status.completed;
+  Future<void> getMessageRepo() async {
+    if (chatId.isEmpty) return;
+
+    isLoading = true;
+    update();
+
+    try {
+      var response = await ApiService.get("/message/$chatId");
+
+      if (response.statusCode == 200) {
+        var data = response.data['data'];
+
+        messages.clear();
+
+        // Create a temporary list to hold all messages
+        List<ChatMessageModel> tempMessages = [];
+
+        for (var messageData in data) {
+          tempMessages.add(
+            ChatMessageModel(
+              time: DateTime.parse(messageData['createdAt']).toLocal(),
+              text: messageData['text'] ?? '',
+              image: messageData['sender']['image'] ?? '',
+              messageImage: messageData['image'],
+              isNotice: false,
+              isMe: LocalStorage.userId == messageData['sender']['_id'],
+            ),
+          );
+        }
+
+        // Sort messages by time - oldest to newest
+        tempMessages.sort((a, b) => a.time.compareTo(b.time));
+
+        // Add sorted messages to main list
+        messages.addAll(tempMessages);
+
+        // Listen for new messages via socket
+        listenMessage(chatId);
+
+        isLoading = false;
+        update();
+
+        // Scroll to bottom after loading messages
+        scrollToBottom();
+      } else {
+        Utils.errorSnackBar(response.statusCode.toString(), response.message);
+        isLoading = false;
+        update();
+      }
+    } catch (e) {
+      print('Error fetching messages: $e');
+      Get.snackbar(
+        'Error',
+        'Failed to load messages',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading = false;
       update();
-    } else {
-      Utils.errorSnackBar(response.statusCode.toString(), response.message);
-      status = Status.error;
-      update();
+    }
+  }
+
+  void getCard() async {
+    try {
+      var response = await ApiService.get("/posts/$serviceId");
+
+      if (response.statusCode == 200) {
+        final viewPostResponse = ViewPostResponseModel.fromJson(response.data);
+        post = viewPostResponse.data;
+      } else {
+        Utils.errorSnackBar(response.statusCode.toString(), response.message);
+      }
+    } catch (e) {
+      print('Error fetching card: $e');
     }
   }
 
@@ -94,17 +186,7 @@ class FirstMessageController extends GetxController {
         attachmentType = 'image';
         update();
 
-        // Send image message
-        await sendMessageWithAttachment();
-
-        Get.snackbar(
-          'Success',
-          'Image attached',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 2),
-        );
+        await sendMessageWithImage();
       }
     } catch (e) {
       Get.snackbar(
@@ -129,17 +211,7 @@ class FirstMessageController extends GetxController {
         attachmentType = 'image';
         update();
 
-        // Send image message
-        await sendMessageWithAttachment();
-
-        Get.snackbar(
-          'Success',
-          'Photo captured',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-          duration: const Duration(seconds: 2),
-        );
+        await sendMessageWithImage();
       }
     } catch (e) {
       Get.snackbar(
@@ -152,53 +224,110 @@ class FirstMessageController extends GetxController {
     }
   }
 
-  Future<void> sendMessageWithAttachment() async {
+  Future<void> sendMessageWithImage() async {
     if (selectedAttachment == null) return;
 
-    // Add message with attachment to UI
-    messages.insert(
-      0,
+    // Add uploading message at the BOTTOM
+    messages.add(
       ChatMessageModel(
         time: DateTime.now(),
-        text: "📎 Image attachment",
+        text: "",
         image: LocalStorage.myImage,
+        messageImage: selectedAttachment!.path,
         isMe: true,
+        isUploading: true,
       ),
     );
 
+    isUploadingImage = true;
     update();
+    scrollToBottom(); // Scroll to show uploading message
 
-    // TODO: Upload attachment to server and get URL
-    // var uploadedUrl = await uploadAttachment(selectedAttachment!);
+    try {
+      FormData formData = FormData.fromMap({
+        'chatId': chatRoomId,
+        'service': serviceId,
+        'image': await MultipartFile.fromFile(
+          selectedAttachment!.path,
+          filename: selectedAttachment!.path.split('/').last,
+        ),
+      });
 
-    var body = {
-      "chat": chatId,
-      "message": "📎 Image attachment",
-      "sender": LocalStorage.userId,
-      // "attachment": uploadedUrl,
-      // "attachmentType": attachmentType,
-    };
+      final response = await ApiService.post(
+        "message/create",
+        body: formData,
+      );
 
-    SocketServices.emitWithAck("add-new-message", body, (data) {
-      if (kDebugMode) {
-        print("Message with attachment sent: $data");
+      // Remove uploading message from BOTTOM
+      messages.removeLast();
+
+      if (response.statusCode == 200) {
+        var messageData = response.data['data'];
+        // Add actual message at BOTTOM
+        messages.add(
+          ChatMessageModel(
+            time: DateTime.parse(messageData['createdAt']).toLocal(),
+            text: messageData['text'] ?? '',
+            image: LocalStorage.myImage,
+            messageImage: messageData['image'],
+            isMe: true,
+            isUploading: false,
+          ),
+        );
+
+        update();
+        scrollToBottom(); // Scroll to show new message
+
+        Get.snackbar(
+          'Success',
+          'Image sent successfully',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 2),
+        );
+
+        print("Image sent successfully");
+      } else {
+        update();
+        Get.snackbar(
+          'Error',
+          'Failed to send image',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
       }
-    });
+    } catch (e) {
+      if (messages.isNotEmpty && messages.last.isUploading == true) {
+        messages.removeLast();
+      }
+      update();
 
-    // Clear attachment
-    selectedAttachment = null;
-    attachmentType = null;
-    update();
+      print('Error sending image: $e');
+      Get.snackbar(
+        'Error',
+        'Failed to send image: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      selectedAttachment = null;
+      attachmentType = null;
+      isUploadingImage = false;
+      update();
+    }
   }
 
-  addNewMessage() async {
+  Future<void> addNewMessage() async {
     if (messageController.text.trim().isEmpty) return;
 
     isMessage = true;
     update();
 
-    messages.insert(
-      0,
+    // Add message at BOTTOM
+    messages.add(
       ChatMessageModel(
         time: DateTime.now(),
         text: messageController.text,
@@ -209,43 +338,50 @@ class FirstMessageController extends GetxController {
 
     isMessage = false;
     update();
+    scrollToBottom(); // Scroll to show new message
+
+    print("chat room id 😍😍😍😍 $chatRoomId");
+    print("service id 😍😍😍😍 $serviceId");
 
     var body = {
-      "chat": chatId,
-      "message": messageController.text,
-      "sender": LocalStorage.userId,
+      "chatId": chatRoomId,
+      "text": messageController.text,
+      "service": serviceId,
     };
 
     messageController.clear();
 
-    SocketServices.emitWithAck("add-new-message", body, (data) {
-      if (kDebugMode) {
-        print(
-          "===============================================================> Received acknowledgment: $data",
-        );
-      }
-    });
+    final response = await ApiService.post("message/create", body: body);
+
+    if (response.statusCode == 200) {
+      print("Message sent successfully");
+    } else {
+      Get.snackbar(
+        'Error',
+        'Failed to send message',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   listenMessage(String chatId) async {
-    SocketServices.on('new-message::$chatId', (data) {
-      status = Status.loading;
-      update();
-
-      var time = data['createdAt'].toLocal();
-      messages.insert(
-        0,
+    SocketServices.on('getMessage::$chatId', (data) {
+      // Add new message at BOTTOM
+      messages.add(
         ChatMessageModel(
           isNotice: data['messageType'] == "notice" ? true : false,
-          time: time,
-          text: data['message'],
-          image: data['sender']['image'],
-          isMe: false,
+          time: DateTime.parse(data['createdAt']).toLocal(),
+          text: data['text'] ?? data['message'] ?? '',
+          image: data['sender']['image'] ?? '',
+          messageImage: data['image'],
+          isMe: LocalStorage.userId == data['sender']['_id'],
         ),
       );
 
-      status = Status.completed;
       update();
+      scrollToBottom(); // Scroll to show new message from socket
     });
   }
 
