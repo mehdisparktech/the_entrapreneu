@@ -1,28 +1,37 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:the_entrapreneu/features/profile/data/model/html_model.dart';
-import '../../../../services/api/api_service.dart';
+
 import '../../../../config/api/api_end_point.dart';
+import '../../../../services/api/api_service.dart';
 import '../../../../utils/app_utils.dart';
 import '../../../../utils/enum/enum.dart';
 
-class TermsOfServicesController extends GetxController {
+class HelpSupportController extends GetxController {
   /// Api status check here
   Status status = Status.completed;
 
   ///  HTML model initialize here
   HtmlModel data = HtmlModel.fromJson({});
+  TextEditingController titleController=TextEditingController();
+  TextEditingController messageController=TextEditingController();
 
-  /// Terms of services Controller instance create here
-  static TermsOfServicesController get instance =>
-      Get.put(TermsOfServicesController());
+  /// Privacy Policy Controller instance create here
+  static HelpSupportController get instance =>
+      Get.put(HelpSupportController());
 
-  ///  Terms of services Api call here
-  geTermsOfServicesRepo() async {
-    return;
+  /// Privacy Policy Api call here
+  supportAdminRepo() async {
     status = Status.loading;
     update();
 
-    var response = await ApiService.get(ApiEndPoint.termsOfServices);
+    var response = await ApiService.post(
+        ApiEndPoint.helpSupport,
+      body: {
+        "title": titleController.text,
+        "message": messageController.text,
+      }
+    );
 
     if (response.statusCode == 200) {
       data = HtmlModel.fromJson(response.data['data']['content']);
@@ -36,10 +45,4 @@ class TermsOfServicesController extends GetxController {
     }
   }
 
-  /// Controller on Init here
-  @override
-  void onInit() {
-    geTermsOfServicesRepo();
-    super.onInit();
-  }
 }

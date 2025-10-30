@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:the_entrapreneu/features/home/presentation/controller/home_controller.dart';
 import 'package:the_entrapreneu/features/home/presentation/widgets/posts_complete.dart';
 import '../../../../services/api/api_service.dart';
 import '../../../../utils/constants/app_colors.dart';
@@ -462,6 +463,7 @@ class PostJobController extends GetxController {
             Get.back();
           },
         );
+        Get.find<HomeController>().fetchPosts();
       } else {
         Get.snackbar(
           'Error',
