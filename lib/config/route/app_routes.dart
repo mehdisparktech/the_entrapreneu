@@ -3,7 +3,7 @@ import 'package:the_entrapreneu/features/history/presentation/screen/complete_hi
 import 'package:the_entrapreneu/features/history/presentation/screen/history_details_screen.dart';
 import 'package:the_entrapreneu/features/history/presentation/screen/history_screen.dart';
 import 'package:the_entrapreneu/features/history/presentation/screen/review_screen.dart';
-import 'package:the_entrapreneu/features/home/presentation/screen/create_post_screen.dart';
+import 'package:the_entrapreneu/features/home/presentation/screen/post_details_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/custom_offe_screen.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/first_message.dart';
 import 'package:the_entrapreneu/features/home/presentation/screen/home_nav_screen.dart';

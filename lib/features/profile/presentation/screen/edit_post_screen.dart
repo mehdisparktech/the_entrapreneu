@@ -7,7 +7,7 @@ import '../../../../config/api/api_end_point.dart';
 import '../controller/edit_post_controller.dart';
 
 class EditPostScreen extends StatelessWidget {
-  EditPostScreen({Key? key}) : super(key: key);
+  EditPostScreen({super.key});
 
   final EditPostController controller = Get.put(EditPostController());
 
@@ -414,6 +414,7 @@ class EditPostScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildCategoryCard({
     required IconData icon,
     required String label,
@@ -473,6 +474,7 @@ class EditPostScreen extends StatelessWidget {
     );
   }
 
+  // ignore: unused_element
   Widget _buildActionButton({
     required IconData icon,
     required String label,

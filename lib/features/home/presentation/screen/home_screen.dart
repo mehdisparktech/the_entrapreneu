@@ -15,8 +15,6 @@ import '../widgets/home_items.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  final int notificationCount = 5;
-
   void _showCreatePostBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -42,7 +40,9 @@ class HomeScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      HomeDetails(notificationCount: notificationCount),
+                      HomeDetails(
+                        notificationCount: controller.notificationCount,
+                      ),
                       SizedBox(height: 20.h),
                       CustomSearchField(
                         onChanged: (value) {
@@ -88,18 +88,22 @@ class HomeScreen extends StatelessWidget {
                           itemCount: controller.filteredPosts.length,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10.w,
-                            mainAxisSpacing: 10.h,
-                            childAspectRatio: 0.95,
-                          ),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10.w,
+                                mainAxisSpacing: 10.h,
+                                childAspectRatio: 0.95,
+                              ),
                           itemBuilder: (context, index) {
                             final post = controller.filteredPosts[index];
                             return HomeItem(
                               post: post,
                               onTap: () {
-                                Get.toNamed(AppRoutes.createPost, arguments: post.id);
+                                Get.toNamed(
+                                  AppRoutes.createPost,
+                                  arguments: post.id,
+                                );
                               },
                             );
                           },

@@ -23,10 +23,7 @@ class PostJobScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppBar(
-                  title: "Create Post",
-                  showBackButton: true,
-                ),
+                CustomAppBar(title: "Create Post", showBackButton: true),
                 SizedBox(height: 20.h),
 
                 // Upload Image Section
@@ -36,7 +33,10 @@ class PostJobScreen extends StatelessWidget {
                       height: 150.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[300]!, style: BorderStyle.solid),
+                        border: Border.all(
+                          color: Colors.grey[300]!,
+                          style: BorderStyle.solid,
+                        ),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Stack(
@@ -82,7 +82,10 @@ class PostJobScreen extends StatelessWidget {
                       height: 120.h,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[300]!, style: BorderStyle.solid),
+                        border: Border.all(
+                          color: Colors.grey[300]!,
+                          style: BorderStyle.solid,
+                        ),
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Column(
@@ -136,7 +139,8 @@ class PostJobScreen extends StatelessWidget {
                 SizedBox(height: 5.h),
                 _buildTextField(
                   controller: controller.descriptionController,
-                  hintText: "About The Role\nWe Are Looking For A Skilled And Reliable Plumber To Join Our Team. The Ideal Candidate Will Have Experience In Installing, Repairing, And Monitoring Residential And/Or Commercial Plumbing Systems.",
+                  hintText:
+                      "About The Role\nWe Are Looking For A Skilled And Reliable Plumber To Join Our Team. The Ideal Candidate Will Have Experience In Installing, Repairing, And Monitoring Residential And/Or Commercial Plumbing Systems.",
                   maxLines: 5,
                 ),
                 SizedBox(height: 16.h),
@@ -151,7 +155,10 @@ class PostJobScreen extends StatelessWidget {
                 Obx(() {
                   if (controller.isCategoryLoading.value) {
                     return Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 16.h,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(8.r),
@@ -163,7 +170,9 @@ class PostJobScreen extends StatelessWidget {
                           width: 20.w,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              AppColors.primaryColor,
+                            ),
                           ),
                         ),
                       ),
@@ -191,19 +200,21 @@ class PostJobScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 SizedBox(height: 8.h),
-                Obx(() => _buildDropdown(
-                  value: controller.selectedSubCategory.value.isEmpty
-                      ? null
-                      : controller.selectedSubCategory.value,
-                  hint: "Select Sub Category",
-                  icon: Icons.build,
-                  items: controller.subCategories,
-                  onChanged: controller.subCategories.isEmpty
-                      ? null
-                      : (value) {
-                    controller.selectedSubCategory.value = value!;
-                  },
-                )),
+                Obx(
+                  () => _buildDropdown(
+                    value: controller.selectedSubCategory.value.isEmpty
+                        ? "Some Sub Category"
+                        : controller.selectedSubCategory.value,
+                    hint: "Select Sub Category",
+                    icon: Icons.build,
+                    items: controller.subCategories,
+                    onChanged: controller.subCategories.isEmpty
+                        ? null
+                        : (value) {
+                            controller.selectedSubCategory.value = value!;
+                          },
+                  ),
+                ),
                 SizedBox(height: 16.h),
 
                 // Address
@@ -222,7 +233,8 @@ class PostJobScreen extends StatelessWidget {
 
                 // Location Info
                 Obx(() {
-                  if (controller.latitude.value != 0.0 && controller.longitude.value != 0.0) {
+                  if (controller.latitude.value != 0.0 &&
+                      controller.longitude.value != 0.0) {
                     return Padding(
                       padding: EdgeInsets.only(bottom: 16.h),
                       child: Container(
@@ -230,11 +242,17 @@ class PostJobScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.green.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8.r),
-                          border: Border.all(color: Colors.green.withOpacity(0.3)),
+                          border: Border.all(
+                            color: Colors.green.withOpacity(0.3),
+                          ),
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.check_circle, color: Colors.green, size: 20.sp),
+                            Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                              size: 20.sp,
+                            ),
                             SizedBox(width: 8.w),
                             Expanded(
                               child: Text(
@@ -292,33 +310,40 @@ class PostJobScreen extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
                 SizedBox(height: 6.h),
-                Obx(() => Row(
-                  children: [
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: "Pay",
-                        isSelected: controller.selectedPricingOption.value == 'pay',
-                        onTap: () => controller.selectPricingOption('pay'),
+                Obx(
+                  () => Row(
+                    children: [
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: "Pay",
+                          isSelected:
+                              controller.selectedPricingOption.value == 'pay',
+                          onTap: () => controller.selectPricingOption('pay'),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: "Accepting Offer",
-                        isSelected: controller.selectedPricingOption.value == 'accepting_offer',
-                        onTap: () => controller.selectPricingOption('accepting_offer'),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: "Accepting Offer",
+                          isSelected:
+                              controller.selectedPricingOption.value ==
+                              'accepting_offer',
+                          onTap: () =>
+                              controller.selectPricingOption('accepting_offer'),
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 8.w),
-                    Expanded(
-                      child: _buildPricingOption(
-                        title: "Free",
-                        isSelected: controller.selectedPricingOption.value == 'free',
-                        onTap: () => controller.selectPricingOption('free'),
+                      SizedBox(width: 8.w),
+                      Expanded(
+                        child: _buildPricingOption(
+                          title: "Free",
+                          isSelected:
+                              controller.selectedPricingOption.value == 'free',
+                          onTap: () => controller.selectPricingOption('free'),
+                        ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  ),
+                ),
 
                 // Price field (show only when Pay is selected)
                 Obx(() {
@@ -346,25 +371,31 @@ class PostJobScreen extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 SizedBox(height: 8.h),
-                Obx(() => _buildDropdown(
-                  value: controller.selectedPriorityLevel.value.isEmpty
-                      ? null
-                      : controller.selectedPriorityLevel.value,
-                  hint: "Select Priority",
-                  items: controller.priorityLevels,
-                  onChanged: (value) {
-                    controller.selectedPriorityLevel.value = value!;
-                  },
-                )),
+                Obx(
+                  () => _buildDropdown(
+                    value: controller.selectedPriorityLevel.value.isEmpty
+                        ? null
+                        : controller.selectedPriorityLevel.value,
+                    hint: "Select Priority",
+                    items: controller.priorityLevels,
+                    onChanged: (value) {
+                      controller.selectedPriorityLevel.value = value!;
+                    },
+                  ),
+                ),
                 SizedBox(height: 32.h),
 
                 // Post Button
                 Obx(() {
                   return CommonButton(
-                    titleText: controller.isLoading.value ? "Posting..." : "Post",
+                    titleText: controller.isLoading.value
+                        ? "Posting..."
+                        : "Post",
                     buttonColor: AppColors.primaryColor,
                     buttonRadius: 8,
-                    onTap: controller.isLoading.value ? null : () => controller.createPost(),
+                    onTap: controller.isLoading.value
+                        ? null
+                        : () => controller.createPost(),
                   );
                 }),
               ],
@@ -398,20 +429,17 @@ class PostJobScreen extends StatelessWidget {
         keyboardType: keyboardType,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.grey[400],
-          ),
+          hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey[400]),
           border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
+          ),
           suffixIcon: suffixIcon != null
               ? Icon(suffixIcon, color: Colors.grey[600], size: 20.sp)
               : null,
         ),
-        style: TextStyle(
-          fontSize: 14.sp,
-          color: Colors.black,
-        ),
+        style: TextStyle(fontSize: 14.sp, color: Colors.black),
       ),
     );
   }
@@ -449,14 +477,17 @@ class PostJobScreen extends StatelessWidget {
                 items: items.isEmpty
                     ? null
                     : items.map((String item) {
-                  return DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black),
-                    ),
-                  );
-                }).toList(),
+                        return DropdownMenuItem<String>(
+                          value: item,
+                          child: Text(
+                            item,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: Colors.black,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                 onChanged: items.isEmpty ? null : onChanged,
               ),
             ),

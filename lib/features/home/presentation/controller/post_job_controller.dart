@@ -39,7 +39,8 @@ class PostJobController extends GetxController {
   // Category options - will be populated from API
   var categories = <String>[].obs;
   var categoryMap = <String, String>{}.obs; // name -> id mapping
-  var categorySubCategoryMap = <String, List<String>>{}.obs; // id -> subcategories
+  var categorySubCategoryMap =
+      <String, List<String>>{}.obs; // id -> subcategories
 
   // Sub category options - will be updated based on selected category
   var subCategories = <String>[].obs;
@@ -135,9 +136,7 @@ class PostJobController extends GetxController {
 
       final response = await ApiService.get(
         ApiEndPoint.category, // Replace with your actual endpoint
-        header: {
-          'Content-Type': 'application/json',
-        },
+        header: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200 && response.data['success'] == true) {
@@ -150,7 +149,9 @@ class PostJobController extends GetxController {
         for (var category in categoryData) {
           String categoryName = category['name'];
           String categoryId = category['_id'];
-          List<String> subCats = List<String>.from(category['subCategories'] ?? []);
+          List<String> subCats = List<String>.from(
+            category['subCategories'] ?? [],
+          );
 
           categories.add(categoryName);
           categoryMap[categoryName] = categoryId;
@@ -186,7 +187,8 @@ class PostJobController extends GetxController {
     selectedCategoryId.value = categoryMap[categoryName] ?? '';
 
     // Update subcategories based on selected category
-    subCategories.value = categorySubCategoryMap[selectedCategoryId.value] ?? [];
+    subCategories.value =
+        categorySubCategoryMap[selectedCategoryId.value] ?? [];
 
     // Clear selected subcategory
     selectedSubCategory.value = '';
@@ -319,7 +321,7 @@ class PostJobController extends GetxController {
     );
     if (picked != null) {
       serviceDateController.text =
-      "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
+          "${picked.day.toString().padLeft(2, '0')} ${_getMonthName(picked.month)} ${picked.year}";
     }
   }
 
@@ -357,58 +359,77 @@ class PostJobController extends GetxController {
   Future<void> createPost() async {
     // Validation
     if (titleController.text.trim().isEmpty) {
-      Get.snackbar('Error', 'Please enter title',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Please enter title',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
     if (descriptionController.text.trim().isEmpty) {
-      Get.snackbar('Error', 'Please enter description',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Please enter description',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
     if (selectedCategory.value.isEmpty) {
-      Get.snackbar('Error', 'Please select category',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Please select category',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
-    if (selectedSubCategory.value.isEmpty) {
-      Get.snackbar('Error', 'Please select sub category',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-      return;
-    }
+    // if (selectedSubCategory.value.isEmpty) {
+    //   Get.snackbar('Error', 'Please select sub category',
+    //       snackPosition: SnackPosition.BOTTOM,
+    //       backgroundColor: Colors.red,
+    //       colorText: Colors.white);
+    //   return;
+    // }
 
     if (latitude.value == 0.0 || longitude.value == 0.0) {
-      Get.snackbar('Error', 'Location not available. Please enable location.',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Location not available. Please enable location.',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
     if (selectedPricingOption.value.isEmpty) {
-      Get.snackbar('Error', 'Please select pricing option',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Please select pricing option',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
-    if (selectedPricingOption.value == 'pay' && priceController.text.trim().isEmpty) {
-      Get.snackbar('Error', 'Please enter price',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
+    if (selectedPricingOption.value == 'pay' &&
+        priceController.text.trim().isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please enter price',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
       return;
     }
 
@@ -442,11 +463,8 @@ class PostJobController extends GetxController {
         method: 'POST',
         files: selectedImage.value != null
             ? [
-          {
-            'name': 'image',
-            'image': selectedImage.value!.path,
-          }
-        ]
+                {'name': 'image', 'image': selectedImage.value!.path},
+              ]
             : [],
       );
 

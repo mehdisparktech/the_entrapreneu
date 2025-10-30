@@ -74,9 +74,10 @@ class ApiService {
       formData.fields.add(MapEntry(key, value));
     });
 
-    header['Content-Type'] = "multipart/form-data";
+    final headers = Map<String, String>.from(header);
+    headers['Content-Type'] = "multipart/form-data";
 
-    return _request(url, method, body: formData, header: header);
+    return _request(url, method, body: formData, header: headers);
   }
 
   static Future<ApiResponseModel> multipartImage(

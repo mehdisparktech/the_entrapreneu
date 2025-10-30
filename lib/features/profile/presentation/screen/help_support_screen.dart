@@ -5,11 +5,12 @@ import 'package:the_entrapreneu/component/button/common_button.dart';
 import 'package:the_entrapreneu/component/image/common_image.dart';
 import 'package:the_entrapreneu/component/text/common_text.dart';
 import 'package:the_entrapreneu/component/text_field/common_text_field.dart';
+import 'package:the_entrapreneu/features/profile/presentation/controller/help_support_controller.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import 'package:the_entrapreneu/utils/constants/app_string.dart';
 import 'package:the_entrapreneu/utils/extensions/extension.dart';
-import 'package:the_entrapreneu/utils/helpers/other_helper.dart';
+import 'package:the_entrapreneu/utils/enum/enum.dart';
 
 class HelpSupportScreen extends StatefulWidget {
   const HelpSupportScreen({super.key});
@@ -19,15 +20,8 @@ class HelpSupportScreen extends StatefulWidget {
 }
 
 class _HelpSupportScreenState extends State<HelpSupportScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-
   @override
   void dispose() {
-    _nameController.dispose();
-    _passwordController.dispose();
-    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -78,7 +72,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         ),
         SizedBox(height: 8.h),
         CommonTextField(
-          controller: _nameController,
+          controller: HelpSupportController.instance.titleController,
           borderRadius: 8.r,
           hintText: 'Enter your Issue Title',
           textInputAction: TextInputAction.next,
@@ -106,7 +100,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
         ),
         SizedBox(height: 8.h),
         CommonTextField(
-          controller: _descriptionController,
+          controller: HelpSupportController.instance.messageController,
           hintText:
               'If you are having trouble to sign in with Account then you can Email us in Account Issues or Choosing Other Issue Regarding',
           textInputAction: TextInputAction.newline,
@@ -120,57 +114,117 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
 
   /// Attach file section
   Widget _buildAttachFileSection() {
-    return InkWell(
-      onTap: () {
-        // Handle file attachment
-        OtherHelper.openGallery();
-      },
-      borderRadius: BorderRadius.circular(4.r),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 109, vertical: 17),
-        decoration: ShapeDecoration(
-          color: AppColors.white,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 2, color: const Color(0xFFD1D5D6)),
-            borderRadius: BorderRadius.circular(11),
-          ),
-          shadows: [
-            BoxShadow(
-              color: Color(0x1E000000),
-              blurRadius: 50,
-              offset: Offset(20, 20),
-              spreadRadius: 0,
-            ),
-          ],
-        ),
-        child: Row(
+    return GetBuilder<HelpSupportController>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CommonImage(imageSrc: AppIcons.attachment, width: 24, height: 24),
-            8.width,
-            CommonText(
-              text: 'Attach File',
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColors.secondaryText,
+            InkWell(
+              onTap: () {
+                controller.pickImage();
+              },
+              borderRadius: BorderRadius.circular(4.r),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 109,
+                  vertical: 17,
+                ),
+                decoration: ShapeDecoration(
+                  color: AppColors.white,
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, color: const Color(0xFFD1D5D6)),
+                    borderRadius: BorderRadius.circular(11),
+                  ),
+                  shadows: [
+                    BoxShadow(
+                      color: Color(0x1E000000),
+                      blurRadius: 50,
+                      offset: Offset(20, 20),
+                      spreadRadius: 0,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CommonImage(
+                      imageSrc: AppIcons.attachment,
+                      width: 24,
+                      height: 24,
+                    ),
+                    8.width,
+                    CommonText(
+                      text: 'Attach File',
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.secondaryText,
+                    ),
+                  ],
+                ),
+              ),
             ),
+            if (controller.image != null) ...[
+              SizedBox(height: 12.h),
+              Container(
+                height: 200.h,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.r),
+                  border: Border.all(color: AppColors.primaryColor),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: Stack(
+                    children: [
+                      Image.file(
+                        controller.image!,
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                      Positioned(
+                        top: 8,
+                        right: 8,
+                        child: GestureDetector(
+                          onTap: () {
+                            controller.image = null;
+                            controller.update();
+                          },
+                          child: Container(
+                            padding: EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 
   /// Submit button
   Widget _buildSubmitButton() {
-    return CommonButton(
-      titleText: 'Submit',
-      onTap: () {
-        // Handle submit action
-        Get.snackbar(
-          'Success',
-          'Your issue has been submitted successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: AppColors.green,
-          colorText: AppColors.white,
+    return GetBuilder<HelpSupportController>(
+      builder: (controller) {
+        return CommonButton(
+          titleText: 'Submit',
+          isLoading: controller.status == Status.loading,
+          onTap: () {
+            controller.supportAdminRepo();
+          },
         );
       },
     );
