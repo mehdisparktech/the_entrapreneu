@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 
 import '../../../../../config/route/app_routes.dart';
 import '../../../../../services/api/api_service.dart';
@@ -123,8 +124,6 @@ class ForgetPasswordController extends GetxController {
   /// Create New Password Api Call
 
   Future<void> resetPasswordRepo() async {
-    Get.offAllNamed(AppRoutes.signIn);
-    return;
     isLoadingReset = true;
     update();
     Map<String, String> header = {"Authorization": forgetPasswordToken};
@@ -141,7 +140,11 @@ class ForgetPasswordController extends GetxController {
 
     if (response.statusCode == 200) {
       Utils.successSnackBar(response.message, response.message);
-      Get.offAllNamed(AppRoutes.signIn);
+      SuccessProfileDialogHere.show(
+        Get.context!,
+        title:
+            "Your password has been successfully reset. You can now log in using your new password.",
+      );
 
       emailController.clear();
       otpController.clear();

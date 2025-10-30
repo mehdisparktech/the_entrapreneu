@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:the_entrapreneu/features/auth/sign%20up/presentation/widget/success_profile.dart';
 import 'package:the_entrapreneu/utils/constants/app_colors.dart';
 import 'package:the_entrapreneu/utils/constants/app_icons.dart';
 import '../../../../../../../utils/extensions/extension.dart';
@@ -82,7 +81,7 @@ class CreatePassword extends StatelessWidget {
                     isLoading: controller.isLoadingReset,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
-                        SuccessProfileDialogHere.show(Get.context!, title: "Your password has been successfully reset. You can now log in using your new password.");
+                        controller.resetPasswordRepo();
                       }
                     },
                   ),

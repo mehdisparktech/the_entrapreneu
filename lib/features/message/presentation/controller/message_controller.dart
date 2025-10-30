@@ -49,7 +49,7 @@ class MessageController extends GetxController {
       messages.clear();
       status = Status.loading;
       update();
-      
+
       // Add demo messages
       messages.addAll([
         ChatMessageModel(
@@ -59,13 +59,17 @@ class MessageController extends GetxController {
           isMe: false,
         ),
         ChatMessageModel(
-          time: DateTime.now().subtract(const Duration(minutes: 1, seconds: 45)),
+          time: DateTime.now().subtract(
+            const Duration(minutes: 1, seconds: 45),
+          ),
           text: "I'm testing the chat interface. This is a demo message.",
           image: "",
           isMe: true,
         ),
         ChatMessageModel(
-          time: DateTime.now().subtract(const Duration(minutes: 1, seconds: 30)),
+          time: DateTime.now().subtract(
+            const Duration(minutes: 1, seconds: 30),
+          ),
           text: "That's great! Let me know if you need any assistance.",
           image: "https://randomuser.me/api/portraits/women/44.jpg",
           isMe: false,
@@ -78,12 +82,13 @@ class MessageController extends GetxController {
         ),
         ChatMessageModel(
           time: DateTime.now().subtract(const Duration(seconds: 30)),
-          text: "Of course! This is a longer message to demonstrate how the chat bubble handles text wrapping. The message should automatically adjust its height to fit the content while maintaining proper padding and alignment.",
+          text:
+              "Of course! This is a longer message to demonstrate how the chat bubble handles text wrapping. The message should automatically adjust its height to fit the content while maintaining proper padding and alignment.",
           image: "https://randomuser.me/api/portraits/women/44.jpg",
           isMe: false,
         ),
       ]);
-      
+
       status = Status.completed;
       update();
       return;

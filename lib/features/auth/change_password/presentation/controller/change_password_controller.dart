@@ -4,7 +4,6 @@ import 'package:the_entrapreneu/services/storage/storage_services.dart';
 
 import '../../../../../services/api/api_service.dart';
 import '../../../../../config/api/api_end_point.dart';
-import '../../../../../utils/app_utils.dart';
 
 class ChangePasswordController extends GetxController {
   bool isLoading = false;
@@ -40,7 +39,6 @@ class ChangePasswordController extends GetxController {
       currentPasswordController.clear();
       newPasswordController.clear();
       confirmPasswordController.clear();
-
     } else {
       Get.snackbar(response.statusCode.toString(), response.message);
     }
