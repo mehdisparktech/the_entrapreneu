@@ -48,40 +48,42 @@ class EditProfile extends StatelessWidget {
           ),
 
           /// Body
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Form(
-                key: controller.formKey,
-                child: Column(
-                  children: [
-                    20.height,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      20.height,
 
-                    /// Profile Image
-                    _buildProfileImage(controller),
+                      /// Profile Image
+                      _buildProfileImage(controller),
 
-                    32.height,
+                      32.height,
 
-                    /// All Form Fields
-                    EditProfileAllFiled(controller: controller),
+                      /// All Form Fields
+                      EditProfileAllFiled(controller: controller),
 
-                    32.height,
+                      32.height,
 
-                    /// Update Button
-                    CommonButton(
-                      titleText: 'Update',
-                      onTap: controller.editProfileRepo,
-                      isLoading: controller.isLoading,
-                      buttonColor: AppColors.primaryColor,
-                      titleColor: AppColors.white,
-                      buttonHeight: 56.h,
-                      buttonRadius: 8.r,
-                      titleSize: 16.sp,
-                      titleWeight: FontWeight.w600,
-                    ),
+                      /// Update Button
+                      CommonButton(
+                        titleText: 'Update',
+                        onTap: controller.editProfileRepo,
+                        isLoading: controller.isLoading,
+                        buttonColor: AppColors.primaryColor,
+                        titleColor: AppColors.white,
+                        buttonHeight: 56.h,
+                        buttonRadius: 8.r,
+                        titleSize: 16.sp,
+                        titleWeight: FontWeight.w600,
+                      ),
 
-                    32.height,
-                  ],
+                      32.height,
+                    ],
+                  ),
                 ),
               ),
             ),

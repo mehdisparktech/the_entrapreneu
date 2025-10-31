@@ -21,73 +21,76 @@ class ChangePasswordScreen extends StatelessWidget {
       appBar: AppBar(),
       body: GetBuilder<ChangePasswordController>(
         builder: (controller) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Form(
-              key: controller.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CommonImage(imageSrc: AppIcons.changePassword, size: 200),
-                  40.height,
-                  const CommonText(
-                    text: AppString.changePassword,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.black,
-                    bottom: 40,
-                  ),
-
-                  /// current Password section
-                  const CommonText(
-                    text: AppString.currentPassword,
-                    bottom: 8,
-                  ).start,
-                  CommonTextField(
-                    controller: controller.currentPasswordController,
-                    hintText: AppString.currentPassword,
-                    validator: OtherHelper.passwordValidator,
-                    isPassword: true,
-                  ),
-
-                  /// New Password section
-                  const CommonText(
-                    text: AppString.newPassword,
-                    bottom: 8,
-                    top: 16,
-                  ).start,
-                  CommonTextField(
-                    controller: controller.newPasswordController,
-                    hintText: AppString.newPassword,
-                    validator: OtherHelper.passwordValidator,
-                    isPassword: true,
-                  ),
-
-                  /// confirm Password section
-                  const CommonText(
-                    text: AppString.confirmPassword,
-                    bottom: 8,
-                    top: 16,
-                  ).start,
-                  CommonTextField(
-                    controller: controller.confirmPasswordController,
-                    hintText: AppString.confirmPassword,
-                    validator: (value) => OtherHelper.confirmPasswordValidator(
-                      value,
-                      controller.newPasswordController,
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Form(
+                key: controller.formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CommonImage(imageSrc: AppIcons.changePassword, size: 200),
+                    40.height,
+                    const CommonText(
+                      text: AppString.changePassword,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.black,
+                      bottom: 40,
                     ),
-                    isPassword: true,
-                  ),
 
-                  20.height,
+                    /// current Password section
+                    const CommonText(
+                      text: AppString.currentPassword,
+                      bottom: 8,
+                    ).start,
+                    CommonTextField(
+                      controller: controller.currentPasswordController,
+                      hintText: AppString.currentPassword,
+                      validator: OtherHelper.passwordValidator,
+                      isPassword: true,
+                    ),
 
-                  /// submit Button
-                  CommonButton(
-                    titleText: AppString.update,
-                    isLoading: controller.isLoading,
-                    onTap: controller.changePasswordRepo,
-                  ),
-                ],
+                    /// New Password section
+                    const CommonText(
+                      text: AppString.newPassword,
+                      bottom: 8,
+                      top: 16,
+                    ).start,
+                    CommonTextField(
+                      controller: controller.newPasswordController,
+                      hintText: AppString.newPassword,
+                      validator: OtherHelper.passwordValidator,
+                      isPassword: true,
+                    ),
+
+                    /// confirm Password section
+                    const CommonText(
+                      text: AppString.confirmPassword,
+                      bottom: 8,
+                      top: 16,
+                    ).start,
+                    CommonTextField(
+                      controller: controller.confirmPasswordController,
+                      hintText: AppString.confirmPassword,
+                      validator: (value) =>
+                          OtherHelper.confirmPasswordValidator(
+                            value,
+                            controller.newPasswordController,
+                          ),
+                      isPassword: true,
+                    ),
+
+                    20.height,
+
+                    /// submit Button
+                    CommonButton(
+                      titleText: AppString.update,
+                      isLoading: controller.isLoading,
+                      onTap: controller.changePasswordRepo,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

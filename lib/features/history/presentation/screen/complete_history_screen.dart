@@ -33,29 +33,32 @@ class CompleteHistoryScreen extends StatelessWidget {
           );
         }
 
-        return SingleChildScrollView(
-          padding: EdgeInsets.all(20.w),
-          child: Column(
-            children: [
-              // Service Info Card
-              _buildServiceInfoCard(request, controller),
-              SizedBox(height: 20.h),
+        return SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.all(20.w),
+            child: Column(
+              children: [
+                // Service Info Card
+                _buildServiceInfoCard(request, controller),
+                SizedBox(height: 20.h),
 
-              // Details Card
-              _buildDetailsCard(request, controller),
+                // Details Card
+                _buildDetailsCard(request, controller),
 
-              SizedBox(height: 20.h),
+                SizedBox(height: 20.h),
 
-              // Customer Info Card
-              // _buildCustomerInfoCard(request),
+                // Customer Info Card
+                // _buildCustomerInfoCard(request),
 
-              // Action Buttons (only for pending requests)
-              if (controller.isPendingRequest) _buildActionButtons(controller),
-              SizedBox(height: 10.h),
-              // Reject Reason Field (only for rejected requests)
-              if (controller.isRejectedRequest)
-                _buildRejectReasonField(controller, context),
-            ],
+                // Action Buttons (only for pending requests)
+                if (controller.isPendingRequest)
+                  _buildActionButtons(controller),
+                SizedBox(height: 10.h),
+                // Reject Reason Field (only for rejected requests)
+                if (controller.isRejectedRequest)
+                  _buildRejectReasonField(controller, context),
+              ],
+            ),
           ),
         );
       }),

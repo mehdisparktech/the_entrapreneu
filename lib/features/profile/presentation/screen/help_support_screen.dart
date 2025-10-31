@@ -42,19 +42,21 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
 
   /// Body Section starts here
   Widget _bodySection() {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildNameField(),
-          SizedBox(height: 16.h),
-          _buildDescriptionField(),
-          SizedBox(height: 16.h),
-          _buildAttachFileSection(),
-          SizedBox(height: 24.h),
-          _buildSubmitButton(),
-        ],
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildNameField(),
+            SizedBox(height: 16.h),
+            _buildDescriptionField(),
+            SizedBox(height: 16.h),
+            _buildAttachFileSection(),
+            SizedBox(height: 24.h),
+            _buildSubmitButton(),
+          ],
+        ),
       ),
     );
   }

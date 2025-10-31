@@ -107,7 +107,7 @@ class SignInScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: Colors.grey,width: 2),
+                            border: Border.all(color: Colors.grey, width: 2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.1),
@@ -141,7 +141,7 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 12.h,),
+                      SizedBox(width: 12.h),
                       Expanded(
                         child: Container(
                           height: 48.h,
@@ -149,7 +149,7 @@ class SignInScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: Colors.grey,width: 2),
+                            border: Border.all(color: Colors.grey, width: 2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.1),
@@ -185,20 +185,16 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
-
                 ],
               ),
             ),
           );
         },
       ),
-      bottomNavigationBar: Container(
-        height: 60.h,
-        child: Column(
-          children: [
-            const DoNotHaveAccount(),
-          ],
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 60.h,
+          child: Column(children: [const DoNotHaveAccount()]),
         ),
       ),
     );

@@ -6,7 +6,7 @@ import '../../../../config/route/app_routes.dart';
 import '../controller/provider_info_controller.dart';
 
 class ServiceProviderInfoScreen extends StatelessWidget {
-  ServiceProviderInfoScreen({Key? key}) : super(key: key);
+  ServiceProviderInfoScreen({super.key});
 
   final ServiceProviderController controller = Get.put(
     ServiceProviderController(),

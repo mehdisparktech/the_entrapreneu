@@ -17,18 +17,20 @@ class HistoryScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: _buildAppBar(),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          children: [
-            // Tab buttons
-            _buildTabButtons(controller),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Column(
+            children: [
+              // Tab buttons
+              _buildTabButtons(controller),
 
-            SizedBox(height: 20.h),
+              SizedBox(height: 20.h),
 
-            // Content based on selected tab
-            Expanded(child: _buildTabContent(controller)),
-          ],
+              // Content based on selected tab
+              Expanded(child: _buildTabContent(controller)),
+            ],
+          ),
         ),
       ),
     );
@@ -97,31 +99,33 @@ class HistoryScreen extends StatelessWidget {
 
             return controller.selectedTabIndex.value == 0
                 ? ListView.builder(
-              itemCount: currentData.length,
-              itemBuilder: (context, index) {
-                final request = currentData[index];
-                final isPendingTab = controller.selectedTabIndex.value == 0;
+                    itemCount: currentData.length,
+                    itemBuilder: (context, index) {
+                      final request = currentData[index];
+                      final isPendingTab =
+                          controller.selectedTabIndex.value == 0;
 
-                return RequestCard(
-                  request: request,
-                  showActions: isPendingTab,
-                  onTap: () => controller.navigateHistoryDetails(request),
-                );
-              },
-            )
+                      return RequestCard(
+                        request: request,
+                        showActions: isPendingTab,
+                        onTap: () => controller.navigateHistoryDetails(request),
+                      );
+                    },
+                  )
                 : ListView.builder(
-              itemCount: currentData.length,
-              itemBuilder: (context, index) {
-                final request = currentData[index];
-                final isPendingTab = controller.selectedTabIndex.value == 0;
+                    itemCount: currentData.length,
+                    itemBuilder: (context, index) {
+                      final request = currentData[index];
+                      final isPendingTab =
+                          controller.selectedTabIndex.value == 0;
 
-                return CompletedCard(
-                  request: request,
-                  showActions: isPendingTab,
-                  onTap: () => controller.navigateToDetails(request),
-                );
-              },
-            );
+                      return CompletedCard(
+                        request: request,
+                        showActions: isPendingTab,
+                        onTap: () => controller.navigateToDetails(request),
+                      );
+                    },
+                  );
           }),
         ),
       ],

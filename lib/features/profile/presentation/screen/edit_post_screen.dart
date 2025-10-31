@@ -41,26 +41,112 @@ class EditPostScreen extends StatelessWidget {
           );
         }
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
 
-                // Image Section
-                Obx(() {
-                  if (controller.selectedImage.value != null) {
+                  // Image Section
+                  Obx(() {
+                    if (controller.selectedImage.value != null) {
+                      return Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.file(
+                              controller.selectedImage.value!,
+                              width: double.infinity,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 12,
+                            right: 12,
+                            child: GestureDetector(
+                              onTap: () => controller.showImagePicker(context),
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF1E5AA8),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    // Show existing image from URL
+                    if (controller.existingImageUrl.value.isNotEmpty) {
+                      return Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  '${ApiEndPoint.imageUrl}${controller.existingImageUrl.value}',
+                              width: double.infinity,
+                              height: 150,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Container(
+                                color: Colors.grey[200],
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+                              errorWidget: (context, url, error) => Container(
+                                color: Colors.grey[200],
+                                child: const Icon(Icons.error),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 12,
+                            right: 12,
+                            child: GestureDetector(
+                              onTap: () => controller.showImagePicker(context),
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  color: Color(0xFF1E5AA8),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }
+
+                    // Default image placeholder with camera overlay
                     return Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.file(
-                            controller.selectedImage.value!,
-                            width: double.infinity,
-                            height: 150,
-                            fit: BoxFit.cover,
+                        Container(
+                          width: double.infinity,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                              image: AssetImage(AppImages.noImage),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Positioned(
@@ -84,329 +170,247 @@ class EditPostScreen extends StatelessWidget {
                         ),
                       ],
                     );
-                  }
+                  }),
 
-                  // Show existing image from URL
-                  if (controller.existingImageUrl.value.isNotEmpty) {
-                    return Stack(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                '${ApiEndPoint.imageUrl}${controller.existingImageUrl.value}',
-                            width: double.infinity,
-                            height: 150,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => Container(
-                              color: Colors.grey[200],
-                              child: const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                            ),
-                            errorWidget: (context, url, error) => Container(
-                              color: Colors.grey[200],
-                              child: const Icon(Icons.error),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 12,
-                          right: 12,
-                          child: GestureDetector(
-                            onTap: () => controller.showImagePicker(context),
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                color: Color(0xFF1E5AA8),
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Icon(
-                                Icons.camera_alt,
-                                color: Colors.white,
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }
+                  const SizedBox(height: 20),
 
-                  // Default image placeholder with camera overlay
-                  return Stack(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: AssetImage(AppImages.noImage),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 12,
-                        right: 12,
-                        child: GestureDetector(
-                          onTap: () => controller.showImagePicker(context),
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF1E5AA8),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.camera_alt,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }),
-
-                const SizedBox(height: 20),
-
-                // Title
-                _buildLabel('Title'),
-                const SizedBox(height: 8),
-                _buildTextField(
-                  controller: controller.titleController,
-                  hintText: 'Enter title',
-                ),
-
-                const SizedBox(height: 16),
-
-                // Description
-                _buildLabel('Description'),
-                const SizedBox(height: 8),
-                _buildTextField(
-                  controller: controller.descriptionController,
-                  hintText: 'Enter description',
-                  maxLines: 5,
-                ),
-
-                const SizedBox(height: 16),
-
-                // Category
-                _buildLabel('Category'),
-                const SizedBox(height: 8),
-                Obx(
-                  () => _buildDropdown(
-                    value: controller.selectedCategory.value.isEmpty
-                        ? null
-                        : controller.selectedCategory.value,
-                    hint: 'Select category',
-                    items: controller.categories,
-                    onChanged: (value) {
-                      controller.selectedCategory.value = value!;
-                    },
+                  // Title
+                  _buildLabel('Title'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller: controller.titleController,
+                    hintText: 'Enter title',
                   ),
-                ),
 
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                // Sub Category
-                _buildLabel('Sub Category'),
-                const SizedBox(height: 8),
-                Obx(
-                  () => _buildDropdown(
-                    value: controller.selectedSubCategory.value.isEmpty
-                        ? null
-                        : controller.selectedSubCategory.value,
-                    hint: 'Select sub category',
-                    items: controller.subCategories,
-                    onChanged: (value) {
-                      controller.selectedSubCategory.value = value!;
-                    },
+                  // Description
+                  _buildLabel('Description'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller: controller.descriptionController,
+                    hintText: 'Enter description',
+                    maxLines: 5,
                   ),
-                ),
 
-                const SizedBox(height: 16),
+                  const SizedBox(height: 16),
 
-                // State and City Row
-                Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildLabel('State'),
-                          const SizedBox(height: 8),
-                          _buildTextField(
-                            controller: controller.stateController,
-                            hintText: 'State',
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildLabel('City'),
-                          const SizedBox(height: 8),
-                          _buildTextField(
-                            controller: controller.cityController,
-                            hintText: 'City',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // Select Date
-                _buildLabel('Select Date'),
-                const SizedBox(height: 8),
-                _buildTextField(
-                  controller: controller.selectDateController,
-                  hintText: 'Select date',
-                  suffixIcon: Icons.calendar_today,
-                  readOnly: true,
-                  onTap: () => controller.selectDate(context),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Select Time
-                _buildLabel('Select Time'),
-                const SizedBox(height: 8),
-                _buildTextField(
-                  controller: controller.selectTimeController,
-                  hintText: 'Select time',
-                  suffixIcon: Icons.access_time,
-                  readOnly: true,
-                  onTap: () => controller.selectTime(context),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Pricing / Fee Options
-                _buildLabel('Pricing / Fee Options'),
-                const SizedBox(height: 8),
-                Obx(
-                  () => Row(
-                    children: [
-                      Expanded(
-                        child: _buildPricingOption(
-                          title: 'Pay',
-                          isSelected:
-                              controller.selectedPricingOption.value == 'pay',
-                          onTap: () => controller.selectPricingOption('pay'),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: _buildPricingOption(
-                          title: 'Accepting Offer',
-                          isSelected:
-                              controller.selectedPricingOption.value ==
-                              'accepting_offer',
-                          onTap: () =>
-                              controller.selectPricingOption('accepting_offer'),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: _buildPricingOption(
-                          title: 'Free',
-                          isSelected:
-                              controller.selectedPricingOption.value == 'free',
-                          onTap: () => controller.selectPricingOption('free'),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Price field (only show if 'pay' is selected)
-                Obx(() {
-                  if (controller.selectedPricingOption.value == 'pay') {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildLabel('Price'),
-                        const SizedBox(height: 8),
-                        _buildTextField(
-                          controller: controller.priceController,
-                          hintText: 'Enter price',
-                        ),
-                        const SizedBox(height: 16),
-                      ],
-                    );
-                  }
-                  return const SizedBox.shrink();
-                }),
-
-                // Priority Level
-                _buildLabel('Priority Level'),
-                const SizedBox(height: 8),
-                Obx(
-                  () => _buildDropdown(
-                    value: controller.selectedPriorityLevel.value.isEmpty
-                        ? null
-                        : controller.selectedPriorityLevel.value,
-                    hint: 'Select priority',
-                    items: controller.priorityLevels,
-                    onChanged: (value) {
-                      controller.selectedPriorityLevel.value = value!;
-                    },
-                  ),
-                ),
-
-                const SizedBox(height: 32),
-
-                // Update Button
-                Obx(
-                  () => SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: controller.isLoading.value
+                  // Category
+                  _buildLabel('Category'),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () => _buildDropdown(
+                      value: controller.selectedCategory.value.isEmpty
                           ? null
-                          : () => controller.updatePost(),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF1E5AA8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 0,
-                      ),
-                      child: controller.isLoading.value
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Text(
-                              'Update',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                          : controller.selectedCategory.value,
+                      hint: 'Select category',
+                      items: controller.categories,
+                      onChanged: (value) {
+                        controller.selectedCategory.value = value!;
+                      },
                     ),
                   ),
-                ),
 
-                const SizedBox(height: 20),
-              ],
+                  const SizedBox(height: 16),
+
+                  // Sub Category
+                  _buildLabel('Sub Category'),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () => _buildDropdown(
+                      value: controller.selectedSubCategory.value.isEmpty
+                          ? null
+                          : controller.selectedSubCategory.value,
+                      hint: 'Select sub category',
+                      items: controller.subCategories,
+                      onChanged: (value) {
+                        controller.selectedSubCategory.value = value!;
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // State and City Row
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildLabel('State'),
+                            const SizedBox(height: 8),
+                            _buildTextField(
+                              controller: controller.stateController,
+                              hintText: 'State',
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildLabel('City'),
+                            const SizedBox(height: 8),
+                            _buildTextField(
+                              controller: controller.cityController,
+                              hintText: 'City',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Select Date
+                  _buildLabel('Select Date'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller: controller.selectDateController,
+                    hintText: 'Select date',
+                    suffixIcon: Icons.calendar_today,
+                    readOnly: true,
+                    onTap: () => controller.selectDate(context),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Select Time
+                  _buildLabel('Select Time'),
+                  const SizedBox(height: 8),
+                  _buildTextField(
+                    controller: controller.selectTimeController,
+                    hintText: 'Select time',
+                    suffixIcon: Icons.access_time,
+                    readOnly: true,
+                    onTap: () => controller.selectTime(context),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Pricing / Fee Options
+                  _buildLabel('Pricing / Fee Options'),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () => Row(
+                      children: [
+                        Expanded(
+                          child: _buildPricingOption(
+                            title: 'Pay',
+                            isSelected:
+                                controller.selectedPricingOption.value == 'pay',
+                            onTap: () => controller.selectPricingOption('pay'),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildPricingOption(
+                            title: 'Accepting Offer',
+                            isSelected:
+                                controller.selectedPricingOption.value ==
+                                'accepting_offer',
+                            onTap: () => controller.selectPricingOption(
+                              'accepting_offer',
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _buildPricingOption(
+                            title: 'Free',
+                            isSelected:
+                                controller.selectedPricingOption.value ==
+                                'free',
+                            onTap: () => controller.selectPricingOption('free'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Price field (only show if 'pay' is selected)
+                  Obx(() {
+                    if (controller.selectedPricingOption.value == 'pay') {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildLabel('Price'),
+                          const SizedBox(height: 8),
+                          _buildTextField(
+                            controller: controller.priceController,
+                            hintText: 'Enter price',
+                          ),
+                          const SizedBox(height: 16),
+                        ],
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  }),
+
+                  // Priority Level
+                  _buildLabel('Priority Level'),
+                  const SizedBox(height: 8),
+                  Obx(
+                    () => _buildDropdown(
+                      value: controller.selectedPriorityLevel.value.isEmpty
+                          ? null
+                          : controller.selectedPriorityLevel.value,
+                      hint: 'Select priority',
+                      items: controller.priorityLevels,
+                      onChanged: (value) {
+                        controller.selectedPriorityLevel.value = value!;
+                      },
+                    ),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Update Button
+                  Obx(
+                    () => SizedBox(
+                      width: double.infinity,
+                      height: 50,
+                      child: ElevatedButton(
+                        onPressed: controller.isLoading.value
+                            ? null
+                            : () => controller.updatePost(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF1E5AA8),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: controller.isLoading.value
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Update',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         );

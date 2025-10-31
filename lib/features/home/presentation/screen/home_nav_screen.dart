@@ -44,38 +44,40 @@ class HomeNav extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => Container(
-          height: 83.h,
-          color: AppColors.primaryColor, // background color
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(icons.length, (index) {
-              bool isSelected = controller.currentIndex.value == index;
+        () => SafeArea(
+          child: Container(
+            height: 83.h,
+            color: AppColors.primaryColor, // background color
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(icons.length, (index) {
+                bool isSelected = controller.currentIndex.value == index;
 
-              return GestureDetector(
-                onTap: () => controller.currentIndex.value = index,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 200),
-                  padding: EdgeInsets.all(isSelected ? 12.w : 0),
-                  decoration: BoxDecoration(
-                    color: isSelected ? Colors.white : Colors.transparent,
-                    shape: BoxShape.circle,
-                  ),
-                  child: SvgPicture.asset(
-                    icons[index],
-                    height: 26.w,
-                    width: 26.w,
-                    colorFilter: ColorFilter.mode(
-                      isSelected
-                          ? AppColors.primaryColor
-                          : Colors.white.withOpacity(0.6),
-                      BlendMode.srcIn,
+                return GestureDetector(
+                  onTap: () => controller.currentIndex.value = index,
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: EdgeInsets.all(isSelected ? 12.w : 0),
+                    decoration: BoxDecoration(
+                      color: isSelected ? Colors.white : Colors.transparent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(
+                      icons[index],
+                      height: 26.w,
+                      width: 26.w,
+                      colorFilter: ColorFilter.mode(
+                        isSelected
+                            ? AppColors.primaryColor
+                            : Colors.white.withOpacity(0.6),
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
-                ),
-              );
-            }),
+                );
+              }),
+            ),
           ),
         ),
       ),

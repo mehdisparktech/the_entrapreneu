@@ -48,15 +48,15 @@ class SignUpScreen extends StatelessWidget {
                     isLoading: controller.isLoading,
                     onTap: () => controller.signUpUser(signUpFormKey),
                   ),
-                  SizedBox(height: 20,),
-                  
+                  SizedBox(height: 20),
+
                   CommonText(
-                      text: "Or Sign Up With",
+                    text: "Or Sign Up With",
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.grey,
                   ),
-                  
+
                   24.height,
 
                   Row(
@@ -68,7 +68,7 @@ class SignUpScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: Colors.grey,width: 2),
+                            border: Border.all(color: Colors.grey, width: 2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.1),
@@ -102,7 +102,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(width: 12.h,),
+                      SizedBox(width: 12.h),
                       Expanded(
                         child: Container(
                           height: 48.h,
@@ -110,7 +110,7 @@ class SignUpScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.transparent,
                             borderRadius: BorderRadius.circular(12.r),
-                            border: Border.all(color: Colors.grey,width: 2),
+                            border: Border.all(color: Colors.grey, width: 2),
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.1),
@@ -146,25 +146,20 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 1,)
-
+                  SizedBox(height: 1),
 
                   ///  Sign In Instruction here
-
                 ],
               ),
             ),
           );
         },
       ),
-      bottomNavigationBar: Container(
-        height: 60.h,
-        child: Column(
-          children: [
-            const AlreadyAccountRichText(),
-          ],
+      bottomNavigationBar: SafeArea(
+        child: SizedBox(
+          height: 60.h,
+          child: Column(children: [const AlreadyAccountRichText()]),
         ),
-
       ),
     );
   }

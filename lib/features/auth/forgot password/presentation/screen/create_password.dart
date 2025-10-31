@@ -26,66 +26,69 @@ class CreatePassword extends StatelessWidget {
       /// Body Section starts here
       body: GetBuilder<ForgetPasswordController>(
         builder: (controller) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CommonImage(imageSrc: AppIcons.resetPassword, size: 250),
-                  20.height,
-                  const CommonText(
-                    text: AppString.setNewPassword,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.primaryColor,
-                    bottom: 8,
-                  ),
-                  20.height,
-
-                  /// New Password here
-                  const CommonText(
-                    text: AppString.newPassword,
-                    bottom: 8,
-                  ).start,
-                  CommonTextField(
-                    controller: controller.passwordController,
-
-                    hintText: AppString.newPassword,
-                    isPassword: true,
-                    validator: OtherHelper.passwordValidator,
-                  ),
-
-                  /// Confirm Password here
-                  const CommonText(
-                    text: AppString.confirmPassword,
-                    bottom: 8,
-                    top: 12,
-                  ).start,
-                  CommonTextField(
-                    controller: controller.confirmPasswordController,
-
-                    hintText: AppString.confirmPassword,
-                    validator: (value) => OtherHelper.confirmPasswordValidator(
-                      value,
-                      controller.passwordController,
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CommonImage(imageSrc: AppIcons.resetPassword, size: 250),
+                    20.height,
+                    const CommonText(
+                      text: AppString.setNewPassword,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryColor,
+                      bottom: 8,
                     ),
-                    isPassword: true,
-                  ),
-                  64.height,
+                    20.height,
 
-                  /// Submit Button here
-                  CommonButton(
-                    titleText: AppString.continues,
-                    isLoading: controller.isLoadingReset,
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        controller.resetPasswordRepo();
-                      }
-                    },
-                  ),
-                ],
+                    /// New Password here
+                    const CommonText(
+                      text: AppString.newPassword,
+                      bottom: 8,
+                    ).start,
+                    CommonTextField(
+                      controller: controller.passwordController,
+
+                      hintText: AppString.newPassword,
+                      isPassword: true,
+                      validator: OtherHelper.passwordValidator,
+                    ),
+
+                    /// Confirm Password here
+                    const CommonText(
+                      text: AppString.confirmPassword,
+                      bottom: 8,
+                      top: 12,
+                    ).start,
+                    CommonTextField(
+                      controller: controller.confirmPasswordController,
+
+                      hintText: AppString.confirmPassword,
+                      validator: (value) =>
+                          OtherHelper.confirmPasswordValidator(
+                            value,
+                            controller.passwordController,
+                          ),
+                      isPassword: true,
+                    ),
+                    64.height,
+
+                    /// Submit Button here
+                    CommonButton(
+                      titleText: AppString.continues,
+                      isLoading: controller.isLoadingReset,
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          controller.resetPasswordRepo();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

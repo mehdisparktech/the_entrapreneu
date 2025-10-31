@@ -25,43 +25,45 @@ class ForgotPasswordScreen extends StatelessWidget {
         appBar: AppBar(),
 
         /// body section
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CommonImage(imageSrc: AppIcons.forgotPassword, size: 250),
-                20.height,
-                const CommonText(
-                  text: AppString.forgotPassword,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.primaryColor,
-                  bottom: 8,
-                ),
-                const CommonText(
-                  text: AppString.forgotPasswordsubtitle,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  maxLines: 2,
-                  color: AppColors.secondaryText,
-                ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CommonImage(imageSrc: AppIcons.forgotPassword, size: 250),
+                  20.height,
+                  const CommonText(
+                    text: AppString.forgotPassword,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
+                    bottom: 8,
+                  ),
+                  const CommonText(
+                    text: AppString.forgotPasswordsubtitle,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    maxLines: 2,
+                    color: AppColors.secondaryText,
+                  ),
 
-                /// forget password take email for reset Password
-                const CommonText(
-                  text: AppString.email,
-                  bottom: 8,
-                  top: 60,
-                ).start,
-                CommonTextField(
-                  controller: controller.emailController,
-                  hintText: AppString.email,
-                  validator: OtherHelper.emailValidator,
-                ),
-                50.height,
-              ],
+                  /// forget password take email for reset Password
+                  const CommonText(
+                    text: AppString.email,
+                    bottom: 8,
+                    top: 60,
+                  ).start,
+                  CommonTextField(
+                    controller: controller.emailController,
+                    hintText: AppString.email,
+                    validator: OtherHelper.emailValidator,
+                  ),
+                  50.height,
+                ],
+              ),
             ),
           ),
         ),

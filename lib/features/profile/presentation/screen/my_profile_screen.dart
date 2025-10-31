@@ -36,43 +36,45 @@ class MyProfileScreen extends StatelessWidget {
             ),
             leadingWidth: 50.w,
           ),
-          body: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Column(
-                children: [
-                  20.height,
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  children: [
+                    20.height,
 
-                  /// Profile Image
-                  _buildProfileImage(controller),
+                    /// Profile Image
+                    _buildProfileImage(controller),
 
-                  16.height,
+                    16.height,
 
-                  /// Name
-                  CommonText(
-                    text: controller.userName,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.black,
-                  ),
+                    /// Name
+                    CommonText(
+                      text: controller.userName,
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.black,
+                    ),
 
-                  32.height,
+                    32.height,
 
-                  /// About Section
-                  _buildAboutSection(controller),
+                    /// About Section
+                    _buildAboutSection(controller),
 
-                  24.height,
+                    24.height,
 
-                  /// Profile Details
-                  _buildProfileDetails(controller),
+                    /// Profile Details
+                    _buildProfileDetails(controller),
 
-                  32.height,
+                    32.height,
 
-                  /// Edit Profile Button
-                  _buildEditProfileButton(controller),
+                    /// Edit Profile Button
+                    _buildEditProfileButton(controller),
 
-                  32.height,
-                ],
+                    32.height,
+                  ],
+                ),
               ),
             ),
           ),
@@ -145,7 +147,7 @@ class MyProfileScreen extends StatelessWidget {
   Widget _buildProfileDetails(MyProfileController controller) {
     return Column(
       children: [
-       // _buildDetailRow('Mobile', controller.mobile),
+        // _buildDetailRow('Mobile', controller.mobile),
         16.height,
         _buildDetailRow('E-mail', controller.userEmail),
         16.height,

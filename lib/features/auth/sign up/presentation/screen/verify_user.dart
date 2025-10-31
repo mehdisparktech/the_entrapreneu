@@ -42,122 +42,122 @@ class _VerifyUserState extends State<VerifyUser> {
       /// Body Section starts here
       body: GetBuilder<SignUpController>(
         builder: (controller) {
-          return SingleChildScrollView(
-            padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  CommonImage(imageSrc: AppIcons.enterotp, size: 250),
-                  20.height,
-                  const CommonText(
-                    text: AppString.otpVerify,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.primaryColor,
-                    bottom: 8,
-                  ),
-
-                  /// instruction how to get OTP
-                  Center(
-                    child: CommonText(
-                      text:
-                          "${AppString.codeHasBeenSendTo} ${controller.emailController.text}",
-                      fontSize: 14,
-
-                      bottom: 40,
-                      maxLines: 3,
-                      color: AppColors.secondaryText,
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    CommonImage(imageSrc: AppIcons.enterotp, size: 250),
+                    20.height,
+                    const CommonText(
+                      text: AppString.otpVerify,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.primaryColor,
+                      bottom: 8,
                     ),
-                  ),
 
-                  /// OTP Filed here
-                  Flexible(
-                    flex: 0,
-                    child: PinCodeTextField(
-                      controller: controller.otpController,
-                      autoDisposeControllers: false,
-                      cursorColor: AppColors.black,
-                      appContext: (context),
-                      autoFocus: true,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(16.r),
-                        fieldHeight: 60.h,
-                        fieldWidth: 60.w,
-                        activeFillColor: AppColors.transparent,
-                        selectedFillColor: AppColors.transparent,
-                        inactiveFillColor: AppColors.transparent,
-                        borderWidth: 0.5.w,
-                        selectedColor: AppColors.primaryColor,
-                        activeColor: AppColors.primaryColor,
-                        inactiveColor: AppColors.black,
+                    /// instruction how to get OTP
+                    Center(
+                      child: CommonText(
+                        text:
+                            "${AppString.codeHasBeenSendTo} ${controller.emailController.text}",
+                        fontSize: 14,
+
+                        bottom: 40,
+                        maxLines: 3,
+                        color: AppColors.secondaryText,
                       ),
-                      length: 6,
-                      keyboardType: TextInputType.number,
-                      autovalidateMode: AutovalidateMode.disabled,
-                      enableActiveFill: true,
-                      validator: (value) {
-                        if (value != null && value.length == 6) {
-                          return null;
-                        } else {
-                          return AppString.otpIsInValid;
+                    ),
+
+                    /// OTP Filed here
+                    Flexible(
+                      flex: 0,
+                      child: PinCodeTextField(
+                        controller: controller.otpController,
+                        autoDisposeControllers: false,
+                        cursorColor: AppColors.black,
+                        appContext: (context),
+                        autoFocus: true,
+                        pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(16.r),
+                          fieldHeight: 60.h,
+                          fieldWidth: 60.w,
+                          activeFillColor: AppColors.transparent,
+                          selectedFillColor: AppColors.transparent,
+                          inactiveFillColor: AppColors.transparent,
+                          borderWidth: 0.5.w,
+                          selectedColor: AppColors.primaryColor,
+                          activeColor: AppColors.primaryColor,
+                          inactiveColor: AppColors.black,
+                        ),
+                        length: 6,
+                        keyboardType: TextInputType.number,
+                        autovalidateMode: AutovalidateMode.disabled,
+                        enableActiveFill: true,
+                        validator: (value) {
+                          if (value != null && value.length == 6) {
+                            return null;
+                          } else {
+                            return AppString.otpIsInValid;
+                          }
+                        },
+                      ),
+                    ),
+
+                    /// Resent OTP or show Timer
+                    /*GestureDetector(
+                      onTap: controller.time == '00:00'
+                          ? () {
+                              controller.startTimer();
+                              controller.signUpUser(formKey);
+                            }
+                          : () {},
+                      child: CommonText(
+                        text: controller.time == '00:00'
+                            ? AppString.resendCode
+                            : "${AppString.resendCodeIn} ${controller.time} ${AppString.minute}",
+                        bottom: 20,
+                        fontSize: 18,
+                      ),
+                    ),*/
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CommonText(
+                          text: "Didn't receive the code?",
+                          fontSize: 16,
+                          bottom: 40,
+                          maxLines: 3,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textPrimary,
+                        ),
+                        CommonText(
+                          text: "Resend",
+                          fontSize: 16,
+                          bottom: 40,
+                          fontWeight: FontWeight.w700,
+                          maxLines: 3,
+                          color: AppColors.primaryColor,
+                        ),
+                      ],
+                    ),
+
+                    ///  Submit Button here
+                    CommonButton(
+                      titleText: AppString.verify,
+                      isLoading: controller.isLoadingVerify,
+                      onTap: () {
+                        if (formKey.currentState!.validate()) {
+                          controller.verifyOtpRepo();
                         }
                       },
                     ),
-                  ),
-
-                  /// Resent OTP or show Timer
-                  /*GestureDetector(
-                    onTap: controller.time == '00:00'
-                        ? () {
-                            controller.startTimer();
-                            controller.signUpUser(formKey);
-                          }
-                        : () {},
-                    child: CommonText(
-                      text: controller.time == '00:00'
-                          ? AppString.resendCode
-                          : "${AppString.resendCodeIn} ${controller.time} ${AppString.minute}",
-                      bottom: 20,
-                      fontSize: 18,
-                    ),
-                  ),*/
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      CommonText(
-                          text: "Didn't receive the code?",
-                        fontSize: 16,
-                        bottom: 40,
-                        maxLines: 3,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textPrimary,
-                      ),
-                      CommonText(
-                        text: "Resend",
-                        fontSize: 16,
-                        bottom: 40,
-                        fontWeight: FontWeight.w700,
-                        maxLines: 3,
-                        color: AppColors.primaryColor,
-                      ),
-                    ],
-                  ),
-
-
-                  ///  Submit Button here
-                  CommonButton(
-                    titleText: AppString.verify,
-                    isLoading: controller.isLoadingVerify,
-                    onTap: () {
-                      if (formKey.currentState!.validate()) {
-                        controller.verifyOtpRepo();
-                      }
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
